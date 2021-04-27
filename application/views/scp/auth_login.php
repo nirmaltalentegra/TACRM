@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$this->load->view('_layout/header');
+$this->load->view('_layout/header_login');
 ?>
 <body>
   <div id="app">
@@ -15,14 +15,18 @@ $this->load->view('_layout/header');
             <div class="card card-primary">
               <div class="card-header">
                 <h4>Login</h4>
-				
-              </div>
-				<div><?php echo $message; ?></div>
-				
+			  </div>
+			    <?php if($this->session->flashdata('error') != "") {
+				?>  
+				<div class="alert alert-danger alert-dismissable">
+					<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+					<?php echo $this->session->flashdata('error'); ?>                    
+				</div>
+				<?php } ?>
               <div class="card-body">
                 <form method="POST" action="<?= base_url('scp/auth_login') ?>" class="needs-validation" novalidate="">
                   <div class="form-group">
-                    <label for="email">Email</label>
+                    <label for="email">Email <?php echo $message; ?></label>
                     <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus>
                     <div class="invalid-feedback">
                       Please fill in your email

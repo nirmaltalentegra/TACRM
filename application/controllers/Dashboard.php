@@ -21,7 +21,8 @@ class Dashboard extends APP_Controller {
         $this->load->library('form_validation');
         $this->load->library('Arbac');
         $this->load->library('upload');
-        if(!$this->arbac->is_loggedin()){ redirect('scp/auth_login'); }
+        if(!$this->arbac->is_loggedin()){ redirect('scp/auth_login'); } 
+		
     }
 
     public function index() {        

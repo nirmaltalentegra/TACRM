@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-$this->load->view('_layout/header');
+$this->load->view('_layout/siteheader');
 ?>
 <!-- Main Content -->
 <div class="main-content">
@@ -101,4 +101,4 @@ $this->load->view('_layout/header');
     </div>
   </section>
 </div>
-<?php $this->load->view('_layout/footer'); ?>
+<?php $this->load->view('_layout/sitefooter'); ?>

@@ -1,46 +1,66 @@
 	
-<form id="frm_profile" name="frm_profile" class="form-horizontal form-label-left" enctype="multipart/form-data" action="<?php echo base_url('profile/update_tab_1'); ?>" method="post">
+<form id="frm_profile" name="frm_profile" class="form-horizontal form-label-left" enctype="multipart/form-data" action="<?php echo base_url('staff/update_tab_1'); ?>" method="post">
    
     <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class=" form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="int">First Name</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" class="form-control col-md-7 col-xs-12" name="first_name" id="first_name" placeholder="First Name" value="<?php echo $first_name; ?>" />
+		<div class="form-group floating-addon">
+                        <label>First Name</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <i class="far fa-user"></i>
+                            </div>
+                          </div>
+                           <input type="text" class="form-control col-md-7 col-xs-12" name="first_name" id="first_name" placeholder="First Name" value="<?php echo $first_name; ?>" />
                     <?php echo form_error('first_name') ?>
-                </div>
-            </div>
+                        </div>
+                      </div>
+            
         </div>
         <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class=" form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="int">Last Name</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" class="form-control col-md-7 col-xs-12" name="last_name" id="last_name" placeholder="Last Name" value="<?php echo $last_name; ?>" />
+		<div class="form-group floating-addon">
+                        <label>Last Name</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <i class="far fa-user"></i>
+                            </div>
+                          </div>
+                           <input type="text" class="form-control col-md-7 col-xs-12" name="last_name" id="last_name" placeholder="Last Name" value="<?php echo $last_name; ?>" />
                     <?php echo form_error('last_name') ?>
-                </div>
-            </div>
+                        </div>
+                      </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class=" form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="int">Email Address</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" class="form-control col-md-7 col-xs-12" autocomplete="off" name="email_id" id="email_id" data-existing_email="<?php echo $email_id; ?>" placeholder="Email Address" value="<?php echo $email_id; ?>" />
+		<div class="form-group floating-addon">
+                        <label>Email Address</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <i class="far fa-user"></i>
+                            </div>
+                          </div>
+                           <input type="text" class="form-control col-md-7 col-xs-12" autocomplete="off" name="email_id" id="email_id" data-existing_email="<?php echo $email_id; ?>" placeholder="Email Address" value="<?php echo $email_id; ?>" />
                     <?php echo form_error('email_id') ?>
-                </div>
-                <span class="text-danger" id="email_error"></span>
-            </div>
-            
+                        </div>
+						 <span class="text-danger" id="email_error"></span>
+                      </div>            
         </div> 
         <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class=" form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="int">Mobile</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="text" class="form-control col-md-7 col-xs-12" name="mobile" id="mobile" placeholder="Mobile" value="<?php echo $mobile; ?>" />
+		<div class="form-group floating-addon">
+                        <label>Mobile</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <i class="far fa-user"></i>
+                            </div>
+                          </div>
+                          <input type="text" class="form-control col-md-7 col-xs-12" name="mobile" id="mobile" placeholder="Mobile" value="<?php echo $mobile; ?>" />
                     <?php echo form_error('mobile') ?>
-                </div>
-            </div>
+                        </div>
+                      </div>  
         </div>
     </div>
 
@@ -53,7 +73,14 @@
     </div>    
 </div>    
 </form>
-
+<style>
+.error {
+	width: 100%;
+	margin-top: .25rem;
+	font-size: 80%;
+	color: #dc3545;
+}
+</style>
 <script type="text/javascript">
 $( document ).ready(function() {  
         
@@ -78,7 +105,7 @@ $( document ).ready(function() {
         var form1 = $('#frm_profile');        
        validator1= form1.validate({
             errorElement: 'span', //default input error message container
-            errorClass: 'help-block', // default input error message class
+            errorClass: 'error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",
             rules: {
@@ -86,17 +113,21 @@ $( document ).ready(function() {
                 first_name: {
 							required: true
 							},
-	        last_name: {
+				last_name: {
 							required: true
 							},
                 mobile: {
-							required: true,digits:true,
+							required: true,number: true,minlength: 10,maxlength: 10
 							},
                 email_id: {
 							required: true,email:true,
 							}
 	        },
             messages: {
+				first_name: "Please enter First Name!",
+				last_name: "Please enter Last Name!",
+				mobile: "Please enter valid Mobile!",
+				email_id: "Please enter valid Email!",
 	        },
             highlight: function(element) { // hightlight error inputs
                 $(element)

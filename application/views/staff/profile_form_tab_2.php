@@ -1,23 +1,34 @@
 <form id="frm_pwd" name="frm_pwd" class="form-horizontal form-label-left" data-parsley-validate="" action="#" method="post"> 
     <div class="alert hide" id="msg-pass"> </div>
     <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class=" form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="int">New Password</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="password" class="form-control col-md-7 col-xs-12" name="new_password" id="new_password" placeholder="New Password" value="" />                   
-                </div>
-            </div>
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            
+			<div class="form-group floating-addon">
+                        <label>New Password</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <i class="far fa-user"></i>
+                            </div>
+                          </div>
+                          <input type="password" class="form-control col-md-7 col-xs-12" name="new_password" id="new_password" placeholder="New Password" value="" />      
+                        </div>
+                      </div>
         </div>        
     </div>
     <div class="row">
-        <div class="col-md-6 col-sm-6 col-xs-12">
-            <div class=" form-group">
-                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="int">Confirm New Password</label>
-                <div class="col-md-6 col-sm-6 col-xs-12">
-                    <input type="password" class="form-control col-md-7 col-xs-12" name="confirm_password" id="confirm_password" placeholder="Confirm New Password" value="" />                    
-                </div>
-            </div>
+        <div class="col-md-12 col-sm-6 col-xs-12">
+            <div class="form-group floating-addon">
+                        <label>Confirm New Password</label>
+                        <div class="input-group">
+                          <div class="input-group-prepend">
+                            <div class="input-group-text">
+                              <i class="far fa-user"></i>
+                            </div>
+                          </div>
+                           <input type="password" class="form-control col-md-7 col-xs-12" name="confirm_password" id="confirm_password" placeholder="Confirm New Password" value="" />  
+                        </div>
+                      </div>  
         </div>        
     </div>
 <h3 class="page-header">&nbsp;</h3>
@@ -29,6 +40,15 @@
     </div>    
 </div>    
 </form>
+<!-- General JS Scripts -->
+<style>
+.error {
+	width: 100%;
+	margin-top: .25rem;
+	font-size: 80%;
+	color: #dc3545;
+}
+</style>
 <script type="text/javascript">
 $( document ).ready(function() {
         $('#frm_pwd').submit(function(){
@@ -37,21 +57,23 @@ $( document ).ready(function() {
         var form2 = $('#frm_pwd');        
         form2.validate({
             errorElement: 'span', //default input error message container
-            errorClass: 'help-block', // default input error message class
+            errorClass: 'error', // default input error message class
             focusInvalid: false, // do not focus the last invalid input
             ignore: "",
             rules: {    
-                        new_password: {
-                            required: true,
-                            minlength: 5,
-                            maxlength: 13
-                        },
-                        confirm_password: {
-                            required: true,
-                            equalTo: "#new_password"
-                        },
+				new_password: {
+					required: true,
+					minlength: 5,
+					maxlength: 13
+				},
+				confirm_password: {
+					required: true,
+					equalTo: "#new_password"
+				},
 	        },
             messages: {
+				new_password: "Please enter New Password",
+				confirm_password: "Please enter the same password as New Password",
 	        },
             highlight: function(element) { // hightlight error inputs
                 $(element)
@@ -82,7 +104,7 @@ $( document ).ready(function() {
                     var formData    =   new FormData(form);                   
                     
                     $.ajax({
-                                url: "<?php echo site_url() ?>/profile/reset_password",
+                                url: "<?php echo site_url() ?>/staff/reset_password",
                                 type: 'POST',
                                 data: formData,
                                 async: false,

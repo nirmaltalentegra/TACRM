@@ -55,36 +55,29 @@ class Staff extends APP_Controller {
             'mobile'        => $row["mobile"],
             'email_id'      => $row["email"],
         );
+		$data['error'] = "";
+		
         $this->load->view('staff/profile', $data);		
     }
 	
 	
 	public function update_tab_1() 
     {
-        $this->form_validation->set_rules('first_name', 'First Name', 'trim|required');
-	$this->form_validation->set_rules('last_name', 'Last Name', 'trim|required');
-	$this->form_validation->set_rules('mobile', 'Mobile', 'trim|required|numeric');
-        $this->form_validation->set_rules('email_id', 'Email Address', 'trim|required');
-        
-        if ($this->form_validation->run() == FALSE) {
-            echo validation_errors();
-        } else {
-            $logged_in              = $this->session->userdata('id');
-            $data = array(                
-		'firstname'         => $this->input->post('first_name',TRUE),
+        $logged_in              = $this->session->userdata('id');
+        $data = array(                
+				'firstname'         => $this->input->post('first_name',TRUE),
                 'lastname'          => $this->input->post('last_name',TRUE),
-		'mobile'            => $this->input->post('mobile',TRUE),			
-		'updated'           => date('Y-m-d H:i:s')
+				'mobile'            => $this->input->post('mobile',TRUE),			
+				'updated'           => date('Y-m-d H:i:s')
 	    );
             $this->Staff_model->update_by_staff_id($logged_in, $data); 
             $data = array( 
-		'email'            => $this->input->post('email_id',TRUE)
+				'email'            => $this->input->post('email_id',TRUE)
 	    );
-            $this->Staff_model->update($logged_in, $data); 
-            
-            $this->session->set_flashdata('message', 'Update Profile Success');
-            redirect(site_url('profile'));
-        }
+		$this->Staff_model->update($logged_in, $data); 
+		
+		$this->session->set_flashdata('message', 'Update Profile Success');
+		redirect(site_url('staff/profile'));
     }
     
     public function reset_password()
