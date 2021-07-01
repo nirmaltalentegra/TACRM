@@ -1,0 +1,2 @@
+[26-Jun-2021 09:05:24 America/Chicago] PHP Warning:  imagecolorallocate(): Green component is out of range in /home1/hysedhjb/public_html/generate_certificate_in_php-master/index.php on line 5
+[26-Jun-2021 09:05:27 America/Chicago] PHP Warning:  imagecolorallocate(): Green component is out of range in /home1/hysedhjb/public_html/generate_certificate_in_php-master/index.php on line 5

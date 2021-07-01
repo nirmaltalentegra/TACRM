@@ -1,0 +1,498 @@
+<h2 style="margin-top:0px">Staff <?php echo $button ?></h2>
+         
+		 <ul class="nav nav-tabs">
+    <li class="active"><a href="#account">Account</a></li>
+    <li><a href="#access">Access</a></li>
+    <li><a href="#permission">Permission</a></li>
+    <li><a href="#team">Team</a></li>
+  </ul>
+<form class="form-horizontal" action="<?php echo $action; ?>" method="post" id="frm_create">
+	<input type="hidden" name="password" id="password" value="" /> 
+        <input type="hidden" name="staff_id" id="staff_id" value="<?php echo $staff_id; ?>" />
+<div class="tab-content">
+     
+    <div id="account" class="tab-pane fade in active">
+		
+		<h3>Account Details</h3>
+		
+		<hr />
+		
+		<div class="avatar pull-left" style="width: 100px; margin: 10px;">
+            <img class="avatar" alt="Avatar" src="//www.gravatar.com/avatar/d41d8cd98f00b204e9800998ecf8427e?s=80&d=mm" />        
+		</div>
+		
+		<div class="form-group">
+		        <label class="col-sm-2" for="text"><span class="text-danger">*</span> Full Name: </label>	
+				<div class="col-sm-4">
+					<input type="text" class="form-control" name="firstname" autofocus value="<?php echo $firstname;?>" placeholder="First Name" />
+					<div class="error"><?php echo form_error('firstname') ?></div>
+                                        
+                                </div>
+                                <div class="col-sm-4">
+					<input type="text" class="form-control" name="lastname" value="<?php echo $lastname;?>" placeholder="Last Name" />	
+                                        <div class="error"><?php echo form_error('lastname') ?></div>
+                                </div>
+		</div>
+		
+		<div class=" form-group">
+                <label class="col-sm-2" for="varchar"><span class="text-danger">*</span> Email Address: </label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="email" id="email" placeholder="me@mycompany.com" data-existing_email="<?php echo $email;?>" value="<?php echo $email;?>" />
+                    <?php echo form_error('email') ?>
+                </div>
+                <span class="text-danger" id="email_error"></span>
+            </div>
+			
+		
+		<div class=" form-group">
+                <label class="col-sm-2" for="varchar"><span class="text-danger">*</span> User Name: </label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="username" id="username" data-existing_username="<?php echo $username;?>" placeholder="vikram" value="<?php echo $username;?>" />
+                    <div class="error"><?php echo form_error('username') ?></div><br>
+                    </div>
+                <div class="col-sm-4">
+                    <button type="button" class="btn btn-info btn-sm" data-toggle="modal" data-target="#setPass">Set Password</button>
+                    
+                    <div class="error"><?php echo form_error('password') ?></div>
+                    <div class="text-danger" id="pwd_error"></div>
+                </div>
+                <span class="text-danger" id="username_error"></span>
+            </div>
+		
+		<div class=" form-group">
+                <label class="col-sm-2" for="varchar"><span class="text-danger">*</span> Phone No: </label>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="phone" id="phone" placeholder="000-0000-0000" value="<?php echo $phone;?>" />
+					<?php echo form_error('phone') ?></div>
+					<div class="col-sm-2">
+					<input type="text" class="form-control" name="phone_ext" id="phone_ext" placeholder="extn" value="<?php echo $phone_ext;?>" />
+                    <?php echo form_error('phone_ext') ?>
+                </div>
+				
+            </div>
+		
+		<div class=" form-group">
+                <label class="col-sm-2" for="varchar"><span class="text-danger">*</span> Mobile No: </label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="mobile" id="mobile" placeholder="1234567890" value="<?php echo $mobile;?>" />
+                    <?php echo form_error('mobile') ?>
+                </div>
+            </div>
+		
+		
+
+		
+		<hr />
+		<h4>Status and Settings</h4>
+		<hr />
+		
+		<label class="checkbox">
+                    <input type="checkbox" name="islocked" value="1" <?php if($banned == 1) { ?> checked="" <?php } ?>/>
+              Locked            </label>
+            <label class="checkbox">
+            <input type="checkbox" name="isadmin" value="1" <?php if($isadmin == 1) { ?> checked="" <?php } ?>/>
+              Administrator            </label>
+            <label class="checkbox">
+            <input type="checkbox" name="assigned_only" value="1" <?php if($assigned_only == 1) { ?> checked="" <?php } ?>/>
+              Limit ticket access to ONLY assigned tickets            </label>
+            <label class="checkbox">
+            <input type="checkbox" name="onvacation" value="1" <?php if($onvacation == 1) { ?> checked="" <?php } ?>/>
+              Vacation Mode            </label>
+		<label class="checkbox">
+            <input type="checkbox" name="sms_notification" value="1" <?php if($sms_notification == 1) { ?> checked="" <?php } ?>/>
+              SMS Notification           </label>
+			
+
+		<hr />
+			
+		<div class=" form-group">
+                <label class="col-sm-2" for="text"><span class="text-danger">*</span>Signature : </label>	
+                <div class="col-sm-6">
+                    <textarea class="form-control" name="signature" id="signature" /><?php echo $signature ; ?></textarea>
+                    <?php echo form_error('signature') ?>
+                </div>
+            </div>
+
+		
+</div>
+
+<div id="access" class="tab-pane fade">
+		     <h3>Access</h3>
+
+<div class=" form-group">
+                        <label class="col-sm-2" for="int">Organization:</label>
+                        <div class="col-sm-6">
+                            <select name="org_id" id="org_id" class="form-control">
+                                <option value="">select Organization</option>
+                                <?php
+                                foreach ($org_data as $org) {
+                                    $org_selected = "";
+                                    if($org_id == $org->id) {
+                                        $org_selected = "selected";
+                                    }
+                                    
+                                    
+                                    echo '<option value="' . $org->id . '"'. $org_selected.' >' . $org->name . "</option>";
+                                }
+                                ?>
+                            </select>
+                            <?php echo form_error('org_id') ?>
+                        </div>
+                    </div>
+
+
+
+<div class=" form-group">
+                        <label class="col-sm-2" for="int">Primary Department:</label>
+                        <div class="col-sm-6">
+                            <select name="dept_id" id="dept_id" class="form-control">
+                                <option value="">select Department</option>
+                                <?php
+                                foreach ($dept_data as $dept) {
+                                    $dept_selected = "";
+                                    if($dept_id == $dept->id) {
+                                        $dept_selected = "selected";
+                                    }
+                                    
+                                    
+                                    echo '<option value="' . $dept->id . '"'. $dept_selected.'>' . $dept->name . "</option>";
+                                }
+                                ?>
+                            </select>
+                            <?php echo form_error('dept_id') ?>
+                        </div>
+                    </div>
+
+
+<div class=" form-group">
+                        <label class="col-sm-2" for="int">Primary Role:</label>
+                        <div class="col-sm-6">
+                            <select name="role_id" id="role_id" class="form-control">
+                                <option value="">select Role</option>
+                                <?php
+                                foreach ($role_data as $role) {
+                                    $role_selected = "";
+                                    if($role_id == $role->id) {
+                                        $role_selected = "selected";
+                                    }
+                                    
+                                    
+                                    echo '<option value="' . $role->id . '"'. $role_selected.'>' . $role->name . "</option>";
+                                }
+                                ?>
+                            </select>
+                            <?php echo form_error('role_id') ?>
+                        </div>
+                    </div>
+					
+<div class=" form-group">
+                        <label class="col-sm-2" for="int">Reporting Manager:</label>
+                        <div class="col-sm-6">
+                            <select name="manager_id" id="manager_id" class="form-control">
+                                <option value="">select Manager</option>
+                                <?php
+                                foreach ($staff_data as $staff) {
+                                    $manager_selected = "";
+                                    if($manager_id == $staff['staff_id']) {
+                                        $manager_selected = "selected";
+                                    }
+                                    
+                                    echo '<option value="' . $staff['staff_id'] . '"'. $manager_selected.'>' . $staff['staff_name'] . "</option>";
+                                }
+                                ?>
+                            </select>
+                            <?php echo form_error('manager_id') ?>
+                        </div>
+                    </div>
+
+<div class=" form-group">
+                        <label class="col-sm-2" for="int">Designation:</label>
+                        <div class="col-sm-6">
+                            <select name="designation_id" id="designation_id" class="form-control">
+                                <option value="">select Designation</option>
+                                <?php
+                                foreach ($designation_data as $desgn) {
+                                    $desgn_selected = "";
+                                    if($designation_id == $desgn->id) {
+                                        $desgn_selected = "selected";
+                                    }
+                                    
+                                    echo '<option value="' . $desgn->id . '"'. $desgn_selected.'>' . $desgn->name . "</option>";
+                                }
+                                ?>
+                            </select>
+                            <?php echo form_error('designation_id') ?>
+                        </div>
+                    </div>
+					
+					
+	   
+</div>	
+	
+<div id="permission" class="tab-pane fade">
+		     <h3>Permission</h3>		
+	   
+</div>	
+
+<div id="team" class="tab-pane fade">
+		     <h3>Team</h3>		
+	   
+</div>	
+
+	
+	
+	    <button type="submit" class="btn btn-primary"><?php echo $button ?></button> 
+	    <a href="<?php echo site_url('staff') ?>" class="btn btn-default">Cancel</a>
+	
+    
+</div>
+</form>
+
+
+
+<!-- Modal -->
+  <div class="modal fade" id="setPass" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Set Password</h4>
+        </div>
+        <div class="modal-body">
+		<form class="form-horizontal" action="" method="post" id="frm_password">
+		
+		<div class=" form-group">
+                <label class="col-sm-4" for="varchar"><span class="text-danger">*</span> Password: </label>
+                <div class="col-sm-6">
+                    <input type="password" class="form-control" name="passwd" id="passwd" placeholder="Password"  />
+                    <?php echo form_error('passwd') ?>
+                </div>
+            </div>
+		
+		
+		<div class=" form-group">
+                <label class="col-sm-4" for="varchar"><span class="text-danger">*</span>Confirm Password: </label>
+                <div class="col-sm-6">
+                    <input type="password" class="form-control" name="confirm_passwd" id="confirm_passwd" placeholder="Confirm Password"  />
+                    <?php echo form_error('confirm_passwd') ?>
+                </div>
+            </div>
+		
+       
+                    <button type="submit" class="btn btn-info" id="set_password">Set</button>
+		 </form> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+<script type="text/javascript">
+$(document).ready(function(){
+    $(".nav-tabs a").click(function(){
+        $(this).tab('show');
+    });
+    $('.nav-tabs a').on('shown.bs.tab', function(){
+        
+    });
+});
+</script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        /// make loader hidden in start
+      $('#email').blur(function(){
+        var email_val = $("#email").val();
+        var existing_email = $("#email").data('existing_email');
+        
+        var filter = /^[a-zA-Z0-9]+[a-zA-Z0-9_.-]+[a-zA-Z0-9_-]+@[a-zA-Z0-9]+[a-zA-Z0-9.-]+[a-zA-Z0-9]+.[a-z]{2,4}$/;
+        if(filter.test(email_val)){
+            // show loader
+            $('#loading').show();
+            $.post("<?php echo site_url()?>/staff/email_check", {
+                email: email_val,existing_email:existing_email
+            }, function(response){
+                //alert(response.message);
+                $('#email_error').html(response.message);
+            });
+            return false;
+        }
+    });
+    
+	     $('#username').blur(function(){
+                var username_val = $("#username").val();
+                var existing_username = $("#username").data('existing_username');
+		$.post("<?php echo site_url()?>/staff/username_check", {
+                    username: username_val,existing_username:existing_username
+                }, function(response){
+              
+                $('#username_error').html(response.message);
+                });
+                return false;
+            });
+    
+    var form1 = $('#frm_password');
+    var error1 = $('.alert-danger', form1);
+    var success1 = $('.alert-success', form1);
+
+    form1.validate({
+        errorElement: 'span', //default input error message container
+        errorClass: 'help-block', // default input error message class
+        focusInvalid: false, // do not focus the last invalid input
+        ignore: "",
+        rules: {
+            passwd: {
+                required: true,
+                minlength: 5,
+                maxlength: 13
+            },
+            confirm_passwd: {
+                required: true,
+                equalTo: "#passwd"
+            },
+        },
+        invalidHandler: function(event, validator) { //display error alert on form submit              
+
+            var errors = validator.numberOfInvalids();
+            if (errors) {
+                validator.errorList[0].element.focus();
+            }
+        },
+        highlight: function(element) { // hightlight error inputs
+            $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+        },
+        unhighlight: function(element) { // revert the change done by hightlight
+            $(element)
+                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+        },
+        success: function(label) {
+            label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+        },
+        submitHandler: function(form) {
+            //Check if the user id exists
+            $("#password").val($("#passwd").val());
+            $("#pwd_error").text("");
+            //alert('password '+$("#password").val());
+            $('#setPass').modal('hide');
+        }
+    });
+    
+    var form2 = $('#frm_create');
+    var error1 = $('.alert-danger', form2);
+    var success1 = $('.alert-success', form2);
+
+    form2.validate({
+        errorElement: 'span', //default input error message container
+        errorClass: 'help-block', // default input error message class
+        focusInvalid: false, // do not focus the last invalid input
+        ignore: "",
+        rules: {
+            firstname: {
+                required: true
+            },
+            lastname: {
+                required: true,
+            },
+            username: {
+                required: true,
+            },
+            email: {
+                required: true,
+                email: true
+            },
+            phone: {
+                required: true,
+                digits: true
+            },
+            phone_ext: {
+                required: true,
+                digits: true
+            },
+            mobile: {
+                required: true,
+                digits: true
+            },
+            signature: {
+                required: true
+            },
+            org_id: {
+                required: true
+            },
+            dept_id: {
+                required: true
+            },
+            role_id: {
+                required: true
+            },
+            manager_id: {
+                required: true
+            },
+            designation_id: {
+                required: true
+            }
+            
+            
+        },
+        invalidHandler: function(event, validator) {              
+            $(".tab-content").find("div.tab-pane:hidden:has(div.has-error)").each(function (index, tab) {
+                var id = $(tab).attr("id");
+                //console.log('total errors '+validator.numberOfInvalids()+' tab id '+id);
+                $('a[href="#' + id + '"]').tab('show');
+            });
+            
+            $(".tab-content").find("div.tab-pane").each(function (index, tab) {
+                var id = $(tab).attr("id");
+                //console.log(' index '+index);
+                console.log(' tab id '+$(tab).attr("id"));
+                $('a[href="#' + id + '"]').removeClass('alert-danger');
+
+            });
+        },
+        highlight: function(element) { // hightlight error inputs
+            $(element)
+                    .closest('.form-group').addClass('has-error'); // set error class to the control group
+            
+                    $(".tab-content").find("div.tab-pane:has(div.has-error)").each(function (index, tab) {
+                        var id = $(tab).attr("id");
+                        //console.log(' index '+index);
+                        //console.log(' tab id '+$(tab).attr("id"));
+                        $('a[href="#' + id + '"]').addClass('alert-danger');
+
+                    });
+                    
+        },
+        unhighlight: function(element) { // revert the change done by hightlight
+            $(element)
+                    .closest('.form-group').removeClass('has-error'); // set error class to the control group
+                    
+        },
+        success: function(label) {
+            label
+                    .closest('.form-group').removeClass('has-error'); // set success class to the control group
+        },
+        submitHandler: function(form) {
+            //Check if the user id exists
+            //alert('pwd ');
+            if($("#password").val() == "" && $("#staff_id").val() == "") {
+                $("#pwd_error").text("Please set password");
+            }
+            else {
+                $("#pwd_error").text("");
+                form.submit();
+            }    
+        }
+    });
+    
+    
+	
+    });  
+</script>
+	
+	
+	
+	

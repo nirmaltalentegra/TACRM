@@ -1,0 +1,7 @@
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = true
+[remote "main"]
+	url = https://github.com/talentegra/TACRM.git
+	fetch = +refs/heads/*:refs/remotes/main/*
