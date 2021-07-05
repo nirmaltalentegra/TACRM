@@ -42,10 +42,12 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
                           <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                         </div>
                       </th>
+			<th>Category</th>		  
 		    <th>Course</th>
-		    <th>Category</th>
+		    
 		    <th>Batch Title</th>
-		    <th>Description</th>
+			<th>Batch Code</th>
+		    <!--<th>Description</th>-->
 		    <th>Faculty</th>
 		    <th>Branch</th>
 		    <th>Batch Type</th>
@@ -59,8 +61,8 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
 		    <th>Currency Id</th>-->
 		    <th>Batch Fee Type</th>
 		    <th>Fees</th>
-		    <th>Course Fee Type</th>
-		    <th>Course Fee</th>
+		    <!--<th>Course Fee Type</th>
+		    <th>Course Fee</th>-->
 		    <th>Batch Status</th> 
 		    <!--<th>Created</th>
 		    <th>Updated</th>-->
@@ -80,16 +82,17 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
                           <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                         </div>
                       </td>
-		    <td><?php echo $batches->course_name ?></td>
 		    <td><?php echo $batches->category_name ?></td>
+			<td><?php echo $batches->course_name ?></td>
 		    <td><?php echo $batches->batch_title ?></td>
-		    <td><?php echo $batches->description ?></td>
+			<td><?php echo ($batches->batch_code != "") ? $batches->batch_code : ""; ?></td>
+		    <!--<td><?php echo $batches->description ?></td>-->
 		    <td><?php echo $batches->fullname ?></td>
 		    <td><?php echo $batches->branch_name ?></td>
 		    <td><?php echo $batches->batch_type_name ?></td>
 		    <td><?php echo $batches->batch_pattern ?></td>
-		    <td><?php echo $batches->start_date ?></td>
-		    <td><?php echo $batches->end_date ?></td>
+		    <td><?php echo date('d-m-Y',strtotime($batches->start_date)); ?></td>
+		    <td><?php echo date('d-m-Y',strtotime($batches->end_date)); ?></td>
 		    <!--<td><?php //echo $batches->week_days ?></td>-->
 		    <!--<td><?php //echo $batches->student_enrolled ?></td>-->
 		    <!--<td><?php //echo $batches->batch_capacity ?></td>-->
@@ -97,20 +100,28 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
 		    <!--<td><?php echo $batches->currency_id ?></td>-->
 		    <td><?php echo $batches->batch_fee_type_name ?></td>
 		    <td><?php echo $batches->fees ?></td>
-		    <td><?php echo $batches->course_fee_type_name ?></td>
-		    <td><?php echo $batches->course_fee ?></td>
+		    <!--<td><?php echo $batches->course_fee_type_name ?></td>
+		    <td><?php echo $batches->course_fee ?></td>-->
 		    <td><?php echo $batches->status ?></td>
 		    <!--<td><?php //echo $batches->created ?></td>-->
 		    <!--<td><?php //echo $batches->updated ?></td>-->
-		    <td style="text-align:center" width="200px">
+		    <td width="200px">
 			<?php 
-			echo anchor(site_url('students/create/'.$batches->batch_id),'Add Students'); 
-			echo ' | '; 
-			echo anchor(site_url('batches/read/'.$batches->batch_id),'Read'); 
-			echo ' | '; 
-			echo anchor(site_url('batches/update/'.$batches->batch_id),'Update'); 
-			echo ' | '; 
-			echo anchor(site_url('batches/delete/'.$batches->batch_id),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+			echo '<a class="btn btn-icon btn-sm btn-info" href="'.site_url('students/create/'.$batches->batch_id).'" title="Enroll Students">';
+			echo '<i class="fas fa-plus"></i>'; 
+            echo '</a>&nbsp;'; 
+			
+			echo '<a class="btn btn-icon btn-sm btn-info" href="'.site_url('batches/read/'.$batches->batch_id).'" title="Details">';
+			echo '<i class="fas fa-info-circle"></i>'; 
+            echo '</a>&nbsp;'; 
+			
+			echo '<a class="btn btn-icon btn-sm btn-primary" href="'.site_url('batches/update/'.$batches->batch_id).'" title="Edit">';
+			echo '<i class="far fa-edit"></i>'; 
+            echo '</a>&nbsp;';
+			
+			echo '<a class="btn btn-icon btn-sm btn-danger" href="'.site_url('batches/delete/'.$batches->batch_id).'" title="Delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')">';
+			echo '<i class="fas fa-times"></i>'; 
+            echo '</a>';
 			?>
 		    </td>
 	        </tr>

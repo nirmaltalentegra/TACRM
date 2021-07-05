@@ -173,7 +173,7 @@ $this->load->view('_layout/siteheader');
 	
          
 			<input type="hidden" class="form-control " name="user_id" id="user_id" placeholder="User Id" value="<?php echo $user_id; ?>" />
-			<input type="hidden" class="form-control " name="student_name" id="student_name" placeholder="Student" value="" />
+			<input type="hidden" class="form-control " name="student_name" id="student_name" placeholder="Student" value="<?php echo $student_name; ?>" />
 			<?php echo form_error('user_id') ?>
 		
 	     <div class="ln_solid"></div>

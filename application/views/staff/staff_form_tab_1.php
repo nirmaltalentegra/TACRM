@@ -93,7 +93,7 @@
 								  <i class="fas fa-lock"></i>
 								</div>
 							  </div>
-							    <input type="password" class="form-control col-md-7 col-xs-12" name="password" id="password" placeholder="Password" />
+							    <input type="password" class="form-control col-md-7 col-xs-12" name="passwd" id="passwd" placeholder="Password" />
 						<?php echo form_error('passwd') ?>
 							</div>
 						  </div>

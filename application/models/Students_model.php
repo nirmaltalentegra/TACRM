@@ -25,12 +25,11 @@ class Students_model extends CI_Model
     // get all
     function get_all()
     {
-		$this->db->select('students.* ,batches.batch_title,courses_catalog.course_name,email,phone');
-		$this->db->join('batches', 'batches.batch_id = students.batch_id');
-		$this->db->join('courses_catalog', 'courses_catalog.course_id = students.course_id');
+		$this->db->select('students.user_id,students.name,COUNT(students.user_id) as count_course,email,phone');
 		$this->db->join('users', 'users.id = students.user_id');
-        $this->db->order_by($this->id, $this->order);
-        return $this->db->get($this->table)->result();   
+		$this->db->group_by('students.user_id,students.name'); 
+        $this->db->order_by('students.user_id', $this->order);
+        return $this->db->get($this->table)->result();    
     }
 	
 	// get all data array
@@ -198,6 +197,18 @@ class Students_model extends CI_Model
         } else {
             return 'failure';
         }
+    }
+	
+	// get all
+    function get_studentdetail_by_user_id($user_id)
+    {
+		$this->db->select('students.*,users.email,users.phone,batches.batch_title,courses_catalog.course_name');
+		$this->db->join('users', 'users.id = students.user_id');
+		$this->db->join('batches', 'batches.batch_id = students.batch_id');
+		$this->db->join('courses_catalog', 'courses_catalog.course_id = students.course_id');
+		$this->db->where('user_id', $user_id);
+        $this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();    
     }
 
 }

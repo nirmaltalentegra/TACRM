@@ -6,16 +6,16 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-      <h1>Students List</h1>
+      <h1>Course Details for <?php echo $result[0]->name; ?></h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active">
           <a href="dashboard">Dashboard</a>
         </div>
         <div class="breadcrumb-item">
-          <a href=Students>Students</a>
+          <a href='<?php echo base_url('students/'); ?>' >Students</a>
         </div>
         <div class="breadcrumb-item">
-          Students List
+          Student Details
         </div>
       </div>
     </div>
@@ -24,15 +24,12 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
         <div class="col-12">
           <div class="card">
             <!--<div class="card-header">
-              <h4>Students List</h4>
+              <h4>Student <?php echo $result[0]->name; ?> List</h4>
             </div>-->
 			<?php if($this->session->flashdata('error')): ?>
 				<div class="alert alert-danger"><?php echo $this->session->flashdata('error'); ?></div>
 			<?php endif ?>
 			<div class="pull-right">
-                     <?php echo anchor(site_url('students/create'), '<i class="fa fa-plus"></i> Create', 'class="btn btn-primary"'); ?>
-                    <a href="\#" class="btn btn-danger"><i class="fa fa-print"></i> PDF</a>
-                        <a href="#" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Excel</a>
                 </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -45,17 +42,28 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
                           <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                         </div>
                       </th>
-			<th>Student Name</th>
-			<th>Email</th>
-			<th>Mobile</th>			
-			<th>Total Courses Enrolled</th>	
-		    <!--<th>Action</th>-->
+					  
+			<th>Batch Name</th>	
+			<th>Course Name</th>
+			<th>Course Completed</th>			
+			<th>Completion Date</th>	
+		    <!--<th>Deleted At</th>	-->		
+			<th>Fees Paid</th>	
+		    <th>Fees Payable</th>
+			<!--<th>Is Deleted</th>-->
+			<!--<th>Updated</th>-->
+			<th>Active</th>
+			<th>Added By</th>
+			<th>Created</th>			
+			<th>Action</th>
                 </tr>
+				
+				 
             </thead>
 	    <tbody>
-            <?php
+            <?php 
             $start = 0;
-            foreach ($students_data as $students)
+            foreach ($result as $row)
             {
                 ?>
                 <tr>
@@ -65,23 +73,39 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
                           <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                         </div>
                       </td>
-					    <td><?php echo $students->name ?></td>
-						<td><?php echo $students->email ?></td>
-						<td><?php echo $students->phone ?></td>
-						<td><?php echo  anchor(site_url('students/student_course_batch/'.$students->user_id),$students->count_course); ?></td>
-						<!--<td style="text-align:center" width="200px">-->
+						<td><?php echo $row->batch_title; ?></td>
+						<td><?php echo $row->course_name; ?></td>
+						<td><?php echo ($row->course_completed == 1) ? "Yes" : "No"; ?></td>
+						<td><?php echo ($row->course_completed == 1) ? date('d-m-Y',strtotime($row->completion_date)) : ""; ?></td>
+						<!--<td><?php //echo $row->deleted_at; ?></td>-->
+						<td><?php echo $row->fees_paid; ?></td>
+						<td><?php echo $row->fees_payable; ?></td>
+						<!--<td><?php //echo $row->is_deleted; ?></td>-->
+						<!--<td><?php //echo $row->updated; ?></td>-->
+					    <td><?php echo ($row->active == 1) ? "Yes" : "No"; ?></td>
+						<td><?php echo (get_user_details($row->added_by)['user_name'])?(get_user_details($row->added_by)['user_name']):''; ?></td>
+						<td><?php echo date('d-m-Y',strtotime($row->created)); ?></td>
+						
+						<td width="200px">
 						<?php 
-						/*echo anchor(site_url('students/read/'.$students->user_id),'Read'); 
-						echo ' | '; 
-						echo anchor(site_url('students/update/'.$students->user_id),'Update'); 
-						echo ' | '; 
-						echo anchor(site_url('students/delete/'.$students->user_id),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); */
-						/*if($students->course_completed == 1) {
+						echo '<a class="btn btn-icon btn-sm btn-info" href="'.site_url('students/read/'.$row->student_id).'" title="Details">';
+						echo '<i class="fas fa-info-circle"></i>'; 
+						echo '</a>&nbsp;'; 
+						
+						echo '<a class="btn btn-icon btn-sm btn-primary" href="'.site_url('students/update/'.$row->student_id).'" title="Edit">';
+						echo '<i class="far fa-edit"></i>'; 
+						echo '</a>&nbsp;';
+						
+						echo '<a class="btn btn-icon btn-sm btn-danger" href="'.site_url('students/delete/'.$row->student_id).'" title="Delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')">';
+						echo '<i class="fas fa-times"></i>'; 
+						echo '</a>';
+						
+						if($row->course_completed == 1) {
 						?>
-						<a href="javascript:void(0);" class="print_certificate" data-id=<?php echo $students->student_id; ?>>Print</a>
-						<?php }*/ ?>
-						<!--</td>-->
-	        </tr>
+						<a href="javascript:void(0);" class=" btn btn-icon btn-sm btn-warning print_certificate" data-id=<?php echo $row->student_id; ?> title="Print"><i class="fas fa-print"></i></a> 
+						<?php } ?>
+						</td>
+	       </tr>
                 <?php
             }
             ?>

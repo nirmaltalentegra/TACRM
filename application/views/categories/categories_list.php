@@ -6,16 +6,16 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-      <h1>Students List</h1>
+      <h1>Categories List</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active">
           <a href="dashboard">Dashboard</a>
         </div>
         <div class="breadcrumb-item">
-          <a href=Students>Students</a>
+          <a href=Categories>Categories</a>
         </div>
         <div class="breadcrumb-item">
-          Students List
+          Categories List
         </div>
       </div>
     </div>
@@ -24,13 +24,10 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
         <div class="col-12">
           <div class="card">
             <!--<div class="card-header">
-              <h4>Students List</h4>
+              <h4>Categories List</h4>
             </div>-->
-			<?php if($this->session->flashdata('error')): ?>
-				<div class="alert alert-danger"><?php echo $this->session->flashdata('error'); ?></div>
-			<?php endif ?>
 			<div class="pull-right">
-                     <?php echo anchor(site_url('students/create'), '<i class="fa fa-plus"></i> Create', 'class="btn btn-primary"'); ?>
+                     <?php echo anchor(site_url('categories/create'), '<i class="fa fa-plus"></i> Create', 'class="btn btn-primary"'); ?>
                     <a href="\#" class="btn btn-danger"><i class="fa fa-print"></i> PDF</a>
                         <a href="#" class="btn btn-success"><i class="fa fa-file-excel-o"></i> Excel</a>
                 </div>
@@ -45,17 +42,18 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
                           <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                         </div>
                       </th>
-			<th>Student Name</th>
-			<th>Email</th>
-			<th>Mobile</th>			
-			<th>Total Courses Enrolled</th>	
-		    <!--<th>Action</th>-->
+		    <th>Category Name</th>
+		    <th>Parent Category</th>
+		    <th>Active</th>
+		    <th>Created</th>
+		    <!--<th>Updated</th>-->
+		    <th>Action</th>
                 </tr>
             </thead>
 	    <tbody>
             <?php
             $start = 0;
-            foreach ($students_data as $students)
+            foreach ($categories_data as $categories)
             {
                 ?>
                 <tr>
@@ -65,22 +63,28 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
                           <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                         </div>
                       </td>
-					    <td><?php echo $students->name ?></td>
-						<td><?php echo $students->email ?></td>
-						<td><?php echo $students->phone ?></td>
-						<td><?php echo  anchor(site_url('students/student_course_batch/'.$students->user_id),$students->count_course); ?></td>
-						<!--<td style="text-align:center" width="200px">-->
-						<?php 
-						/*echo anchor(site_url('students/read/'.$students->user_id),'Read'); 
-						echo ' | '; 
-						echo anchor(site_url('students/update/'.$students->user_id),'Update'); 
-						echo ' | '; 
-						echo anchor(site_url('students/delete/'.$students->user_id),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); */
-						/*if($students->course_completed == 1) {
-						?>
-						<a href="javascript:void(0);" class="print_certificate" data-id=<?php echo $students->student_id; ?>>Print</a>
-						<?php }*/ ?>
-						<!--</td>-->
+		    
+			<td><?php echo $categories->category_name ?></td>
+		    <td><?php echo $categories->parent_category_name ?></td>
+		    <td><?php echo ($categories->active=='1')?'Yes':'No' ?></td>
+		    <td><?php echo date('d-m-Y',strtotime($categories->created)); ?></td>
+		    <!--<td><?php echo $categories->updated ?></td>-->
+		    <td width="200px">
+			<?php 
+			echo '<a class="btn btn-icon btn-sm btn-info" href="'.site_url('categories/read/'.$categories->category_id).'" title="Details">';
+			echo '<i class="fas fa-info-circle"></i>'; 
+            echo '</a>&nbsp;'; 
+			
+			echo '<a class="btn btn-icon btn-sm btn-primary" href="'.site_url('categories/update/'.$categories->category_id).'" title="Edit">';
+			echo '<i class="far fa-edit"></i>'; 
+            echo '</a>&nbsp;';
+			
+			echo '<a class="btn btn-icon btn-sm btn-danger" href="'.site_url('categories/delete/'.$categories->category_id).'" title="Delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')">';
+			echo '<i class="fas fa-times"></i>'; 
+            echo '</a>';
+			
+			?>
+		    </td>
 	        </tr>
                 <?php
             }
@@ -95,12 +99,5 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
     </div>
   </section>
 </div>
-<script>
-        $(".print_certificate").click(function(){
-            //alert($(this).attr('data-id'));
-            var student_id = $(this).attr('data-id');
-            window.location.href = "<?php echo base_url(); ?>student_certificate/print_certificate/"+student_id;
-        });
-</script>
 <?php $this->load->view('_layout/sitefooter'); ?>
 

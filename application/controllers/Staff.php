@@ -255,10 +255,10 @@ class Staff extends APP_Controller {
             }
             
               
-            echo "<pre>";
+           /* echo "<pre>";
               print_r($_POST);
               echo "</pre>";
-              exit; 
+              exit; */
             //Create staff
             //$staff_id = $this->arbac->create_user($input_email, $input_password, $input_username, $input_banned);
             $staff_id = $this->arbac->create_user($input_email, $input_password, $input_username);            

@@ -19,6 +19,7 @@ class Batches extends APP_Controller
         $this->load->model('Batches_model');
 		$this->load->model('Currency_model');
 		$this->load->model('Common_model');
+		$this->load->model('Staff_model');
         $this->load->library('form_validation');
 		$this->load->library('Arbac');
 		if(!$this->arbac->is_loggedin()){ redirect('scp/auth_login'); }
@@ -26,6 +27,7 @@ class Batches extends APP_Controller
 
     public function index()
     {
+		$staff_details = $this->Staff_model->get_staff_primary_role($this->session->userdata('id'));
         $batches = $this->Batches_model->get_all();
 		//echo($this->db->last_query());
 		//echo '<pre>';
@@ -57,6 +59,7 @@ class Batches extends APP_Controller
 		'batch_id' => $row->batch_id,
 		'course_id' => ($row_course =='failure')?'':$row_course[0]['course_name'],
 		'category_id' => ($row_categories =='failure')?'':$row_categories[0]['category_name'],
+		'batch_code' => $row->batch_code,
 		'batch_title' => $row->batch_title,
 		'description' => $row->description,
 		'faculty_id' => ($row_faculty =='failure')?'':$row_faculty[0]['fullname'],
@@ -133,11 +136,11 @@ class Batches extends APP_Controller
     public function create_action() 
     {
         $this->_rules();
-
+			
         if ($this->form_validation->run() == FALSE) {
             $this->create();
         } else {
-			
+		$total_batch = $this->Batches_model->total_rows() + 1;
             $data = array(
 		'course_id' => $this->input->post('course_id',TRUE),
 		'category_id' => $this->input->post('category_id',TRUE),
@@ -158,7 +161,8 @@ class Batches extends APP_Controller
 		'course_fee_type' => $this->input->post('course_fee_type',TRUE),
 		'course_fee' => $this->input->post('course_fee',TRUE),
 		'batch_status' => $this->input->post('batch_status',TRUE),
-		'created' => date('Y-m-d H:i:s'),
+		'batch_code' => "Batch".str_pad($total_batch,  3, "0",STR_PAD_LEFT),
+		'created' => date('Y-m-d H:i:s'), 
 		'updated' => date('Y-m-d H:i:s'),
 	    );
             $this->Batches_model->insert($data);

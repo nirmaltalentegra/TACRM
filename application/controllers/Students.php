@@ -48,11 +48,11 @@ class Students extends APP_Controller
 		$added_by_details = get_user_details($row->added_by);
             $data = array(
 			'title'  => 'TRAMS::SCP::Students',
-		'active' => $row->active,
+		'active' => ($row->active=='1')?'Yes':'No',
 		'added_by' => $added_by_details['user_name'],
 		'batch_id' => ($row_batch =='failure')?'':$row_batch[0]['batch_title'],
 		'completion_date' => $row->completion_date,
-		'course_completed' => $row->course_completed,
+		'course_completed' => ($row->course_completed=='1')?'Yes':'No',
 		'course_id' => ($row_course =='failure')?'':$row_course[0]['course_name'],
 		'created' => $row->created,
 		'deleted_at' => $row->deleted_at,
@@ -100,6 +100,7 @@ class Students extends APP_Controller
 	    'student_id' => set_value('student_id'),
 	    'updated' => set_value('updated'),
 	    'user_id' => set_value('user_id'),
+		'student_name' => set_value('student_name'),
 		'bid' => $bid,
 		'cid' => $cid,
 		'course_name' => $course_name,
@@ -172,7 +173,6 @@ class Students extends APP_Controller
     public function update($id) 
     {
         $row = $this->Students_model->get_by_id($id);
-
         if ($row) {
 		$course_details = $this->Common_model->get_details_dynamically('courses_catalog', 'course_id',$row->course_id, 'course_id', $oder_by = NULL);
             $data = array(
@@ -334,6 +334,14 @@ class Students extends APP_Controller
 		$res_arr = array("result" => $result, "course_name" => $course_name);
 		//print_r($res_arr);
 		echo json_encode($res_arr); 
+	}
+	
+	public function student_course_batch($user_id)
+	{
+		$result = $this->Students_model->get_studentdetail_by_user_id($user_id);
+		$data['title']  = 'TRAMS::SCP::Students';
+		$data['result'] = $result;
+		$this->_tpl('students/students_detail', $data);
 	}
 
 }

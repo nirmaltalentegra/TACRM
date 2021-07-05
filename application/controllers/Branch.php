@@ -121,11 +121,12 @@ class Branch extends APP_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->create();
         } else {
+		$total_branch = $this->Branch_model->total_rows() + 1;
             $data = array(
 		'autoresp_email_id' => $this->input->post('autoresp_email_id',TRUE),
 		'branch_address' => $this->input->post('branch_address',TRUE),
 		'branch_area' => $this->input->post('branch_area',TRUE),
-		'branch_code' => $this->input->post('branch_code',TRUE),
+		'branch_code' => "Branch".str_pad($total_branch,  3, "0",STR_PAD_LEFT),
 		'branch_name' => $this->input->post('branch_name',TRUE),
 		'branch_reg_date' => $this->input->post('branch_reg_date',TRUE),
 		'branch_status' => $this->input->post('branch_status',TRUE),
@@ -206,7 +207,6 @@ class Branch extends APP_Controller
 		'autoresp_email_id' => $this->input->post('autoresp_email_id',TRUE),
 		'branch_address' => $this->input->post('branch_address',TRUE),
 		'branch_area' => $this->input->post('branch_area',TRUE),
-		'branch_code' => $this->input->post('branch_code',TRUE),
 		'branch_name' => $this->input->post('branch_name',TRUE),
 		'branch_reg_date' => $this->input->post('branch_reg_date',TRUE),
 		'branch_status' => $this->input->post('branch_status',TRUE),
@@ -252,7 +252,6 @@ class Branch extends APP_Controller
 	$this->form_validation->set_rules('autoresp_email_id', 'autoresp email id', 'trim|required|numeric');
 	$this->form_validation->set_rules('branch_address', 'branch address', 'trim|required');
 	$this->form_validation->set_rules('branch_area', 'branch area', 'trim|required');
-	$this->form_validation->set_rules('branch_code', 'branch code', 'trim|required');
 	$this->form_validation->set_rules('branch_name', 'branch name', 'trim|required');
 	$this->form_validation->set_rules('branch_reg_date', 'branch reg date', 'trim|required');
 	$this->form_validation->set_rules('branch_status', 'branch status', 'trim|required|numeric');

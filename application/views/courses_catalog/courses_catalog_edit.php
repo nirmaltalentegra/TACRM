@@ -35,33 +35,39 @@ $this->load->view('_layout/siteheader');
               </div>
               <div class="card-body">
 	    <div class=" form-group">
-			 <label class="control-label " for="int">Active</label>
-           
-			<input type="text" class="form-control " name="active" id="active" placeholder="Active" value="<?php echo $active; ?>" />
-			<?php echo form_error('active') ?>
-		
-		</div>
-	    <div class=" form-group">
-			 <label class="control-label " for="int">Added By</label>
-           
-			<input type="text" class="form-control " name="added_by" id="added_by" placeholder="Added By" value="<?php echo $added_by; ?>" />
-			<?php echo form_error('added_by') ?>
-		
-		</div>
-	    <div class=" form-group">
-			 <label class="control-label " for="int">Category Id</label>
-           
-			<input type="text" class="form-control " name="category_id" id="category_id" placeholder="Category Id" value="<?php echo $category_id; ?>" />
-			<?php echo form_error('category_id') ?>
-		
-		</div>
-	    <div class=" form-group">
 			 <label class="control-label " for="varchar">Course Code</label>
            
 			<input type="text" class="form-control " name="course_code" id="course_code" placeholder="Course Code" value="<?php echo $course_code; ?>" />
 			<?php echo form_error('course_code') ?>
 		
 		</div>
+		<div class=" form-group">
+			 <label class="control-label " for="varchar">Course Name</label>
+           
+			<input type="text" class="form-control " name="course_name" id="course_name" placeholder="Course Name" value="<?php echo $course_name; ?>" />
+			<?php echo form_error('course_name') ?>
+		
+		</div>
+		<div class=" form-group">
+			 <label class="control-label " for="int">Category</label>
+            <select class="form-control" name="category_id" id="category_id" placeholder="Category" >
+					<option value="0">Select</option>
+			  <?php foreach ($row_categories as $row)
+				{ ?>
+					<option <?=($category_id == $row['category_id'])?'selected':''; ?> value="<?php echo $row['category_id'];?>" ><?php echo $row['category_name']; ?></option>
+				<?php 
+				}
+				?>
+			  </select><?php echo form_error('category_id') ?>
+		
+		</div>
+		<div class=" form-group"> 
+					<label class="control-label " for="course_summary">Course Summary</label>
+					
+					<textarea class="form-control " rows="3" name="course_summary" id="course_summary" placeholder="Course Summary"><?php echo $course_summary; ?></textarea>
+					<?php echo form_error('course_summary') ?>
+				
+				</div>
 	    <div class=" form-group"> 
 					<label class="control-label " for="course_contents">Course Contents</label>
 					
@@ -85,9 +91,16 @@ $this->load->view('_layout/siteheader');
 		</div>
 	    <div class=" form-group">
 			 <label class="control-label " for="tinyint">Course Fee Type</label>
-           
-			<input type="text" class="form-control " name="course_fee_type" id="course_fee_type" placeholder="Course Fee Type" value="<?php echo $course_fee_type; ?>" />
-			<?php echo form_error('course_fee_type') ?>
+             <select class="form-control" name="course_fee_type" id="course_fee_type" placeholder="Course Fee Type" >
+					<option value="0">Select</option>
+			  <?php foreach ($row_course_fee_type as $row)
+				{ ?>
+					<option <?=($course_fee_type == $row['course_fee_type_id'])?'selected':''; ?> value="<?php echo $row['course_fee_type_id'];?>" ><?php echo $row['course_fee_type']; ?></option>
+				<?php 
+				}
+				?>
+			  </select> 
+			  <?php echo form_error('course_fee_type') ?>
 		
 		</div>
 	    <div class=" form-group">
@@ -97,35 +110,7 @@ $this->load->view('_layout/siteheader');
 			<?php echo form_error('course_fees') ?>
 		
 		</div>
-	    <div class=" form-group">
-			 <label class="control-label " for="varchar">Course Name</label>
-           
-			<input type="text" class="form-control " name="course_name" id="course_name" placeholder="Course Name" value="<?php echo $course_name; ?>" />
-			<?php echo form_error('course_name') ?>
-		
-		</div>
-	    <div class=" form-group"> 
-					<label class="control-label " for="course_summary">Course Summary</label>
-					
-					<textarea class="form-control " rows="3" name="course_summary" id="course_summary" placeholder="Course Summary"><?php echo $course_summary; ?></textarea>
-					<?php echo form_error('course_summary') ?>
-				
-				</div>
-	
-	    <div class=" form-group">
-			 <label class="control-label " for="timestamp">Deleted At</label>
-           
-			<input type="text" class="form-control " name="deleted_at" id="deleted_at" placeholder="Deleted At" value="<?php echo $deleted_at; ?>" />
-			<?php echo form_error('deleted_at') ?>
-		
-		</div>
-	    <div class=" form-group">
-			 <label class="control-label " for="tinyint">Is Deleted</label>
-           
-			<input type="text" class="form-control " name="is_deleted" id="is_deleted" placeholder="Is Deleted" value="<?php echo $is_deleted; ?>" />
-			<?php echo form_error('is_deleted') ?>
-		
-		</div>
+	    
 	    <div class=" form-group"> 
 					<label class="control-label " for="notes">Notes</label>
 					

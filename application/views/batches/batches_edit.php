@@ -35,20 +35,6 @@ $this->load->view('_layout/siteheader');
               </div>
               <div class="card-body">
 	    <div class=" form-group">
-			 <label class="control-label " for="int">Course</label>
-           <select class="form-control" name="course_id" id="course_id" placeholder="Course Id" >
-			        <option value="0">Select</option>
-			  <?php foreach ($row_courses as $row)
-				{ ?>
-					<option data-fee = "<?php echo $row['course_fees'];  ?>" <?=($row['course_id']==$course_id)?'selected':'' ?> value="<?php echo $row['course_id'];?>" ><?php echo $row['course_name']; ?></option>
-				<?php 
-				}
-				?>
-			  </select>
-			<?php echo form_error('course_id') ?>
-		
-		</div>
-	    <div class=" form-group">
 			 <label class="control-label " for="int">Category</label>
            <select class="form-control" name="category_id" id="category_id" placeholder="Category Id" >
 			        <option value="0">Select</option>
@@ -60,6 +46,20 @@ $this->load->view('_layout/siteheader');
 				?>
 			  </select>
 			<?php echo form_error('category_id') ?>
+		
+		</div>
+	    <div class=" form-group">
+			 <label class="control-label " for="int">Course</label>
+           <select class="form-control" name="course_id" id="course_id" placeholder="Course Id" >
+			        <option value="0">Select</option>
+			  <?php foreach ($row_courses as $row)
+				{ ?>
+					<option data-category ="<?php echo $row['category_id'];  ?>" data-fee = "<?php echo $row['course_fees'];  ?>" <?=($row['course_id']==$course_id)?'selected':'' ?> value="<?php echo $row['course_id'];?>" ><?php echo $row['course_name']; ?></option>
+				<?php 
+				}
+				?>
+			  </select>
+			<?php echo form_error('course_id') ?>
 		
 		</div>
 	    <div class=" form-group">
@@ -150,7 +150,7 @@ $this->load->view('_layout/siteheader');
 		</div>
 	    <div class=" form-group">
 			 <label class="control-label " for="varchar">Week Days</label>
-			<select class="form-control" multiple name="week_days[]" id="week_days" placeholder="Batch Pattern" >
+			<select class="form-control select2" multiple name="week_days[]" id="week_days" placeholder="Batch Pattern" >
 					<?php $week_days = explode(",",$week_days); ?>
 					<option <?=in_array("1", $week_days)?'selected' : '';?> value="1">Sunday</option>
 					<option <?=in_array("2", $week_days)?'selected' : '';?> value="2">Monday</option>
@@ -292,6 +292,16 @@ $this->load->view('_layout/siteheader');
 
 <script type="text/javascript">
 $(document).ready(function(){
+var $category = $( '#category_id' ),
+	$course = $( '#course_id' ),
+    $options = $course.find( 'option' );
+    
+$category.on( 'change', function() {
+	$course.html( $options.filter( '[data-category="' + this.value + '"]' ) );
+	var fee = $("#course_id").find(':selected').data('fee');
+	$("#course_fee").val(fee);
+} ).trigger( 'change' );
+
 $("#course_id").change(function(){	 	
 var fee = $(this).find(':selected').data('fee');
 $("#course_fee").val(fee);

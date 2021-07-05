@@ -25,6 +25,9 @@ class Courses_catalog_model extends CI_Model
     // get all
     function get_all()
     {
+		$this->db->select('courses_catalog.*,course_fee_type.course_fee_type as course_fee_type_name,categories.category_name');
+		$this->db->join('course_fee_type', 'courses_catalog.course_fee_type = course_fee_type.course_fee_type_id','left'); 
+		$this->db->join('categories', 'courses_catalog.category_id = categories.category_id ','left');
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }

@@ -734,9 +734,10 @@ class Arbac {
 			'pass' => $this->hash_password($pass, 0), // Password cannot be blank but user_id required for salt, setting bad password for now
 			'username' => (!$username) ? '' : $username ,
 		);
-
+echo "here";
 		if ( $this->arbac_db->insert($this->config_vars['users'], $data )){
-
+echo $this->arbac_db->last_query();
+echo "here if";echo $user_id;exit;
 			$user_id = $this->arbac_db->insert_id();
 
 			// set default group
@@ -766,6 +767,7 @@ class Arbac {
 			return $user_id;
 
 		} else {
+			echo "else here";exit;
 			return FALSE;
 		}
 	}

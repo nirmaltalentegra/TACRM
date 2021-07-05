@@ -6,16 +6,16 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-      <h1>Courses_catalog List</h1>
+      <h1>Courses List</h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active">
           <a href="dashboard">Dashboard</a>
         </div>
         <div class="breadcrumb-item">
-          <a href=Courses_catalog>Courses_catalog</a>
+          <a href=Courses_catalog>Courses</a>
         </div>
         <div class="breadcrumb-item">
-          Courses_catalog List
+          Courses List
         </div>
       </div>
     </div>
@@ -23,9 +23,9 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
 <div class="row">
         <div class="col-12">
           <div class="card">
-            <div class="card-header">
+            <!--<div class="card-header">
               <h4>Courses_catalog List</h4>
-            </div>
+            </div>-->
 			<div class="pull-right">
                      <?php echo anchor(site_url('courses_catalog/create'), '<i class="fa fa-plus"></i> Create', 'class="btn btn-primary"'); ?>
                     <a href="\#" class="btn btn-danger"><i class="fa fa-print"></i> PDF</a>
@@ -42,22 +42,25 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
                           <label for="checkbox-all" class="custom-control-label">&nbsp;</label>
                         </div>
                       </th>
-		    <th>Active</th>
-		    <th>Added By</th>
-		    <th>Category Id</th>
+		    
+		    
+			<th>Course Name</th>
 		    <th>Course Code</th>
-		    <th>Course Contents</th>
+			<th>Category Name</th>
+		    <!--<th>Course Contents</th>-->
 		    <th>Course Duration</th>
 		    <th>Course Duration In</th>
 		    <th>Course Fee Type</th>
 		    <th>Course Fees</th>
-		    <th>Course Name</th>
-		    <th>Course Summary</th>
+		    
+		    <!--<th>Course Summary</th>-->
+			<th>Active</th>
+		    <th>Added By</th>
 		    <th>Created</th>
-		    <th>Deleted At</th>
+		    <!--<th>Deleted At</th>
 		    <th>Is Deleted</th>
 		    <th>Notes</th>
-		    <th>Updated</th>
+		    <th>Updated</th>-->
 		    <th>Action</th>
                 </tr>
             </thead>
@@ -74,29 +77,37 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
                           <label for="checkbox-1" class="custom-control-label">&nbsp;</label>
                         </div>
                       </td>
-		    <td><?php echo $courses_catalog->active ?></td>
-		    <td><?php echo $courses_catalog->added_by ?></td>
-		    <td><?php echo $courses_catalog->category_id ?></td>
+		    <td><?php echo $courses_catalog->course_name ?></td>
 		    <td><?php echo $courses_catalog->course_code ?></td>
-		    <td><?php echo $courses_catalog->course_contents ?></td>
+			<td><?php echo $courses_catalog->category_name ?></td>
+		    <!--<td><?php echo $courses_catalog->course_contents ?></td>-->
 		    <td><?php echo $courses_catalog->course_duration ?></td>
 		    <td><?php echo $courses_catalog->course_duration_in ?></td>
-		    <td><?php echo $courses_catalog->course_fee_type ?></td>
+		    <td><?php echo $courses_catalog->course_fee_type_name ?></td>
 		    <td><?php echo $courses_catalog->course_fees ?></td>
-		    <td><?php echo $courses_catalog->course_name ?></td>
-		    <td><?php echo $courses_catalog->course_summary ?></td>
-		    <td><?php echo $courses_catalog->created ?></td>
-		    <td><?php echo $courses_catalog->deleted_at ?></td>
-		    <td><?php echo $courses_catalog->is_deleted ?></td>
+		    
+		    <!--<td><?php echo $courses_catalog->course_summary ?></td>-->
+			<td><?php echo ($courses_catalog->active=='1')?'Yes':'No'; ?></td>
+		    <td><?php echo (get_user_details($courses_catalog->added_by)['user_name'])?(get_user_details($courses_catalog->added_by)['user_name']):''; ?></td>
+		    <td><?php echo date('d-m-Y',strtotime($courses_catalog->created)); ?></td>
+		    <!--<td><?php echo $courses_catalog->deleted_at ?></td>
+		    <td><?php echo ($courses_catalog->is_deleted=='1')?'Yes':'No'; ?></td>
 		    <td><?php echo $courses_catalog->notes ?></td>
-		    <td><?php echo $courses_catalog->updated ?></td>
-		    <td style="text-align:center" width="200px">
+		    <td><?php echo $courses_catalog->updated ?></td>-->
+		    <td width="200px">
 			<?php 
-			echo anchor(site_url('courses_catalog/read/'.$courses_catalog->course_id),'Read'); 
-			echo ' | '; 
-			echo anchor(site_url('courses_catalog/update/'.$courses_catalog->course_id),'Update'); 
-			echo ' | '; 
-			echo anchor(site_url('courses_catalog/delete/'.$courses_catalog->course_id),'Delete','onclick="javasciprt: return confirm(\'Are You Sure ?\')"'); 
+			echo '<a class="btn btn-icon btn-sm btn-info" href="'.site_url('courses_catalog/read/'.$courses_catalog->course_id).'" title="Details">';
+			echo '<i class="fas fa-info-circle"></i>'; 
+            echo '</a>&nbsp;'; 
+			
+			echo '<a class="btn btn-icon btn-sm btn-primary" href="'.site_url('courses_catalog/update/'.$courses_catalog->course_id).'" title="Edit">';
+			echo '<i class="far fa-edit"></i>'; 
+            echo '</a>&nbsp;';
+			
+			echo '<a class="btn btn-icon btn-sm btn-danger" href="'.site_url('courses_catalog/delete/'.$courses_catalog->course_id).'" title="Delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')">';
+			echo '<i class="fas fa-times"></i>'; 
+            echo '</a>';
+			
 			?>
 		    </td>
 	        </tr>

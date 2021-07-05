@@ -49,8 +49,6 @@ $this->load->view('_layout/siteheader');
 	    <tr><td>Email Id</td><td><?php echo $email_id; ?></td></tr>
 	    <tr><td>Mobile</td><td><?php echo $mobile; ?></td></tr>
 	    <tr><td>Phone</td><td><?php echo $phone; ?></td></tr> 
-	    <tr><td>Flags</td><td><?php echo $flags; ?></td></tr>
-	    <tr><td>Ispublic</td><td><?php echo $ispublic; ?></td></tr>
 	    <tr><td>Manager</td><td><?php echo $manager_id; ?></td></tr>
 	    <tr><td>Branch Status</td><td><?php echo $branch_status; ?></td></tr>
 		<tr><td>Autoresp Email Id</td><td><?php echo $autoresp_email_id; ?></td></tr>

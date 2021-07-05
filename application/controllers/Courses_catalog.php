@@ -17,9 +17,10 @@ class Courses_catalog extends APP_Controller
     {
         parent::__construct();
         $this->load->model('Courses_catalog_model');
+		$this->load->model('Common_model');
         $this->load->library('form_validation');
 		$this->load->library('Arbac');
-		if(!$this->arbac->is_loggedin()){ redirect('scp/login'); }
+		if(!$this->arbac->is_loggedin()){ redirect('scp/auth_login'); }
     }
 
     public function index()
@@ -38,23 +39,27 @@ class Courses_catalog extends APP_Controller
     {
         $row = $this->Courses_catalog_model->get_by_id($id);
         if ($row) {
-            $data = array(
+			
+		$row_categories = $this->Common_model->get_details_dynamically('categories', 'category_id', $row->category_id, 'category_id', $oder_by = NULL);
+        $row_course_fee_type = $this->Common_model->get_details_dynamically('course_fee_type', 'course_fee_type_id', $row->course_fee_type, 'course_fee_type_id', $oder_by = NULL);
+		$added_by_details = get_user_details($row->added_by);   
+			$data = array(
 			'title'  => 'TRAMS::SCP::Courses_catalog',
-		'active' => $row->active,
-		'added_by' => $row->added_by,
-		'category_id' => $row->category_id,
+		'active' => ($row->active=='1')?'Yes':'No',
+		'added_by' => $added_by_details['user_name'],
+		'category_id' => ($row_categories =='failure')?'':$row_categories[0]['category_name'],
 		'course_code' => $row->course_code,
 		'course_contents' => $row->course_contents,
 		'course_duration' => $row->course_duration,
 		'course_duration_in' => $row->course_duration_in,
-		'course_fee_type' => $row->course_fee_type,
+		'course_fee_type' => ($row_course_fee_type =='failure')?'':$row_course_fee_type[0]['course_fee_type'],
 		'course_fees' => $row->course_fees,
 		'course_id' => $row->course_id,
 		'course_name' => $row->course_name,
 		'course_summary' => $row->course_summary,
 		'created' => $row->created,
 		'deleted_at' => $row->deleted_at,
-		'is_deleted' => $row->is_deleted,
+		'is_deleted' => ($row->is_deleted=='1')?'Yes':'No',
 		'notes' => $row->notes,
 		'updated' => $row->updated,
 	    );
@@ -89,6 +94,8 @@ class Courses_catalog extends APP_Controller
 	    'notes' => set_value('notes'),
 	    'updated' => set_value('updated'),
 	);
+	      $data['row_categories'] = $this->Common_model->get_table_details_dynamically('categories', 'category_id', $oder_by = NULL);
+		  $data['row_course_fee_type'] = $this->Common_model->get_table_details_dynamically('course_fee_type', 'course_fee_type_id', $oder_by = NULL);
           $this->_tpl('courses_catalog/courses_catalog_form', $data);	
 		
     }
@@ -101,8 +108,8 @@ class Courses_catalog extends APP_Controller
             $this->create();
         } else {
             $data = array(
-		'active' => $this->input->post('active',TRUE),
-		'added_by' => $this->input->post('added_by',TRUE),
+		'active' => '1',
+		'added_by' => $this->session->userdata('id'),
 		'category_id' => $this->input->post('category_id',TRUE),
 		'course_code' => $this->input->post('course_code',TRUE),
 		'course_contents' => $this->input->post('course_contents',TRUE),
@@ -113,10 +120,7 @@ class Courses_catalog extends APP_Controller
 		'course_name' => $this->input->post('course_name',TRUE),
 		'course_summary' => $this->input->post('course_summary',TRUE),
 		'created' => date('Y-m-d H:i:s'),
-		'deleted_at' => $this->input->post('deleted_at',TRUE),
-		'is_deleted' => $this->input->post('is_deleted',TRUE),
 		'notes' => $this->input->post('notes',TRUE),
-		'updated' => date('Y-m-d H:i:s'),
 	    );
 
             $this->Courses_catalog_model->insert($data);
@@ -134,8 +138,6 @@ class Courses_catalog extends APP_Controller
                 'button' => 'Update',
                 'action' => site_url('courses_catalog/update_action'),
 				'title'  => 'TRAMS::SCP::Update Courses_catalog',
-		'active' => set_value('active', $row->active),
-		'added_by' => set_value('added_by', $row->added_by),
 		'category_id' => set_value('category_id', $row->category_id),
 		'course_code' => set_value('course_code', $row->course_code),
 		'course_contents' => set_value('course_contents', $row->course_contents),
@@ -147,11 +149,12 @@ class Courses_catalog extends APP_Controller
 		'course_name' => set_value('course_name', $row->course_name),
 		'course_summary' => set_value('course_summary', $row->course_summary),
 		'created' => set_value('created', $row->created),
-		'deleted_at' => set_value('deleted_at', $row->deleted_at),
-		'is_deleted' => set_value('is_deleted', $row->is_deleted),
 		'notes' => set_value('notes', $row->notes),
 		'updated' => set_value('updated', $row->updated),
 	    );
+			
+	      $data['row_categories'] = $this->Common_model->get_table_details_dynamically('categories', 'category_id', $oder_by = NULL);
+		  $data['row_course_fee_type'] = $this->Common_model->get_table_details_dynamically('course_fee_type', 'course_fee_type_id', $oder_by = NULL);
 			$this->_tpl('courses_catalog/courses_catalog_edit', $data);
 		
         } else {
@@ -168,8 +171,6 @@ class Courses_catalog extends APP_Controller
             $this->update($this->input->post('course_id', TRUE));
         } else {
             $data = array(
-		'active' => $this->input->post('active',TRUE),
-		'added_by' => $this->input->post('added_by',TRUE),
 		'category_id' => $this->input->post('category_id',TRUE),
 		'course_code' => $this->input->post('course_code',TRUE),
 		'course_contents' => $this->input->post('course_contents',TRUE),
@@ -179,9 +180,6 @@ class Courses_catalog extends APP_Controller
 		'course_fees' => $this->input->post('course_fees',TRUE),
 		'course_name' => $this->input->post('course_name',TRUE),
 		'course_summary' => $this->input->post('course_summary',TRUE),
-		
-		'deleted_at' => $this->input->post('deleted_at',TRUE),
-		'is_deleted' => $this->input->post('is_deleted',TRUE),
 		'notes' => $this->input->post('notes',TRUE),
 		'updated' => date('Y-m-d H:i:s'),
 	    );
@@ -197,7 +195,12 @@ class Courses_catalog extends APP_Controller
         $row = $this->Courses_catalog_model->get_by_id($id);
 
         if ($row) {
-            $this->Courses_catalog_model->delete($id);
+           // $this->Courses_catalog_model->delete($id);
+		   $data = array(
+			'is_deleted' => '1',
+			'deleted_at' => date('Y-m-d H:i:s'), 
+			);
+            $this->Courses_catalog_model->update($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('courses_catalog'));
         } else {
@@ -208,8 +211,6 @@ class Courses_catalog extends APP_Controller
 
     public function _rules() 
     {
-	$this->form_validation->set_rules('active', 'active', 'trim|required|numeric');
-	$this->form_validation->set_rules('added_by', 'added by', 'trim|required|numeric');
 	$this->form_validation->set_rules('category_id', 'category id', 'trim|required|numeric');
 	$this->form_validation->set_rules('course_code', 'course code', 'trim|required');
 	$this->form_validation->set_rules('course_contents', 'course contents', 'trim|required');
@@ -220,12 +221,8 @@ class Courses_catalog extends APP_Controller
 	$this->form_validation->set_rules('course_name', 'course name', 'trim|required');
 	$this->form_validation->set_rules('course_summary', 'course summary', 'trim|required');
 		
-	$this->form_validation->set_rules('deleted_at', 'deleted at', 'trim|required');
-	$this->form_validation->set_rules('is_deleted', 'is deleted', 'trim|required');
 	$this->form_validation->set_rules('notes', 'notes', 'trim|required');
 		
-
-	$this->form_validation->set_rules('course_id', 'course_id', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 

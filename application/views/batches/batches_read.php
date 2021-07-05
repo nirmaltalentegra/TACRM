@@ -37,6 +37,7 @@ $this->load->view('_layout/siteheader');
         <table class="table">
 	    <tr><td>Course</td><td><?php echo $course_id; ?></td></tr>
 	    <tr><td>Category</td><td><?php echo $category_id; ?></td></tr>
+		<tr><td>Batch Code</td><td><?php echo $batch_code; ?></td></tr>
 	    <tr><td>Batch Title</td><td><?php echo $batch_title; ?></td></tr>
 	    <tr><td>Description</td><td><?php echo $description; ?></td></tr>
 	    <tr><td>Faculty</td><td><?php echo $faculty_id; ?></td></tr>

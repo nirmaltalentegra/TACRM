@@ -32,21 +32,7 @@ $this->load->view('_layout/siteheader');
                 <h4>Batches</h4>
               </div>
               <div class="card-body">
-	    <div class=" form-group">
-			 <label class="control-label " for="int">Course</label>
-			  <select class="form-control" name="course_id" id="course_id" placeholder="Course Id" >
-			        <option value="0">Select</option>
-			  <?php foreach ($row_courses as $row)
-				{ ?>
-				    <option data-fee = "<?php echo $row['course_fees'];  ?>" value="<?php echo $row['course_id'];?>" ><?php echo $row['course_name']; ?></option>
-				<?php 
-				}
-				?>
-			  </select>
-
-			<?php echo form_error('course_id') ?>
-		
-		</div>
+	    
 	    <div class=" form-group">
 			 <label class="control-label " for="int">Category</label>
          
@@ -61,6 +47,21 @@ $this->load->view('_layout/siteheader');
 			  </select>
 			<!--<input type="text" class="form-control " name="category_id" id="category_id" placeholder="Category Id" value="<?php echo $category_id; ?>" />-->
 			<?php echo form_error('category_id') ?>
+		
+		</div>
+		<div class=" form-group">
+			 <label class="control-label " for="int">Course</label>
+			  <select class="form-control" name="course_id" id="course_id" placeholder="Course Id" >
+			        <option value="0">Select</option>
+			  <?php foreach ($row_courses as $row)
+				{ ?>
+				    <option data-category ="<?php echo $row['category_id'];  ?>" data-fee = "<?php echo $row['course_fees'];  ?>" value="<?php echo $row['course_id'];?>" ><?php echo $row['course_name']; ?></option>
+				<?php 
+				}
+				?>
+			  </select>
+
+			<?php echo form_error('course_id') ?>
 		
 		</div>
 	    <div class=" form-group">
@@ -152,7 +153,7 @@ $this->load->view('_layout/siteheader');
 		</div>
 	    <div class=" form-group">
 			 <label class="control-label " for="varchar">Week Days</label>
-			<select class="form-control" multiple name="week_days[]" id="week_days" placeholder="Batch Pattern" >
+			<select class="form-control select2" multiple name="week_days[]" id="week_days" placeholder="Batch Pattern" >
 					<option value="1">Sunday</option>
 					<option value="2">Monday</option>
 					<option value="3">Tuesday</option>
@@ -295,11 +296,22 @@ $this->load->view('_layout/siteheader');
 
 <script type="text/javascript">
 $(document).ready(function(){
+var $category = $( '#category_id' ),
+	$course = $( '#course_id' ),
+    $options = $course.find( 'option' );
+    
+$category.on( 'change', function() {
+	$course.html( $options.filter( '[data-category="' + this.value + '"]' ) );
+	var fee = $("#course_id").find(':selected').data('fee');
+	$("#course_fee").val(fee);
+} ).trigger( 'change' );
+
 $("#course_id").change(function(){	 	
 var fee = $(this).find(':selected').data('fee');
 $("#course_fee").val(fee);
 });
 });
+
 /*var form2 = $('#frm_create');
         var error1 = $('.alert-danger', form2);
         var success1 = $('.alert-success', form2);

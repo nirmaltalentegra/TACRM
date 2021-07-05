@@ -36,13 +36,6 @@ $this->load->view('_layout/siteheader');
               <div class="card-body">
 	    
 		<div class=" form-group">
-			 <label class="control-label " for="varchar">Branch Code</label>
-           
-			<input type="text" class="form-control " name="branch_code" id="branch_code" placeholder="Branch Code" value="<?php echo $branch_code; ?>" />
-			<?php echo form_error('branch_code') ?>
-		
-		</div>
-		<div class=" form-group">
 			 <label class="control-label " for="int">Branch Type</label>
              <select class="form-control" name="branch_type" id="branch_type" placeholder="Branch Type" >
 					<option value="0">Select</option>

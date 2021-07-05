@@ -25,6 +25,8 @@ class Categories_model extends CI_Model
     // get all
     function get_all()
     {
+		$this->db->select('categories.*,p.category_name as parent_category_name');
+		$this->db->join('categories p', 'categories.parent_id = p.category_id ','left');
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }

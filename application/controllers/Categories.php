@@ -17,9 +17,10 @@ class Categories extends APP_Controller
     {
         parent::__construct();
         $this->load->model('Categories_model');
+		$this->load->model('Common_model');
         $this->load->library('form_validation');
 		$this->load->library('Arbac');
-		if(!$this->arbac->is_loggedin()){ redirect('scp/login'); }
+		if(!$this->arbac->is_loggedin()){ redirect('scp/auth_login'); }
     }
 
     public function index()
@@ -38,13 +39,15 @@ class Categories extends APP_Controller
     {
         $row = $this->Categories_model->get_by_id($id);
         if ($row) {
+		
+		$row_categories = $this->Common_model->get_details_dynamically('categories', 'category_id', $row->parent_id, 'category_id', $oder_by = NULL);
             $data = array(
 			'title'  => 'TRAMS::SCP::Categories',
-		'active' => $row->active,
+		'active' => ($row->active=='1')?'Yes':'No',
 		'category_id' => $row->category_id,
 		'category_name' => $row->category_name,
 		'created' => $row->created,
-		'parent_id' => $row->parent_id,
+		'parent_id' => ($row_categories =='failure')?'':$row_categories[0]['category_name'],
 		'updated' => $row->updated,
 	    );
 			$this->_tpl('categories/categories_read', $data);
@@ -60,13 +63,11 @@ class Categories extends APP_Controller
             'button' => 'Create',
             'action' => site_url('categories/create_action'),
 			'title'  => 'TRAMS::SCP::Create Categories',
-	    'active' => set_value('active'),
-	    'category_id' => set_value('category_id'),
 	    'category_name' => set_value('category_name'),
-	    'created' => set_value('created'),
 	    'parent_id' => set_value('parent_id'),
-	    'updated' => set_value('updated'),
 	);
+			
+		  $data['row_categories'] = $this->Common_model->get_table_details_dynamically('categories', 'category_id', $oder_by = NULL);
           $this->_tpl('categories/categories_form', $data);	
 		
     }
@@ -79,13 +80,11 @@ class Categories extends APP_Controller
             $this->create();
         } else {
             $data = array(
-		'active' => $this->input->post('active',TRUE),
+		'active' => '1',
 		'category_name' => $this->input->post('category_name',TRUE),
 		'created' => date('Y-m-d H:i:s'),
 		'parent_id' => $this->input->post('parent_id',TRUE),
-		'updated' => date('Y-m-d H:i:s'),
 	    );
-
             $this->Categories_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('categories'));
@@ -101,14 +100,12 @@ class Categories extends APP_Controller
                 'button' => 'Update',
                 'action' => site_url('categories/update_action'),
 				'title'  => 'TRAMS::SCP::Update Categories',
-		'active' => set_value('active', $row->active),
 		'category_id' => set_value('category_id', $row->category_id),
 		'category_name' => set_value('category_name', $row->category_name),
-		'created' => set_value('created', $row->created),
 		'parent_id' => set_value('parent_id', $row->parent_id),
-		'updated' => set_value('updated', $row->updated),
 	    );
-			$this->_tpl('categories/', $data);
+			$data['row_categories'] = $this->Common_model->get_table_details_dynamically('categories', 'category_id', $oder_by = NULL);
+			$this->_tpl('categories/categories_edit', $data);
 		
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
@@ -124,9 +121,7 @@ class Categories extends APP_Controller
             $this->update($this->input->post('category_id', TRUE));
         } else {
             $data = array(
-		'active' => $this->input->post('active',TRUE),
 		'category_name' => $this->input->post('category_name',TRUE),
-		
 		'parent_id' => $this->input->post('parent_id',TRUE),
 		'updated' => date('Y-m-d H:i:s'),
 	    );
@@ -153,13 +148,10 @@ class Categories extends APP_Controller
 
     public function _rules() 
     {
-	$this->form_validation->set_rules('active', 'active', 'trim|required');
 	$this->form_validation->set_rules('category_name', 'category name', 'trim|required');
 		
-	$this->form_validation->set_rules('parent_id', 'parent id', 'trim|required|numeric');
 		
 
-	$this->form_validation->set_rules('category_id', 'category_id', 'trim');
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
