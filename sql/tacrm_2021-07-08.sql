@@ -148,6 +148,7 @@ CREATE TABLE `arbac_perm_to_user` (
 
 LOCK TABLES `arbac_perm_to_user` WRITE;
 /*!40000 ALTER TABLE `arbac_perm_to_user` DISABLE KEYS */;
+INSERT INTO `arbac_perm_to_user` VALUES (34,9),(35,9),(41,9);
 /*!40000 ALTER TABLE `arbac_perm_to_user` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,7 +287,7 @@ DROP TABLE IF EXISTS `arbac_users`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `arbac_users` (
-  `id` int unsigned NOT NULL,
+  `id` int unsigned NOT NULL AUTO_INCREMENT,
   `email` varchar(100) NOT NULL,
   `pass` varchar(64) NOT NULL,
   `username` varchar(100) DEFAULT NULL,
@@ -302,7 +303,7 @@ CREATE TABLE `arbac_users` (
   `ip_address` text,
   `login_attempts` int DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -311,7 +312,7 @@ CREATE TABLE `arbac_users` (
 
 LOCK TABLES `arbac_users` WRITE;
 /*!40000 ALTER TABLE `arbac_users` DISABLE KEYS */;
-INSERT INTO `arbac_users` VALUES (1,'admin@dqserv.com','3783a5063e48003fd64eb62d2f06125430b4d63e62aeda455564932654079c80','Admin',0,'2021-06-22 22:19:41','2021-06-22 22:19:41','2021-06-22 22:00:00',NULL,NULL,NULL,NULL,NULL,'86.183.61.40',NULL);
+INSERT INTO `arbac_users` VALUES (1,'admin@dqserv.com','3783a5063e48003fd64eb62d2f06125430b4d63e62aeda455564932654079c80','Admin',0,'2021-07-08 15:29:14','2021-07-08 15:29:14','2021-07-08 15:00:00',NULL,'2021-06-27 00:00:00','FVTn1cgaIHvNrmkJ',NULL,NULL,'81.129.76.123',NULL),(8,'teststaff@test.com','a5f6d0307e403fc289c251dc13d484556d5029d4c57425ac0b734d9fb87f9bd0','teststaff',0,'2021-07-05 16:24:22','2021-07-05 16:24:22','2021-07-05 16:00:00',NULL,NULL,NULL,NULL,NULL,'49.37.173.172',NULL),(9,'test1@test.com','a383bd0d712670e6e1c9842ecf684b3ccfc87a20640670e6430633d06c92d6fa','teststaff1',0,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0);
 /*!40000 ALTER TABLE `arbac_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -365,7 +366,7 @@ CREATE TABLE `batch_pattern` (
 
 LOCK TABLES `batch_pattern` WRITE;
 /*!40000 ALTER TABLE `batch_pattern` DISABLE KEYS */;
-INSERT INTO `batch_pattern` VALUES (1,'Weekdays',1,'2016-06-21 01:05:54','2016-06-21 00:00:00'),(2,'Weekends',1,'2016-06-21 01:05:54','2016-06-21 00:00:00'),(3,'Alternate Days',1,'2016-06-21 01:05:54','2016-06-21 00:00:00'),(4,'Weekly',1,'2016-06-21 01:05:54','2016-06-21 00:00:00'),(5,'Monthly',1,'2016-06-21 01:05:54','2016-06-21 00:00:00');
+INSERT INTO `batch_pattern` VALUES (1,'Weekdays',1,'2016-06-21 01:05:54','2016-06-21 00:00:00'),(2,'Weekends',1,'2016-06-21 01:05:54','2016-06-21 00:00:00'),(3,'Alternate Days',1,'2016-06-21 01:05:54','2016-06-21 00:00:00'),(4,'Weekly',1,'2016-06-21 01:05:54','2016-06-21 00:00:00'),(5,'Monthly',1,'2016-06-21 01:05:54','2016-06-21 00:00:00');
 /*!40000 ALTER TABLE `batch_pattern` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -436,7 +437,7 @@ CREATE TABLE `batches` (
   KEY `course_name` (`course_id`),
   KEY `faculty_id` (`faculty_id`),
   KEY `branch_id` (`branch_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -445,7 +446,7 @@ CREATE TABLE `batches` (
 
 LOCK TABLES `batches` WRITE;
 /*!40000 ALTER TABLE `batches` DISABLE KEYS */;
-INSERT INTO `batches` VALUES (1,1,8,NULL,'RHCE','RHCE - Full Time',1,1,5,4,'2016-06-13 00:00:00','2016-06-13 00:00:00','0,1,2,3,4,5',5,15,0,1,2,35000.00,1,0.00,0,1,NULL,1,NULL,'0000-00-00 00:00:00','2016-06-28 03:14:57'),(3,4,8,NULL,'batch1','batch1',2,3,5,5,'2016-06-15 00:00:00','2016-06-07 00:00:00','',0,0,0,1,1,0.00,2,0.00,0,1,NULL,1,NULL,'2016-06-28 03:17:52','2016-06-28 03:17:52');
+INSERT INTO `batches` VALUES (8,2,8,NULL,'Redhat Certification Program - Admin','Redhat Certification Program - Admin',0,1,1,1,'2021-07-11 00:00:00','2021-07-31 00:00:00','NA',12,30,0,1,1,15000.00,1,15000.00,8,1,NULL,1,NULL,'2021-06-29 17:39:39','2021-06-29 17:39:39'),(12,1,7,NULL,'Online course for Redhat','Online course for Redhat',30,1,1,2,'2021-07-11 00:00:00','2021-07-31 00:00:00','1,7',0,25,0,1,1,5000.00,1,1000.00,8,1,NULL,1,NULL,'2021-06-30 11:23:16','2021-06-30 11:23:16'),(13,2,8,NULL,'Blockchain Ethereum - Jul10','Blockchain Ethereum - Jul10',30,1,1,1,'2021-07-10 00:00:00','2021-08-30 00:00:00','1',0,19,0,1,0,1500.00,1,1000.00,8,1,NULL,1,NULL,'2021-06-30 20:50:20','2021-06-30 20:50:20'),(16,1,8,'Batch014','batch test 122','batch test 122',30,5,1,3,'2021-07-15 00:00:00','2021-08-07 00:00:00','2,3',0,1,0,1,1,1111.00,1,1000.00,7,1,NULL,1,NULL,'2021-07-03 06:23:48','2021-07-03 06:23:48');
 /*!40000 ALTER TABLE `batches` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -457,18 +458,20 @@ DROP TABLE IF EXISTS `batches_students`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `batches_students` (
-  `batch_id` int NOT NULL AUTO_INCREMENT,
+  `batch_student_id` int NOT NULL AUTO_INCREMENT,
+  `batch_id` int NOT NULL,
   `student_id` int NOT NULL,
-  `faculty_id` int NOT NULL,
-  `student_rating` int NOT NULL,
-  `student_comments` text NOT NULL,
-  `faculty_rating` int NOT NULL,
-  `faculty_comments` text NOT NULL,
+  `faculty_id` int DEFAULT NULL,
+  `student_rating` int DEFAULT NULL,
+  `student_comments` text CHARACTER SET latin1 COLLATE latin1_swedish_ci,
+  `faculty_rating` int DEFAULT NULL,
+  `faculty_comments` text CHARACTER SET latin1 COLLATE latin1_swedish_ci,
+  `certified` enum('Yes','No') DEFAULT 'No',
   `active` tinyint NOT NULL,
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
-  PRIMARY KEY (`batch_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`batch_student_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -477,6 +480,7 @@ CREATE TABLE `batches_students` (
 
 LOCK TABLES `batches_students` WRITE;
 /*!40000 ALTER TABLE `batches_students` DISABLE KEYS */;
+INSERT INTO `batches_students` VALUES (1,8,1,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-06-29 17:42:20','2021-07-06 08:31:54'),(2,8,2,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-06-29 17:43:49','0000-00-00 00:00:00'),(3,8,3,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-06-29 17:44:35','2021-06-29 17:45:48'),(4,1,4,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-06-30 09:53:47','2021-06-30 10:16:55'),(5,10,5,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-06-30 10:27:51','0000-00-00 00:00:00'),(6,11,6,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-06-30 11:02:16','2021-06-30 11:03:54'),(7,12,7,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-06-30 11:23:43','0000-00-00 00:00:00'),(8,4,8,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-06-30 12:04:28','0000-00-00 00:00:00'),(9,13,9,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-06-30 20:51:29','2021-06-30 20:52:29'),(10,13,10,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-07-03 11:45:14','2021-07-06 12:22:43'),(13,16,13,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-07-03 13:57:41','0000-00-00 00:00:00'),(14,16,14,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-07-03 14:08:53','0000-00-00 00:00:00'),(16,16,16,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-07-03 14:20:34','0000-00-00 00:00:00'),(17,12,17,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-07-06 09:53:16','0000-00-00 00:00:00'),(18,13,18,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-07-06 10:06:08','0000-00-00 00:00:00'),(19,12,19,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-07-06 13:17:22','2021-07-06 13:18:08'),(20,16,20,NULL,NULL,NULL,NULL,NULL,'No',0,'2021-07-06 14:04:59','0000-00-00 00:00:00');
 /*!40000 ALTER TABLE `batches_students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -515,7 +519,7 @@ CREATE TABLE `branch` (
   UNIQUE KEY `branch_code` (`branch_code`),
   KEY `manager_id` (`manager_id`),
   KEY `autoresp_email_id` (`autoresp_email_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -524,7 +528,7 @@ CREATE TABLE `branch` (
 
 LOCK TABLES `branch` WRITE;
 /*!40000 ALTER TABLE `branch` DISABLE KEYS */;
-INSERT INTO `branch` VALUES (1,'branch1',2,'test','2011-06-30','test','test','test',2,575001,1,'1234567890','1234567890','0',0,14,1,0,0,'testing','2016-06-23 18:56:21','2016-06-28 00:22:22');
+INSERT INTO `branch` VALUES (1,'branch1',2,'test','2011-06-30','test','test','test',2,575001,1,'1234567890','1234567890','0',0,14,1,0,0,'testing','2016-06-23 18:56:21','2016-06-28 00:22:22'),(5,'branch3',4,'branch3','2021-07-09','branch3','branch3','branch3',1,11111,1,'1122334456','8877665549','branch3@test.com',1,8,0,0,1,'test','2021-07-01 10:58:11','2021-07-01 12:21:29'),(6,'BR001',2,'Mangalore','2021-07-02','Mangalore','Mangalore','layout123',3,575014,1,'2356988745','987456985','test@as.com',2,8,1,0,236598745,'asm','2021-07-02 14:04:25','2021-07-02 14:04:25'),(7,'Branch004',3,'branch22','2021-07-31','test address','test area','test',3,555555,1,'9999933222','8877665588','branch22@test.com',2,14,0,0,1,'test','2021-07-03 06:33:19','2021-07-06 07:00:11');
 /*!40000 ALTER TABLE `branch` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -597,7 +601,7 @@ CREATE TABLE `categories` (
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`category_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -606,8 +610,65 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (1,0,'Tuition',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(2,0,'Test Preparation',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(3,0,'Language Learning',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(4,0,'IT Courses',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(5,0,'School',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(6,0,'College',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(7,0,'Online Courses',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(8,0,'Certificate',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(10,8,'Long term course',1,'2016-06-27 18:21:04','2016-06-28 00:30:09'),(11,10,'short term course',1,'2016-06-28 00:24:31','2016-06-28 00:29:57');
+INSERT INTO `categories` VALUES (1,0,'Tuition',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(2,0,'Test Preparation',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(3,0,'Language Learning',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(4,0,'IT Courses',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(5,0,'School',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(6,0,'College',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(7,0,'Online Courses',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(8,0,'Certificate',1,'2016-06-27 18:21:04','2016-06-27 18:21:04'),(10,8,'Long term course',1,'2016-06-27 18:21:04','2016-06-28 00:30:09'),(11,10,'short term course',1,'2016-06-28 00:24:31','2016-06-28 00:29:57'),(13,2,'test category1',1,'2021-07-02 08:46:53','2021-07-02 09:09:54'),(14,6,'test category2',1,'2021-07-02 08:50:42','2021-07-02 09:09:34'),(15,0,'Webinars',1,'2021-07-02 10:37:48','0000-00-00 00:00:00'),(16,0,'Blockchain',1,'2021-07-04 19:54:33','2021-07-06 06:52:46');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `city`
+--
+
+DROP TABLE IF EXISTS `city`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `city` (
+  `city_id` int NOT NULL AUTO_INCREMENT,
+  `city_name` varchar(64) NOT NULL,
+  `state_id` int NOT NULL,
+  `country_id` int NOT NULL,
+  `active` tinyint NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`city_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `city`
+--
+
+LOCK TABLES `city` WRITE;
+/*!40000 ALTER TABLE `city` DISABLE KEYS */;
+INSERT INTO `city` VALUES (1,'Chennai',1,1,1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(2,'Thrichy',1,1,1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(3,'Bangalore',2,1,1,'0000-00-00 00:00:00','0000-00-00 00:00:00');
+/*!40000 ALTER TABLE `city` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `country`
+--
+
+DROP TABLE IF EXISTS `country`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `country` (
+  `country_id` int NOT NULL AUTO_INCREMENT,
+  `country_name` varchar(128) NOT NULL,
+  `country_short` varchar(10) NOT NULL,
+  `active` tinyint NOT NULL,
+  `created` datetime NOT NULL,
+  `updated` datetime NOT NULL,
+  PRIMARY KEY (`country_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `country`
+--
+
+LOCK TABLES `country` WRITE;
+/*!40000 ALTER TABLE `country` DISABLE KEYS */;
+INSERT INTO `country` VALUES (1,'India','IND',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(2,'United States of America','USA',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(3,'Singapore','SG',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(4,'United Kingdom','UK',1,'0000-00-00 00:00:00','0000-00-00 00:00:00');
+/*!40000 ALTER TABLE `country` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -664,7 +725,7 @@ CREATE TABLE `courses_catalog` (
   `updated` datetime NOT NULL,
   PRIMARY KEY (`course_id`),
   UNIQUE KEY `course_code` (`course_code`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -673,8 +734,38 @@ CREATE TABLE `courses_catalog` (
 
 LOCK TABLES `courses_catalog` WRITE;
 /*!40000 ALTER TABLE `courses_catalog` DISABLE KEYS */;
-INSERT INTO `courses_catalog` VALUES (1,8,'RH124','Redhat System Administration I','\r\n    Understand and use essential tools for handling files, directories, command-line environments, and documentation\r\n    Operate running systems, including booting into different run levels, identifying processes, starting and stopping virtual machines, and controlling services\r\n    Configure local storage using partitions and logical volumes\r\n    Create and configure file systems and file system attributes, such as permissions, encryption, access control lists, and network file systems\r\n    Deploy, configure, and maintain systems, including software installation, update, and core services\r\n    Manage users and groups, including use of a centralized directory for authentication\r\n    Manage security, including basic firewall and SELinux configuration\r\n','\r\n    Understand and use essential tools for handling files, directories, command-line environments, and documentation\r\n    Operate running systems, including booting into different run levels, identifying processes, starting and stopping virtual machines, and controlling services\r\n    Configure local storage using partitions and logical volumes\r\n    Create and configure file systems and file system attributes, such as permissions, encryption, access control lists, and network file systems\r\n    Deploy, configure, and maintain systems, including software installation, update, and core services\r\n    Manage users and groups, including use of a centralized directory for authentication\r\n    Manage security, including basic firewall and SELinux configuration\r\n','',1,NULL,NULL,NULL,0,NULL,NULL,1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(2,8,'RH134','Redhat System Administration II','\r\n    Understand and use essential tools for handling files, directories, command-line environments, and documentation\r\n    Operate running systems, including booting into different run levels, identifying processes, starting and stopping virtual machines, and controlling services\r\n    Configure local storage using partitions and logical volumes\r\n    Create and configure file systems and file system attributes, such as permissions, encryption, access control lists, and network file systems\r\n    Deploy, configure, and maintain systems, including software installation, update, and core services\r\n    Manage users and groups, including use of a centralized directory for authentication\r\n    Manage security, including basic firewall and SELinux configuration\r\n','\r\n    Understand and use essential tools for handling files, directories, command-line environments, and documentation\r\n    Operate running systems, including booting into different run levels, identifying processes, starting and stopping virtual machines, and controlling services\r\n    Configure local storage using partitions and logical volumes\r\n    Create and configure file systems and file system attributes, such as permissions, encryption, access control lists, and network file systems\r\n    Deploy, configure, and maintain systems, including software installation, update, and core services\r\n    Manage users and groups, including use of a centralized directory for authentication\r\n    Manage security, including basic firewall and SELinux configuration\r\n','',1,NULL,NULL,NULL,0,NULL,NULL,1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(3,0,'code67','Test course','Test course','','',2,NULL,NULL,NULL,0,NULL,'',1,'2016-06-27 18:43:56','2016-06-27 18:43:56'),(4,8,'certi123','Test course','','','',0,NULL,NULL,NULL,0,NULL,'',1,'2016-06-27 18:57:04','2016-06-27 18:57:04'),(6,11,'it123','test IT course','','','',0,NULL,NULL,NULL,0,NULL,'',1,'2016-06-28 00:49:43','2016-06-28 00:49:43'),(7,10,'it1234','test IT courses','','','',1,NULL,NULL,NULL,0,NULL,'',1,'2016-06-28 00:50:26','2016-06-28 00:50:26');
+INSERT INTO `courses_catalog` VALUES (1,8,'RH124','Redhat System Administration I','\r\n    Understand and use essential tools for handling files, directories, command-line environments, and documentation\r\n    Operate running systems, including booting into different run levels, identifying processes, starting and stopping virtual machines, and controlling services\r\n    Configure local storage using partitions and logical volumes\r\n    Create and configure file systems and file system attributes, such as permissions, encryption, access control lists, and network file systems\r\n    Deploy, configure, and maintain systems, including software installation, update, and core services\r\n    Manage users and groups, including use of a centralized directory for authentication\r\n    Manage security, including basic firewall and SELinux configuration\r\n','\r\n    Understand and use essential tools for handling files, directories, command-line environments, and documentation\r\n    Operate running systems, including booting into different run levels, identifying processes, starting and stopping virtual machines, and controlling services\r\n    Configure local storage using partitions and logical volumes\r\n    Create and configure file systems and file system attributes, such as permissions, encryption, access control lists, and network file systems\r\n    Deploy, configure, and maintain systems, including software installation, update, and core services\r\n    Manage users and groups, including use of a centralized directory for authentication\r\n    Manage security, including basic firewall and SELinux configuration\r\n','',1,NULL,1000.00,NULL,0,NULL,NULL,1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(2,8,'RH134','Redhat System Administration II','\r\n    Understand and use essential tools for handling files, directories, command-line environments, and documentation\r\n    Operate running systems, including booting into different run levels, identifying processes, starting and stopping virtual machines, and controlling services\r\n    Configure local storage using partitions and logical volumes\r\n    Create and configure file systems and file system attributes, such as permissions, encryption, access control lists, and network file systems\r\n    Deploy, configure, and maintain systems, including software installation, update, and core services\r\n    Manage users and groups, including use of a centralized directory for authentication\r\n    Manage security, including basic firewall and SELinux configuration\r\n','\r\n    Understand and use essential tools for handling files, directories, command-line environments, and documentation\r\n    Operate running systems, including booting into different run levels, identifying processes, starting and stopping virtual machines, and controlling services\r\n    Configure local storage using partitions and logical volumes\r\n    Create and configure file systems and file system attributes, such as permissions, encryption, access control lists, and network file systems\r\n    Deploy, configure, and maintain systems, including software installation, update, and core services\r\n    Manage users and groups, including use of a centralized directory for authentication\r\n    Manage security, including basic firewall and SELinux configuration\r\n','',1,NULL,NULL,NULL,0,NULL,NULL,1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(3,8,'code67','Test course','Test course','','',2,NULL,NULL,NULL,0,NULL,'',1,'2016-06-27 18:43:56','2016-06-27 18:43:56'),(4,8,'certi123','Test course','','','',0,NULL,NULL,NULL,0,NULL,'',1,'2016-06-27 18:57:04','2016-06-27 18:57:04'),(6,11,'it123','test IT course','','','',0,NULL,NULL,NULL,0,NULL,'',1,'2016-06-28 00:49:43','2016-06-28 00:49:43'),(7,10,'it1234','test IT courses','','','',1,NULL,2000.00,NULL,0,NULL,'',1,'2016-06-28 00:50:26','2016-06-28 00:50:26'),(11,11,'code1234','course test1','course test1','course test1','1',1,'1`',1111.00,1,1,'2021-07-06 16:43:36','course test1',1,'2021-07-02 10:27:55','0000-00-00 00:00:00'),(12,15,'Web-Redhat','Webinar on Redhat administration','Webinar on Redhat administration','Webinar on Redhat administration','10',1,'hours',15000.00,1,1,'2021-07-06 16:43:27','NA',1,'2021-07-02 10:39:57','2021-07-06 06:57:07'),(13,14,'code12345','course test15','course test15','course test15','1',1,NULL,2900.00,1,1,'2021-07-06 16:43:02','course test15',1,'2021-07-06 13:59:43','2021-07-06 14:00:17');
 /*!40000 ALTER TABLE `courses_catalog` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `currency`
+--
+
+DROP TABLE IF EXISTS `currency`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `currency` (
+  `currency_id` int NOT NULL AUTO_INCREMENT,
+  `currency_name` varchar(64) NOT NULL,
+  `currency_symbol` varchar(11) NOT NULL,
+  `currency_short` varchar(11) NOT NULL,
+  `country_id` int NOT NULL,
+  `conversion` decimal(9,2) NOT NULL,
+  `active` int NOT NULL,
+  `created` int NOT NULL,
+  PRIMARY KEY (`currency_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `currency`
+--
+
+LOCK TABLES `currency` WRITE;
+/*!40000 ALTER TABLE `currency` DISABLE KEYS */;
+INSERT INTO `currency` VALUES (1,'INR','Rs','Rs',1,0.00,1,0);
+/*!40000 ALTER TABLE `currency` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1155,7 +1246,7 @@ CREATE TABLE `profiles` (
   `profile_description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   `status` int NOT NULL DEFAULT '1' COMMENT '1-ACTIVE; 0-INACTIVE',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=34 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1164,7 +1255,7 @@ CREATE TABLE `profiles` (
 
 LOCK TABLES `profiles` WRITE;
 /*!40000 ALTER TABLE `profiles` DISABLE KEYS */;
-INSERT INTO `profiles` VALUES (29,100,NULL,NULL,NULL,NULL,'2021-06-01 14:21:32','2021-06-08 14:47:38','Male','1998-02-01','Piano','New Delhi','123456','[{\"subject\":26,\"from_level\":\"2\",\"to_level\":\"3\"},{\"subject\":27,\"from_level\":\"2\",\"to_level\":\"3\"}]','[{\"institution\":\"Mahatma college of Engineering, New Delhi\",\"deg_type\":\"3\",\"deg_name\":\"ECE\",\"startdate\":\"2015-06-01\",\"enddate\":\"2019-06-01\",\"association\":\"1\",\"speciality\":\"Electronics\",\"score\":\"76\"}]','[{\"organisation\":\"SoftDesk Electricals\",\"designation\":\"Electrical Engineeer\",\"e_startdate\":\"2019-01-01\",\"e_enddate\":\"2020-12-01\",\"association\":\"1\",\"job_description\":\"Electrical Engineeer at softdesk Electricals\"}]','[{\"i_charge\":\"Monthly\",\"min_fee\":\"300\",\"max_fee\":\"350\",\"fee_details\":\"does not vary\",\"tot_exp\":\"2\",\"online_exp\":\"1\",\"travel\":\"No\",\"travel_kms\":null,\"avail_online_teach\":\"Yes\",\"digital_pen\":\"Yes\",\"help_homework_assig\":\"Yes\",\"currently_emp\":\"Yes\",\"oppor_interest\":\"full_time\"}]','[{\"profile_des\":\"I teach one to one and also in group. My way of teaching is very friendly and syllabus related. I don\'t force the kids to do lessons if they don\'t want to. The classes also works as per the child\'s moods. (Younger kids) I teach both elders and younger kids. Students below 5yrs old are taught more.\",\"one_acc\":\"yes\"}]',1),(30,101,'Sayooj','Sayooj Company','Math Reasoning Teacher','Name','2021-06-01 15:09:17','2021-06-01 15:11:19','Female','1990-03-17','Math Reasoning','Mangalore, India','123456','[{\"subject\":28,\"from_level\":\"2\",\"to_level\":\"3\"},{\"subject\":29,\"from_level\":\"2\",\"to_level\":\"3\"},{\"subject\":30,\"from_level\":\"2\",\"to_level\":\"3\"}]','[{\"institution\":\"Nehru College of Engineering\",\"deg_type\":\"5\",\"deg_name\":\"B.Tech\",\"startdate\":\"2016-05-01\",\"enddate\":\"2018-03-06\",\"association\":\"3\",\"speciality\":\"Math Reasoning\",\"score\":\"88\"}]','[{\"organisation\":\"St.Thomas\",\"designation\":\"Math and aptitude tutor\",\"e_startdate\":\"2018-03-12\",\"e_enddate\":\"2020-06-22\",\"association\":\"1\",\"job_description\":\"My Job is teaching Math and aptitude for students\"}]','[{\"i_charge\":\"Weekly\",\"min_fee\":\"400\",\"max_fee\":\"500\",\"fee_details\":\"does not vary\",\"tot_exp\":\"2\",\"online_exp\":\"1\",\"travel\":\"yes\",\"travel_kms\":\"12\",\"avail_online_teach\":\"Yes\",\"digital_pen\":\"Yes\",\"help_homework_assig\":\"Yes\",\"currently_emp\":\"No\",\"oppor_interest\":\"full_time\"}]','[{\"profile_des\":\"I am following the type of teaching style which is mostly adaptable in real life and will help you to easily understand. I am also focusing on makeing students prepare to compete in many comparative exams so that it can be very useful for them.\",\"one_acc\":\"yes\"}]',1),(31,102,NULL,NULL,NULL,NULL,'2021-06-01 15:24:48','2021-06-01 15:25:51','Female','1997-02-19','Chemistry and physics','The Nilgiris,India','123456','[{\"subject\":2,\"from_level\":\"2\",\"to_level\":\"3\"},{\"subject\":1,\"from_level\":\"3\",\"to_level\":\"3\"},{\"subject\":3,\"from_level\":\"2\",\"to_level\":\"3\"}]','[{\"institution\":\"Mahatma college of Engineering, New Delhi\",\"deg_type\":\"6\",\"deg_name\":\"B.Tech\",\"startdate\":\"2018-01-03\",\"enddate\":\"2021-05-31\",\"association\":\"1\",\"speciality\":\"Physics\",\"score\":\"88\"}]','[{\"organisation\":\"VLBS school\",\"designation\":\"Physics Tutor\",\"e_startdate\":\"2018-06-30\",\"e_enddate\":\"2021-02-01\",\"association\":\"2\",\"job_description\":\"Working as a Physics Tutor for VLBS school\"}]','[{\"i_charge\":\"Monthly\",\"min_fee\":\"300\",\"max_fee\":\"350\",\"fee_details\":\"Does not vary\",\"tot_exp\":\"2\",\"online_exp\":\"1\",\"travel\":\"yes\",\"travel_kms\":\"3\",\"avail_online_teach\":\"Yes\",\"digital_pen\":\"Yes\",\"help_homework_assig\":\"Yes\",\"currently_emp\":\"No\",\"oppor_interest\":\"part_time\"}]','[{\"profile_des\":\"I have been solving doubts of students since two years related to chemistry, physics, and maths. I had practised all type of questions from basic to jee advance level. I love to interact with students and explain the things more logical and fun way so that they withhold the concept for a long time.\",\"one_acc\":\"yes\"}]',1),(32,110,NULL,NULL,NULL,NULL,'2021-06-02 19:40:27','2021-06-02 19:40:57','Male','1982-02-21','AWS','Chennai','600017','[{\"subject\":31,\"from_level\":\"1\",\"to_level\":\"3\"}]','[{\"institution\":\"ME\",\"deg_type\":\"6\",\"deg_name\":\"CS\",\"startdate\":\"0982-02-21\",\"enddate\":\"1987-11-11\",\"association\":\"1\",\"speciality\":null,\"score\":null}]','[{\"organisation\":\"digitalq\",\"designation\":\"Govt. Official\",\"e_startdate\":\"1982-02-22\",\"e_enddate\":\"1982-02-22\",\"association\":\"1\",\"job_description\":\"test\"}]','[{\"i_charge\":\"Weekly\",\"min_fee\":\"400\",\"max_fee\":\"500\",\"fee_details\":\"does not vary\",\"tot_exp\":\"2\",\"online_exp\":\"1\",\"travel\":\"yes\",\"travel_kms\":\"12\",\"avail_online_teach\":\"Yes\",\"digital_pen\":\"Yes\",\"help_homework_assig\":\"Yes\",\"currently_emp\":\"No\",\"oppor_interest\":\"full_time\"}]','[{\"profile_des\":\"test agr\",\"one_acc\":\"yes\"}]',1),(33,114,NULL,NULL,NULL,NULL,'2021-06-10 10:00:26','2021-06-10 10:00:26',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1);
+INSERT INTO `profiles` VALUES (29,100,NULL,NULL,NULL,NULL,'2021-06-01 14:21:32','2021-06-08 14:47:38','Male','1998-02-01','Piano','New Delhi','123456','[{\"subject\":26,\"from_level\":\"2\",\"to_level\":\"3\"},{\"subject\":27,\"from_level\":\"2\",\"to_level\":\"3\"}]','[{\"institution\":\"Mahatma college of Engineering, New Delhi\",\"deg_type\":\"3\",\"deg_name\":\"ECE\",\"startdate\":\"2015-06-01\",\"enddate\":\"2019-06-01\",\"association\":\"1\",\"speciality\":\"Electronics\",\"score\":\"76\"}]','[{\"organisation\":\"SoftDesk Electricals\",\"designation\":\"Electrical Engineeer\",\"e_startdate\":\"2019-01-01\",\"e_enddate\":\"2020-12-01\",\"association\":\"1\",\"job_description\":\"Electrical Engineeer at softdesk Electricals\"}]','[{\"i_charge\":\"Monthly\",\"min_fee\":\"300\",\"max_fee\":\"350\",\"fee_details\":\"does not vary\",\"tot_exp\":\"2\",\"online_exp\":\"1\",\"travel\":\"No\",\"travel_kms\":null,\"avail_online_teach\":\"Yes\",\"digital_pen\":\"Yes\",\"help_homework_assig\":\"Yes\",\"currently_emp\":\"Yes\",\"oppor_interest\":\"full_time\"}]','[{\"profile_des\":\"I teach one to one and also in group. My way of teaching is very friendly and syllabus related. I don\'t force the kids to do lessons if they don\'t want to. The classes also works as per the child\'s moods. (Younger kids) I teach both elders and younger kids. Students below 5yrs old are taught more.\",\"one_acc\":\"yes\"}]',1),(30,101,'Sayooj','Sayooj Company','Math Reasoning Teacher','Name','2021-06-01 15:09:17','2021-06-01 15:11:19','Female','1990-03-17','Math Reasoning','Mangalore, India','123456','[{\"subject\":28,\"from_level\":\"2\",\"to_level\":\"3\"},{\"subject\":29,\"from_level\":\"2\",\"to_level\":\"3\"},{\"subject\":30,\"from_level\":\"2\",\"to_level\":\"3\"}]','[{\"institution\":\"Nehru College of Engineering\",\"deg_type\":\"5\",\"deg_name\":\"B.Tech\",\"startdate\":\"2016-05-01\",\"enddate\":\"2018-03-06\",\"association\":\"3\",\"speciality\":\"Math Reasoning\",\"score\":\"88\"}]','[{\"organisation\":\"St.Thomas\",\"designation\":\"Math and aptitude tutor\",\"e_startdate\":\"2018-03-12\",\"e_enddate\":\"2020-06-22\",\"association\":\"1\",\"job_description\":\"My Job is teaching Math and aptitude for students\"}]','[{\"i_charge\":\"Weekly\",\"min_fee\":\"400\",\"max_fee\":\"500\",\"fee_details\":\"does not vary\",\"tot_exp\":\"2\",\"online_exp\":\"1\",\"travel\":\"yes\",\"travel_kms\":\"12\",\"avail_online_teach\":\"Yes\",\"digital_pen\":\"Yes\",\"help_homework_assig\":\"Yes\",\"currently_emp\":\"No\",\"oppor_interest\":\"full_time\"}]','[{\"profile_des\":\"I am following the type of teaching style which is mostly adaptable in real life and will help you to easily understand. I am also focusing on makeing students prepare to compete in many comparative exams so that it can be very useful for them.\",\"one_acc\":\"yes\"}]',1),(31,102,NULL,NULL,NULL,NULL,'2021-06-01 15:24:48','2021-06-01 15:25:51','Female','1997-02-19','Chemistry and physics','The Nilgiris,India','123456','[{\"subject\":2,\"from_level\":\"2\",\"to_level\":\"3\"},{\"subject\":1,\"from_level\":\"3\",\"to_level\":\"3\"},{\"subject\":3,\"from_level\":\"2\",\"to_level\":\"3\"}]','[{\"institution\":\"Mahatma college of Engineering, New Delhi\",\"deg_type\":\"6\",\"deg_name\":\"B.Tech\",\"startdate\":\"2018-01-03\",\"enddate\":\"2021-05-31\",\"association\":\"1\",\"speciality\":\"Physics\",\"score\":\"88\"}]','[{\"organisation\":\"VLBS school\",\"designation\":\"Physics Tutor\",\"e_startdate\":\"2018-06-30\",\"e_enddate\":\"2021-02-01\",\"association\":\"2\",\"job_description\":\"Working as a Physics Tutor for VLBS school\"}]','[{\"i_charge\":\"Monthly\",\"min_fee\":\"300\",\"max_fee\":\"350\",\"fee_details\":\"Does not vary\",\"tot_exp\":\"2\",\"online_exp\":\"1\",\"travel\":\"yes\",\"travel_kms\":\"3\",\"avail_online_teach\":\"Yes\",\"digital_pen\":\"Yes\",\"help_homework_assig\":\"Yes\",\"currently_emp\":\"No\",\"oppor_interest\":\"part_time\"}]','[{\"profile_des\":\"I have been solving doubts of students since two years related to chemistry, physics, and maths. I had practised all type of questions from basic to jee advance level. I love to interact with students and explain the things more logical and fun way so that they withhold the concept for a long time.\",\"one_acc\":\"yes\"}]',1),(32,110,NULL,NULL,NULL,NULL,'2021-06-02 19:40:27','2021-06-02 19:40:57','Male','1982-02-21','AWS','Chennai','600017','[{\"subject\":31,\"from_level\":\"1\",\"to_level\":\"3\"}]','[{\"institution\":\"ME\",\"deg_type\":\"6\",\"deg_name\":\"CS\",\"startdate\":\"0982-02-21\",\"enddate\":\"1987-11-11\",\"association\":\"1\",\"speciality\":null,\"score\":null}]','[{\"organisation\":\"digitalq\",\"designation\":\"Govt. Official\",\"e_startdate\":\"1982-02-22\",\"e_enddate\":\"1982-02-22\",\"association\":\"1\",\"job_description\":\"test\"}]','[{\"i_charge\":\"Weekly\",\"min_fee\":\"400\",\"max_fee\":\"500\",\"fee_details\":\"does not vary\",\"tot_exp\":\"2\",\"online_exp\":\"1\",\"travel\":\"yes\",\"travel_kms\":\"12\",\"avail_online_teach\":\"Yes\",\"digital_pen\":\"Yes\",\"help_homework_assig\":\"Yes\",\"currently_emp\":\"No\",\"oppor_interest\":\"full_time\"}]','[{\"profile_des\":\"test agr\",\"one_acc\":\"yes\"}]',1),(33,114,NULL,NULL,NULL,NULL,'2021-06-10 10:00:26','2021-06-10 10:00:26',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,1),(34,121,NULL,NULL,NULL,NULL,'2021-07-04 19:46:51','2021-07-04 19:47:15','Male','1978-02-12','aws','chennai','600001',NULL,NULL,NULL,NULL,NULL,1);
 /*!40000 ALTER TABLE `profiles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1278,7 +1369,6 @@ CREATE TABLE `staff` (
   `created` datetime NOT NULL,
   `updated` datetime NOT NULL,
   PRIMARY KEY (`staff_id`),
-  UNIQUE KEY `branch_id` (`branch_id`),
   KEY `dept_id` (`dept_id`),
   KEY `issuperuser` (`isadmin`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -1290,7 +1380,7 @@ CREATE TABLE `staff` (
 
 LOCK TABLES `staff` WRITE;
 /*!40000 ALTER TABLE `staff` DISABLE KEYS */;
-INSERT INTO `staff` VALUES (1,1,3,1,3,1,7,'Web','Admin','000','000','9980487456','--\r\nWebadmin',NULL,NULL,NULL,0,0,0,'2016-05-24 19:07:40','2021-06-22 01:22:39');
+INSERT INTO `staff` VALUES (1,1,3,1,3,1,7,'Web','Admin','000','000','9980487456','--\r\nWebadmin',NULL,NULL,NULL,0,0,0,'2016-05-24 19:07:40','2021-06-22 01:22:39'),(2,1,3,2,3,1,7,'Vivek','Staff','000','000','9980487456','--\r\nstaff',NULL,NULL,NULL,0,0,0,'2016-05-24 19:07:40','2021-06-22 01:22:39'),(8,0,0,1,0,0,0,'test','staff','111-2222-9999','','8877665123','',NULL,NULL,NULL,0,1,1,'2021-07-05 16:23:14','2021-07-05 16:23:14'),(9,2,1,1,0,8,14,'test 1','staff1','111-2222-9999','','8877665123','teststaff1',NULL,NULL,NULL,1,1,1,'2021-07-06 05:34:31','2021-07-06 05:34:31');
 /*!40000 ALTER TABLE `staff` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1373,7 +1463,7 @@ CREATE TABLE `staff_details` (
 
 LOCK TABLES `staff_details` WRITE;
 /*!40000 ALTER TABLE `staff_details` DISABLE KEYS */;
-INSERT INTO `staff_details` VALUES (1,'manju','shri','','','1234567891','111','1234567890',0,'','1988-03-02','mangalore','single',0,'','2016-06-24','BE','','',0,0,'no',1,0,1,0,1,0,3,3,'none','Legal','',''),(2,'geetha','s','','','','','1234567890',0,'','1988-03-02','mangalore','single',0,'','2016-06-23','B com','','',0,0,'yes',0,0,1,0,1,0,7,7,'mine','Legal','','');
+INSERT INTO `staff_details` VALUES (1,'manju','shri','','','1234567891','111','1234567890',0,'','1988-03-02','mangalore','single',0,'','2016-06-24','BE','','',0,0,'no',1,0,1,0,1,0,3,3,'none','Legal','',''),(2,'geetha','s','','','','','1234567890',0,'','1988-03-02','mangalore','single',0,'','2016-06-23','B com','','',0,0,'yes',0,0,1,0,1,0,7,7,'mine','Legal','',''),(9,'test 1','staff1','','','111-2222-9999','','8877665123',0,NULL,'0000-00-00','','',0,'','0000-00-00','','','',0,0,'Yes',0,1,1,1,1,0,0,0,'none','Letter',NULL,NULL);
 /*!40000 ALTER TABLE `staff_details` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1427,7 +1517,7 @@ CREATE TABLE `status` (
 
 LOCK TABLES `status` WRITE;
 /*!40000 ALTER TABLE `status` DISABLE KEYS */;
-INSERT INTO `status` VALUES (1,1,'New',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(2,1,'Pending',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(3,1,'Overdue',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(4,1,'Closed',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(5,4,'Enrolled',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(6,3,'Qualified',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(7,6,'Ongoing',1,'2016-06-19 23:15:22','2016-06-19 23:15:22'),(8,6,'Upcoming',1,'2016-06-19 23:15:22','2016-06-19 23:15:22'),(9,6,'Completed',1,'2016-06-19 23:15:22','2016-06-19 23:15:22'),(10,6,'Cancelled',1,'2016-06-19 23:15:22','2016-06-19 23:15:22'),(11,6,'Postponed',1,'2016-06-19 23:15:22','2016-06-19 23:15:22'),(12,3,'Processed',1,'2016-06-19 23:16:55','2016-06-19 23:16:55'),(13,3,'Disqualified',1,'2016-06-19 23:16:55','2016-06-19 23:16:55'),(14,5,'new',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(15,5,'old',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(16,7,'new',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(17,5,'Head-Office',1,'2021-04-21 23:19:39','2021-04-21 23:19:39'),(18,5,'Branch-Office',1,'2021-04-21 23:19:39','2021-04-21 23:19:39'),(19,5,'Franchise',1,'2021-04-21 23:21:02','2021-04-21 23:21:02'),(20,5,'3rd-Party',1,'2021-04-21 23:21:02','2021-04-21 23:21:02');
+INSERT INTO `status` VALUES (1,1,'New',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(2,1,'Pending',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(3,1,'Overdue',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(4,1,'Closed',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(5,4,'Enrolled',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(6,3,'Qualified',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(7,6,'Ongoing',1,'2016-06-19 23:15:22','2016-06-19 23:15:22'),(8,6,'Upcoming',1,'2016-06-19 23:15:22','2016-06-19 23:15:22'),(9,6,'Completed',1,'2016-06-19 23:15:22','2016-06-19 23:15:22'),(10,6,'Cancelled',1,'2016-06-19 23:15:22','2016-06-19 23:15:22'),(11,6,'Postponed',1,'2016-06-19 23:15:22','2016-06-19 23:15:22'),(12,3,'Processed',1,'2016-06-19 23:16:55','2016-06-19 23:16:55'),(13,3,'Disqualified',1,'2016-06-19 23:16:55','2016-06-19 23:16:55'),(14,5,'new',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(15,5,'old',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(16,7,'new',1,'0000-00-00 00:00:00','0000-00-00 00:00:00'),(17,5,'Head-Office',1,'2021-04-21 23:19:39','2021-04-21 23:19:39'),(18,5,'Branch-Office',1,'2021-04-21 23:19:39','2021-04-21 23:19:39'),(19,5,'Franchise',1,'2021-04-21 23:21:02','2021-04-21 23:21:02'),(20,5,'3rd-Party',1,'2021-04-21 23:21:02','2021-04-21 23:21:02');
 /*!40000 ALTER TABLE `status` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1506,28 +1596,25 @@ DROP TABLE IF EXISTS `students`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `students` (
   `student_id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL COMMENT 'from users table',
+  `name` varchar(500) NOT NULL,
   `course_id` int NOT NULL,
-  `first_name` varchar(64) NOT NULL,
-  `last_name` varchar(64) NOT NULL,
-  `phone` varchar(64) NOT NULL,
-  `email` varchar(64) NOT NULL,
-  `address` text NOT NULL,
-  `city` varchar(64) NOT NULL,
-  `zipcode` varchar(32) NOT NULL,
   `fees_payable` float(10,2) NOT NULL,
   `fees_paid` float(10,2) NOT NULL,
-  `active` tinyint NOT NULL,
+  `active` tinyint NOT NULL DEFAULT '0',
   `added_by` int NOT NULL,
-  `course_completed` int NOT NULL,
-  `completion_date` timestamp NOT NULL,
-  `is_deleted` int DEFAULT NULL,
+  `course_completed` int NOT NULL DEFAULT '0',
+  `completion_date` timestamp NULL DEFAULT NULL,
+  `student_did` varchar(200) NOT NULL,
+  `certificate_id` varchar(200) NOT NULL,
+  `student_enrollment_id` varchar(200) NOT NULL,
+  `is_deleted` enum('Yes','No') DEFAULT 'No',
   `created` timestamp NOT NULL,
   `updated` timestamp NOT NULL,
-  `deleted_at` timestamp NOT NULL,
+  `deleted_at` timestamp NULL DEFAULT NULL,
   `batch_id` int DEFAULT NULL,
-  PRIMARY KEY (`student_id`),
-  UNIQUE KEY `course_id` (`course_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`student_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1536,6 +1623,7 @@ CREATE TABLE `students` (
 
 LOCK TABLES `students` WRITE;
 /*!40000 ALTER TABLE `students` DISABLE KEYS */;
+INSERT INTO `students` VALUES (1,105,'Nelson',2,10000.00,5000.00,1,1,0,'0000-00-00 00:00:00','','','','Yes','2021-06-29 17:42:20','2021-07-06 08:31:54','2021-07-05 22:57:31',8),(2,112,'Vivek',2,12000.00,3000.00,1,1,0,NULL,'','','','Yes','2021-06-29 17:43:49','0000-00-00 00:00:00','2021-07-05 22:57:56',8),(3,118,'Asmitha',2,13000.00,2000.00,1,1,1,'2021-07-30 00:00:00','','','','No','2021-06-29 17:44:35','2021-06-29 17:45:48',NULL,8),(4,109,'Wasim Akram Syed',1,2.00,35000.00,1,1,1,'2021-06-25 00:00:00','','','','No','2021-06-30 09:53:47','2021-06-30 10:16:55',NULL,1),(5,108,'ag raj',4,1.00,1.00,1,1,0,NULL,'','','','No','2021-06-30 10:27:51','0000-00-00 00:00:00',NULL,10),(6,108,'ag raj',7,1.00,1210.00,1,1,1,'2021-06-25 00:00:00','','','','No','2021-06-30 11:02:16','2021-06-30 11:03:54',NULL,11),(7,112,'Vivek',1,3000.00,5000.00,1,1,0,NULL,'','','','Yes','2021-06-30 11:23:43','0000-00-00 00:00:00','2021-07-05 22:58:08',12),(8,105,'Nelson',4,1.00,45000.00,1,1,0,NULL,'','','','No','2021-06-30 12:04:28','0000-00-00 00:00:00',NULL,4),(9,112,'Vivek',2,1000.00,500.00,1,1,1,'2021-06-30 00:00:00','','','','Yes','2021-06-30 20:51:29','2021-06-30 20:52:29','2021-07-03 11:36:58',13),(10,119,'John',2,1.00,1500.00,1,1,1,'2021-07-04 00:00:00','stud did','certi id','','Yes','2021-07-03 11:45:14','2021-07-06 12:22:43','2021-07-05 22:58:35',13),(13,113,'Somashree',1,1.00,1111.00,1,1,0,NULL,'','','','No','2021-07-03 13:57:41','0000-00-00 00:00:00',NULL,16),(14,115,'Srivdhya Vivek',1,1.00,1111.00,1,1,0,NULL,'','','','No','2021-07-03 14:08:53','0000-00-00 00:00:00',NULL,16),(16,111,'john',1,1.00,1111.00,1,1,0,NULL,'','','','No','2021-07-03 14:20:34','0000-00-00 00:00:00',NULL,16),(17,108,'ag raj',1,2.00,5000.00,1,1,0,NULL,'','','','No','2021-07-06 09:53:16','0000-00-00 00:00:00',NULL,12),(18,108,'ag raj',2,1.00,1500.00,1,1,0,NULL,'','','','No','2021-07-06 10:06:08','0000-00-00 00:00:00',NULL,13),(19,119,'John',1,1.00,5000.00,1,1,1,'2021-07-07 00:00:00','stud did1','certi id1','/RH124/16','No','2021-07-06 13:17:22','2021-07-06 13:18:08',NULL,12),(20,119,'John',1,1.00,1111.00,1,1,0,NULL,'','','Batch014/RH124/17','No','2021-07-06 14:04:59','0000-00-00 00:00:00',NULL,16);
 /*!40000 ALTER TABLE `students` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1589,6 +1677,62 @@ LOCK TABLES `subjects` WRITE;
 /*!40000 ALTER TABLE `subjects` DISABLE KEYS */;
 INSERT INTO `subjects` VALUES (1,'Physics',NULL,NULL),(2,'Chemistry',NULL,NULL),(3,'Thermodynamics',NULL,NULL),(4,'Maths',NULL,NULL),(5,'Zoology',NULL,NULL),(6,'Electronics','2021-05-05 03:25:44','2021-05-05 03:25:44'),(7,'Computer Science','2021-05-05 03:27:56','2021-05-05 03:27:56'),(8,'computer network','2021-05-05 03:29:47','2021-05-05 03:29:47'),(9,'Java','2021-05-05 03:30:29','2021-05-05 03:30:29'),(12,'Geospace','2021-05-05 03:47:08','2021-05-05 03:47:08'),(13,'Mysql and PHP','2021-05-05 05:42:59','2021-05-05 05:42:59'),(14,'oracle cloud','2021-05-05 23:38:28','2021-05-05 23:38:28'),(15,'sample subject','2021-05-06 06:09:22','2021-05-06 06:09:22'),(24,'sub','2021-05-19 05:50:44','2021-05-19 05:50:44'),(25,'Thermodyna',NULL,NULL),(26,'Piano','2021-06-01 14:24:20','2021-06-01 14:24:20'),(27,'Piano keyboard','2021-06-01 14:24:51','2021-06-01 14:24:51'),(28,'English','2021-06-01 15:11:57','2021-06-01 15:11:57'),(29,'Math Reasoning','2021-06-01 15:12:14','2021-06-01 15:12:14'),(30,'Finance and management Accounting','2021-06-01 15:12:44','2021-06-01 15:12:44'),(31,'aws','2021-06-02 19:41:22','2021-06-02 19:41:22');
 /*!40000 ALTER TABLE `subjects` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_payments`
+--
+
+DROP TABLE IF EXISTS `tbl_payments`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tbl_payments` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_id` int NOT NULL,
+  `student_id` int NOT NULL,
+  `course_id` int NOT NULL,
+  `date` datetime NOT NULL,
+  `amount_paid` float NOT NULL,
+  `note` text NOT NULL,
+  `created_at` datetime NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_payments`
+--
+
+LOCK TABLES `tbl_payments` WRITE;
+/*!40000 ALTER TABLE `tbl_payments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tbl_payments` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `tbl_templates`
+--
+
+DROP TABLE IF EXISTS `tbl_templates`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `tbl_templates` (
+  `template_id` int NOT NULL AUTO_INCREMENT,
+  `description` text NOT NULL,
+  `template_data` text NOT NULL,
+  `status` enum('Active','Inactive') NOT NULL DEFAULT 'Active',
+  `created_dts` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`template_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tbl_templates`
+--
+
+LOCK TABLES `tbl_templates` WRITE;
+/*!40000 ALTER TABLE `tbl_templates` DISABLE KEYS */;
+INSERT INTO `tbl_templates` VALUES (1,'Student Certificate','<!DOCTYPE>\r\n<html>\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\r\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\r\n<title>Certificates</title>\r\n<style>\r\n@font-face {\r\n    font-family: Arial;\r\n    src: url(certificate_files/arial.ttf);\r\n}\r\n\r\n@font-face {\r\n    font-family: certificate;\r\n    src: url(certificate_files/certificate.ttf);\r\n}\r\n@font-face {\r\n    font-family: Old English Text MT;\r\n    src: url(certificate_files/OTT.ttf);\r\n}	\r\n\r\n</style>\r\n</head>\r\n\r\n<body>\r\n<table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"border:10px solid #28829F; border-radius:10px;\">\r\n  <tr>\r\n    <td><table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"border:6px solid #ffffff;\">\r\n  <tr>\r\n    <td><table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" style=\"border:2px solid #28829F; \">\r\n  <tr>\r\n    <td><table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\" class=\"printimg\">\r\n      <tr>\r\n        <td align=\"center\" valign=\"middle\" style=\"padding:8px;\"><img src=\"$image_url/logo.jpg\" width=\"257\"></td>\r\n      </tr>\r\n      <tr>\r\n        <td align=\"center\" valign=\"middle\" style=\"font-family:Old English Text MT;\"><h1>$course Course Certification</h1></td>\r\n      </tr>\r\n      <tr>\r\n        <td align=\"center\" valign=\"middle\" style=\"\"  height=\"200\"><table width=\"80%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n          <tr>\r\n            <td align=\"center\" style=\"border-bottom:0px solid #333333; font-family:Arial; font-size:22px; color: #333333; padding-top:10px;\"><p>Be it known that the faculty of Talentegra  Technology Services hereby confirms that</p></td>\r\n          </tr>\r\n          <tr>\r\n            <td height=\"60\" align=\"center\" style=\"font-family: Old English Text MT; font-size:36px; color:#28829F; border-bottom:  1px dashed #28829F;\">$student_name</td>\r\n          </tr>\r\n          <tr>\r\n            <td align=\"center\" style=\"border-bottom:0px solid #333333; font-family:Arial; font-size:22px; color: #333333; padding-top:10px;\"><p>has successfully completed the $course  Certification Program, and the comprehensive examination required to receive  certification as an $course Course Completion Program.</p></td>\r\n          </tr>\r\n        </table></td>\r\n      </tr>\r\n      <tr>\r\n        <td align=\"center\" valign=\"middle\" style=\"height:90px;\">&nbsp;</td>\r\n      </tr>\r\n      <tr>\r\n        <td align=\"center\" valign=\"middle\"><table width=\"100%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n             <tr>\r\n               <td width=\"32%\" align=\"center\" valign=\"middle\" style=\"border-bottom:0px solid #333333; font-family:Arial; font-size:16px; color: #333333; padding-top:10px;\"><table width=\"80%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n                 <tbody>\r\n                   <tr>\r\n                     <th scope=\"col\" style=\"border-bottom:  1px dashed #000000;\">$completion_date</th>\r\n                   </tr>\r\n                   <tr>\r\n                     <td align=\"center\" style=\"font-family:Arial\">Date</td>\r\n                   </tr>\r\n                 </tbody>\r\n               </table></td>\r\n               <td width=\"43%\" align=\"center\" valign=\"middle\" style=\"border-bottom:0px solid #333333; font-family:Arial; font-size:16px; color: #333333; padding-top:10px;\"><img src=\"$image_url/medal.png\" width=\"112\" height=\"231\"></td>\r\n               <td width=\"25%\" align=\"center\" valign=\"middle\" style=\"border-bottom:0px solid #333333; font-family:Arial; font-size:16px; color: #333333; padding-top:10px;\"><table width=\"80%\" border=\"0\" cellspacing=\"0\" cellpadding=\"0\">\r\n                 <tbody>\r\n                   <tr>\r\n                     <th scope=\"col\" style=\"border-bottom:  1px dashed #000000;\">&nbsp;</th>\r\n                   </tr>\r\n                   <tr>\r\n                     <td align=\"center\" style=\"font-family:Arial;\">Head Training - Talentegra</td>\r\n                   </tr>\r\n                 </tbody>\r\n               </table></td>\r\n             </tr>\r\n             <tr>\r\n               <td align=\"center\" valign=\"middle\" style=\"border-bottom:0px solid #333333; font-family:Arial; font-size:16px; color: #333333; padding-top:10px;\">&nbsp;</td>\r\n               <td align=\"center\" valign=\"middle\" style=\"border-bottom:0px solid #333333; font-family:Arial; font-size:16px; color: #333333; padding-top:10px;\">&nbsp;</td>\r\n               <td align=\"center\" valign=\"middle\" style=\"border-bottom:0px solid #333333; font-family:Arial; font-size:16px; color: #333333; padding-top:10px;\">&nbsp;</td>\r\n             </tr>\r\n             </table></td>\r\n      </tr>\r\n      \r\n     \r\n    </table></td>\r\n  </tr>\r\n</table>\r\n</td>\r\n  </tr>\r\n</table>\r\n</td>\r\n  </tr>\r\n</table>\r\n</body>\r\n</html>','Active','2021-06-29 12:59:21');
+/*!40000 ALTER TABLE `tbl_templates` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1728,7 +1872,7 @@ CREATE TABLE `users` (
   `last_seen` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `users_email_unique` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=116 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1737,7 +1881,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (100,0,'Ashwin Joy','sangeetha@acrasolutions.com','2021-06-01 14:18:25',NULL,NULL,'',0,0,'Teacher','Individual Teacher','$2y$10$gHp8b3VMiH.M2B.U6aZPFe8oENA6/4yKgu6WIceyHvR49SgO2zPUK',NULL,'+91 9943106345',NULL,NULL,'yes',NULL,0,NULL,'2021-06-01 14:17:53','2021-06-08 14:48:14','2021-06-08 14:48:14'),(101,0,'Sayooj','sangeetha@acrainfotech.com','2021-06-01 15:08:49',NULL,NULL,'',0,0,'Teacher','Tutoring Company','$2y$10$dJRLPiMrbRJ7RPwoWvKRg.f.P7iTsYfq7I96hXz0e/c4eSCmbxKsG',NULL,'+91 9932567943',NULL,NULL,'yes',NULL,0,NULL,'2021-06-01 15:08:28','2021-06-01 19:07:32','2021-06-01 19:07:32'),(102,0,'Meena','meena57108@gmail.com','2021-06-01 15:24:21',NULL,NULL,'',0,0,'Teacher','Individual Teacher','$2y$10$/PeUuOq.XHtrurq2scKQ7.bNWlUo5PMk.tRIUq/cKQGMMJ5sOUgL6',NULL,'+919943654327',NULL,NULL,'yes',NULL,0,NULL,'2021-06-01 15:23:59','2021-06-01 16:38:35','2021-06-01 16:38:35'),(105,0,'Nelson','wasim@acrainfotech.com','2021-06-01 15:37:49',NULL,NULL,'',0,0,'Student/Parent','Student/Parent','$2y$10$oqLpzYAD7AnXU.VRx4vNkeCSKpQFhUrstpMG4zY0mqkgSnOK/2MYO',NULL,'9562195621',NULL,NULL,'yes',NULL,0,NULL,'2021-06-01 15:37:24','2021-06-08 13:25:54','2021-06-08 13:25:54'),(107,0,'Johnson','wasimakramsyed1989@gmail.com','2021-06-01 15:54:21',NULL,NULL,'',0,0,'Student/Parent','Student/Parent','$2y$10$3AQcVzcbChoLkbYc3T/iLeRzwygbaKkRJfrSuXSns/bDkFDHcvVW.',NULL,'9876598765',NULL,NULL,'yes',NULL,0,NULL,'2021-06-01 15:53:56','2021-06-01 21:14:05','2021-06-01 21:14:05'),(108,0,'ag raj','agrmax@gmail.com','2021-06-01 20:04:55',NULL,NULL,'',0,0,'Student/Parent','Student/Parent','$2y$10$Fr47aTuE2kAVe5QEwDVUHO1hLFlcBI7YH6VxxO6/pBr3uNBkV6scG',NULL,NULL,NULL,NULL,'yes',NULL,0,NULL,'2021-06-01 20:03:17','2021-06-02 15:09:24','2021-06-02 15:09:24'),(109,0,'Wasim Akram Syed','wasimdeep@gmail.com','2021-06-01 21:15:56',NULL,NULL,'',0,0,'Student/Parent','Student/Parent','$2y$10$h7RG1IYu07prwuOIlR9zPeUcn2XqTjLFmvRX6vKfKk3GqGkAzpjau',NULL,NULL,NULL,NULL,'yes',NULL,0,NULL,'2021-06-01 21:15:45','2021-06-08 14:46:34','2021-06-08 14:46:34'),(110,0,'AGR','agrmax@digitalq.co.in','2021-06-02 19:43:28',NULL,NULL,'',0,0,'Teacher','Individual Teacher','$2y$10$gFVoilyYt1fKQ2lfRd0pcOgemf0JU8U1lGFubRjKrmHz9fDU8/d9C',NULL,'1234567',NULL,NULL,'yes',NULL,0,NULL,'2021-06-02 15:10:14','2021-06-02 19:44:19','2021-06-02 19:44:19'),(111,0,'john','info@acrainfotech.com','2021-06-08 13:28:20','ff12345we','gg12345we','',0,0,'Student/Parent','Student/Parent','$2y$10$jSksiIm9g3ciYD27Ou1eHu.m/1fhcU3dmLcc988B5bxOyY/voMFKG',NULL,NULL,NULL,NULL,'yes',NULL,0,NULL,'2021-06-08 13:27:07','2021-06-08 14:35:45','2021-06-08 14:35:45'),(112,0,'Vivek','billing@talentegra.com','2021-06-09 21:41:07','ff12345we','gg12345we','',0,0,'Student/Parent','Student/Parent','$2y$10$Txl0VQuaf.bDWFSqrcWJEejtCxcsZwkvYYZBhIjNQJDWUj/X6iUMq',NULL,NULL,NULL,NULL,'yes',NULL,0,NULL,'2021-06-09 21:14:22','2021-06-09 22:56:19','2021-06-09 22:56:19'),(113,0,'Somashree','somashree@techarima.com','2021-06-10 07:48:14','ff12345we','gg12345we','',0,0,'Student/Parent','Student/Parent','$2y$10$9SC84BuKpVZxafEwLn009.wV.wg6DOmbHvUyqq2tmiYzdiNb7NGPq',NULL,NULL,NULL,NULL,'yes',NULL,0,NULL,'2021-06-10 07:46:56','2021-06-10 09:55:57','2021-06-10 09:55:57'),(114,0,'Somashree','somashree@talentegra.com','2021-06-10 09:59:53','ff12345we','gg12345we','',0,0,'Teacher','Individual Teacher','$2y$10$OyIh2RB3jQmaOk8CVOdFouqBvWyAK/Ha3m8u1orz5t.xCwJ7s.EsG',NULL,NULL,NULL,NULL,'yes',NULL,0,NULL,'2021-06-10 09:58:04','2021-06-10 12:48:14','2021-06-10 12:48:14'),(115,NULL,'Srivdhya Vivek','srividhyav@talentegra.com','2021-06-22 09:47:51','ff12345we','gg12345we',NULL,NULL,NULL,'Student/Parent','Student/Parent','$2y$10$vu5bDuXCPbPVTea3pSCrAOJY4hstfBkrjOFfMhiELPVuix3YDvQry',NULL,NULL,NULL,NULL,'yes',NULL,NULL,NULL,'2021-06-22 09:47:01','2021-06-22 09:50:10','2021-06-22 09:50:10');
+INSERT INTO `users` VALUES (100,0,'Ashwin Joy','sangeetha@acrasolutions.com','2021-06-01 14:18:25',NULL,NULL,'',0,0,'Teacher','Individual Teacher','$2y$10$gHp8b3VMiH.M2B.U6aZPFe8oENA6/4yKgu6WIceyHvR49SgO2zPUK',NULL,'+91 9943106345',NULL,NULL,'yes',NULL,0,NULL,'2021-06-01 14:17:53','2021-06-08 14:48:14','2021-06-08 14:48:14'),(101,0,'Sayooj','sangeetha@acrainfotech.com','2021-06-01 15:08:49',NULL,NULL,'',0,0,'Teacher','Tutoring Company','$2y$10$dJRLPiMrbRJ7RPwoWvKRg.f.P7iTsYfq7I96hXz0e/c4eSCmbxKsG',NULL,'+91 9932567943',NULL,NULL,'yes',NULL,0,NULL,'2021-06-01 15:08:28','2021-06-01 19:07:32','2021-06-01 19:07:32'),(102,0,'Meena','meena57108@gmail.com','2021-06-01 15:24:21',NULL,NULL,'',0,0,'Teacher','Individual Teacher','$2y$10$/PeUuOq.XHtrurq2scKQ7.bNWlUo5PMk.tRIUq/cKQGMMJ5sOUgL6',NULL,'+919943654327',NULL,NULL,'yes',NULL,0,NULL,'2021-06-01 15:23:59','2021-06-01 16:38:35','2021-06-01 16:38:35'),(105,0,'Nelson','wasim@acrainfotech.com','2021-06-01 15:37:49',NULL,NULL,'',0,0,'Student/Parent','Student/Parent','$2y$10$oqLpzYAD7AnXU.VRx4vNkeCSKpQFhUrstpMG4zY0mqkgSnOK/2MYO',NULL,'9562195621',NULL,NULL,'yes',NULL,0,NULL,'2021-06-01 15:37:24','2021-06-08 13:25:54','2021-06-08 13:25:54'),(107,0,'Johnson','wasimakramsyed1989@gmail.com','2021-06-01 15:54:21',NULL,NULL,'',0,0,'Student/Parent','Student/Parent','$2y$10$3AQcVzcbChoLkbYc3T/iLeRzwygbaKkRJfrSuXSns/bDkFDHcvVW.',NULL,'9876598765',NULL,NULL,'yes',NULL,0,NULL,'2021-06-01 15:53:56','2021-06-01 21:14:05','2021-06-01 21:14:05'),(108,0,'ag raj','agrmax@gmail.com','2021-06-01 20:04:55',NULL,NULL,'',0,0,'Student/Parent','Student/Parent','$2y$10$Fr47aTuE2kAVe5QEwDVUHO1hLFlcBI7YH6VxxO6/pBr3uNBkV6scG',NULL,NULL,NULL,NULL,'yes',NULL,0,NULL,'2021-06-01 20:03:17','2021-06-02 15:09:24','2021-06-02 15:09:24'),(109,0,'Wasim Akram Syed','wasimdeep@gmail.com','2021-06-01 21:15:56',NULL,NULL,'',0,0,'Student/Parent','Student/Parent','$2y$10$h7RG1IYu07prwuOIlR9zPeUcn2XqTjLFmvRX6vKfKk3GqGkAzpjau',NULL,NULL,NULL,NULL,'yes',NULL,0,NULL,'2021-06-01 21:15:45','2021-06-08 14:46:34','2021-06-08 14:46:34'),(110,0,'AGR','agrmax@digitalq.co.in','2021-06-02 19:43:28',NULL,NULL,'',0,0,'Teacher','Individual Teacher','$2y$10$gFVoilyYt1fKQ2lfRd0pcOgemf0JU8U1lGFubRjKrmHz9fDU8/d9C',NULL,'1234567',NULL,NULL,'yes',NULL,0,NULL,'2021-06-02 15:10:14','2021-06-02 19:44:19','2021-06-02 19:44:19'),(111,0,'john','info@acrainfotech.com','2021-06-08 13:28:20','ff12345we','gg12345we','',0,0,'Student/Parent','Student/Parent','$2y$10$jSksiIm9g3ciYD27Ou1eHu.m/1fhcU3dmLcc988B5bxOyY/voMFKG',NULL,NULL,NULL,NULL,'yes',NULL,0,NULL,'2021-06-08 13:27:07','2021-06-08 14:35:45','2021-06-08 14:35:45'),(112,0,'Vivek','billing@talentegra.com','2021-06-09 21:41:07','ff12345we','gg12345we','',0,0,'Student/Parent','Student/Parent','$2y$10$Txl0VQuaf.bDWFSqrcWJEejtCxcsZwkvYYZBhIjNQJDWUj/X6iUMq',NULL,NULL,NULL,NULL,'yes',NULL,0,NULL,'2021-06-09 21:14:22','2021-06-09 22:56:19','2021-06-09 22:56:19'),(113,0,'Somashree','somashree@techarima.com','2021-06-10 07:48:14','ff12345we','gg12345we','',0,0,'Student/Parent','Student/Parent','$2y$10$9SC84BuKpVZxafEwLn009.wV.wg6DOmbHvUyqq2tmiYzdiNb7NGPq',NULL,NULL,NULL,NULL,'yes',NULL,0,NULL,'2021-06-10 07:46:56','2021-06-10 09:55:57','2021-06-10 09:55:57'),(114,0,'Somashree','somashree@talentegra.com','2021-06-10 09:59:53','ff12345we','gg12345we','',0,0,'Teacher','Individual Teacher','$2y$10$OyIh2RB3jQmaOk8CVOdFouqBvWyAK/Ha3m8u1orz5t.xCwJ7s.EsG',NULL,NULL,NULL,NULL,'yes',NULL,0,NULL,'2021-06-10 09:58:04','2021-06-10 12:48:14','2021-06-10 12:48:14'),(115,NULL,'Srivdhya Vivek','srividhyav@talentegra.com','2021-06-22 09:47:51','ff12345we','gg12345we',NULL,NULL,NULL,'Student/Parent','Student/Parent','$2y$10$vu5bDuXCPbPVTea3pSCrAOJY4hstfBkrjOFfMhiELPVuix3YDvQry',NULL,NULL,NULL,NULL,'yes',NULL,NULL,NULL,'2021-06-22 09:47:01','2021-06-22 09:50:10','2021-06-22 09:50:10'),(116,NULL,'Rk','newstudent@gmail.com',NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,'',NULL,'9999933333',NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-28 14:05:44',NULL,NULL),(117,NULL,'SS','ss@gmail.com',NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,'',NULL,'9999933332',NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-28 14:12:11',NULL,NULL),(118,NULL,'Asmitha','asmitharshetty@gmail.com',NULL,NULL,NULL,NULL,NULL,NULL,'',NULL,'',NULL,'9874563698',NULL,NULL,NULL,NULL,NULL,NULL,'2021-06-29 17:44:35',NULL,NULL),(119,NULL,'John','John@gmail.com',NULL,NULL,NULL,NULL,NULL,NULL,'Student/Parent',NULL,'',NULL,'9999933987',NULL,NULL,NULL,NULL,NULL,NULL,'2021-07-03 11:45:14',NULL,NULL),(121,NULL,'Arun','arunkumar@digitalq.co.in',NULL,'ff12345we','gg12345we',NULL,NULL,NULL,'Teacher','Individual Teacher','$2y$10$v1Bk790IPZi.zwNFvZQG8eQJiKMf.H8w48N2Lph5Y.1ozBC61Ply.',NULL,'43242342342',NULL,NULL,'yes',NULL,NULL,NULL,'2021-07-04 19:45:06','2021-07-04 19:47:48','2021-07-04 19:47:48'),(122,NULL,'vivekra','vivekra@digitalqits.com',NULL,'ff12345we','gg12345we',NULL,NULL,NULL,'Student/Parent','Student/Parent','$2y$10$rnCZkCp1ysZcijGgfPSLY.Tx6L3/ndnZ1FvWuh9/gIVzfDMhFD87G',NULL,NULL,NULL,NULL,'yes',NULL,NULL,NULL,'2021-07-04 19:48:51','2021-07-04 19:48:51',NULL);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -1750,4 +1894,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-06-23 12:28:47
+-- Dump completed on 2021-07-08 19:26:21

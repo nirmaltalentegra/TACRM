@@ -232,7 +232,7 @@ class Staff extends APP_Controller {
         //$input_password = $this->input->post('password', TRUE);
         $input_password = $this->input->post('passwd', TRUE);
         $input_banned   = $this->input->post('islocked', TRUE);
-        $permission     = array();  
+        $permission     = array();
 
         if ($input_banned != 1) {
             $input_banned = 0;
@@ -255,10 +255,10 @@ class Staff extends APP_Controller {
             }
             
               
-           /* echo "<pre>";
+            echo "<pre>";
               print_r($_POST);
               echo "</pre>";
-              exit; */
+              exit; 
             //Create staff
             //$staff_id = $this->arbac->create_user($input_email, $input_password, $input_username, $input_banned);
             $staff_id = $this->arbac->create_user($input_email, $input_password, $input_username);            
@@ -266,18 +266,17 @@ class Staff extends APP_Controller {
             if ($staff_id != FALSE) {
                 //Update the staff entry
                 $data = array(
-					'org_id' => $this->input->post('org_id', TRUE),
-                    'dept_id' => $this->input->post('dept_id', TRUE),
-					//'branch_id' => $this->input->post('branch_id', TRUE),
-                    'role_id' => $this->input->post('role_id', TRUE),
-                    'manager_id' => $this->input->post('manager_id', TRUE),
-                    'designation_id' => $this->input->post('designation_id', TRUE),
-                     'firstname' => $this->input->post('firstname', TRUE),
+                    'firstname' => $this->input->post('firstname', TRUE),
                     'lastname' => $this->input->post('lastname', TRUE),
                     'phone' => $this->input->post('phone', TRUE),
                     'phone_ext' => $this->input->post('phone_ext', TRUE),
                     'mobile' => $this->input->post('mobile', TRUE),
-                   'signature' => $this->input->post('signature', TRUE),
+                    'org_id' => $this->input->post('org_id', TRUE),
+                    'dept_id' => $this->input->post('dept_id', TRUE),
+                    'role_id' => $this->input->post('role_id', TRUE),
+                    'manager_id' => $this->input->post('manager_id', TRUE),
+                    'designation_id' => $this->input->post('designation_id', TRUE),
+                    'signature' => $this->input->post('signature', TRUE),
                     //'lang' => $this->input->post('lang',TRUE),
                     //'timezone' => $this->input->post('timezone',TRUE),
                     //'locale' => $this->input->post('locale',TRUE),
@@ -285,8 +284,8 @@ class Staff extends APP_Controller {
                     'sms_notification' => $this->input->post('sms_notification', TRUE),
                     'isadmin' => $this->input->post('isadmin', TRUE),
                     //'isvisible' => $this->input->post('isvisible',TRUE),
-                    //'onvacation' => $this->input->post('onvacation', TRUE),
-                    //'assigned_only' => $this->input->post('assigned_only', TRUE),
+                    'onvacation' => $this->input->post('onvacation', TRUE),
+                    'assigned_only' => $this->input->post('assigned_only', TRUE),
                     //'show_assigned_tickets' => $this->input->post('show_assigned_tickets',TRUE),
                     //'change_passwd' => $this->input->post('change_passwd',TRUE),
                     //'max_page_size' => $this->input->post('max_page_size',TRUE),
@@ -304,32 +303,7 @@ class Staff extends APP_Controller {
                   echo "</pre>"; */
 
                 $this->Staff_model->update_by_staff_id($staff_id, $data);
-				//$details_staff_id = $this->Staff_model->insert_staff($data);
-				
-				$data_details = array(
-                    'staff_id' => $staff_id,
-                    'firstname' => $this->input->post('firstname', TRUE),
-                    'lastname' => $this->input->post('lastname', TRUE),
-                    'phone' => $this->input->post('phone', TRUE),
-                    'phone_ext' => $this->input->post('phone_ext', TRUE),
-                    'mobile' => $this->input->post('mobile', TRUE),
-                    'sms_notification' => $this->input->post('sms_notification', TRUE),
-                    'isadmin' => $this->input->post('isadmin', TRUE),
-                    //'isvisible' => $this->input->post('isvisible',TRUE),
-                    'onvacation' => $this->input->post('onvacation', TRUE),
-                    'assigned_only' => $this->input->post('assigned_only', TRUE),
-                    //'show_assigned_tickets' => $this->input->post('show_assigned_tickets',TRUE),
-                    //'change_passwd' => $this->input->post('change_passwd',TRUE),
-                    //'max_page_size' => $this->input->post('max_page_size',TRUE),
-                    //'auto_refresh_rate' => $this->input->post('auto_refresh_rate',TRUE),
-                    //'default_signature_type' => $this->input->post('default_signature_type',TRUE),
-                    //'default_paper_size' => $this->input->post('default_paper_size',TRUE),
-                    //'extra' => $this->input->post('extra',TRUE),
-                    //'permissions' => $this->input->post('permissions',TRUE),
-                );
-				  
-				$this->Staff_model->insert_staff_details($data_details); 
-				
+
                 //insert in to arbac_perm_to_user table
                 if($this->input->post('create_customer', TRUE) == 1) {
                     $permission[] = array('perm_id' => 45, 'user_id' => $staff_id);

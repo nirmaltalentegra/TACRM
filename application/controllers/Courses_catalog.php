@@ -51,7 +51,6 @@ class Courses_catalog extends APP_Controller
 		'course_code' => $row->course_code,
 		'course_contents' => $row->course_contents,
 		'course_duration' => $row->course_duration,
-		'course_duration_in' => $row->course_duration_in,
 		'course_fee_type' => ($row_course_fee_type =='failure')?'':$row_course_fee_type[0]['course_fee_type'],
 		'course_fees' => $row->course_fees,
 		'course_id' => $row->course_id,
@@ -82,7 +81,6 @@ class Courses_catalog extends APP_Controller
 	    'course_code' => set_value('course_code'),
 	    'course_contents' => set_value('course_contents'),
 	    'course_duration' => set_value('course_duration'),
-	    'course_duration_in' => set_value('course_duration_in'),
 	    'course_fee_type' => set_value('course_fee_type'),
 	    'course_fees' => set_value('course_fees'),
 	    'course_id' => set_value('course_id'),
@@ -114,7 +112,6 @@ class Courses_catalog extends APP_Controller
 		'course_code' => $this->input->post('course_code',TRUE),
 		'course_contents' => $this->input->post('course_contents',TRUE),
 		'course_duration' => $this->input->post('course_duration',TRUE),
-		'course_duration_in' => $this->input->post('course_duration_in',TRUE),
 		'course_fee_type' => $this->input->post('course_fee_type',TRUE),
 		'course_fees' => $this->input->post('course_fees',TRUE),
 		'course_name' => $this->input->post('course_name',TRUE),
@@ -142,7 +139,6 @@ class Courses_catalog extends APP_Controller
 		'course_code' => set_value('course_code', $row->course_code),
 		'course_contents' => set_value('course_contents', $row->course_contents),
 		'course_duration' => set_value('course_duration', $row->course_duration),
-		'course_duration_in' => set_value('course_duration_in', $row->course_duration_in),
 		'course_fee_type' => set_value('course_fee_type', $row->course_fee_type),
 		'course_fees' => set_value('course_fees', $row->course_fees),
 		'course_id' => set_value('course_id', $row->course_id),
@@ -151,6 +147,7 @@ class Courses_catalog extends APP_Controller
 		'created' => set_value('created', $row->created),
 		'notes' => set_value('notes', $row->notes),
 		'updated' => set_value('updated', $row->updated),
+		'active' => set_value('active', $row->active),
 	    );
 			
 	      $data['row_categories'] = $this->Common_model->get_table_details_dynamically('categories', 'category_id', $oder_by = NULL);
@@ -175,13 +172,13 @@ class Courses_catalog extends APP_Controller
 		'course_code' => $this->input->post('course_code',TRUE),
 		'course_contents' => $this->input->post('course_contents',TRUE),
 		'course_duration' => $this->input->post('course_duration',TRUE),
-		'course_duration_in' => $this->input->post('course_duration_in',TRUE),
 		'course_fee_type' => $this->input->post('course_fee_type',TRUE),
 		'course_fees' => $this->input->post('course_fees',TRUE),
 		'course_name' => $this->input->post('course_name',TRUE),
 		'course_summary' => $this->input->post('course_summary',TRUE),
 		'notes' => $this->input->post('notes',TRUE),
 		'updated' => date('Y-m-d H:i:s'),
+		'active' => $this->input->post('active',TRUE),
 	    );
 
             $this->Courses_catalog_model->update($this->input->post('course_id', TRUE), $data);
@@ -215,11 +212,10 @@ class Courses_catalog extends APP_Controller
 	$this->form_validation->set_rules('course_code', 'course code', 'trim|required');
 	$this->form_validation->set_rules('course_contents', 'course contents', 'trim|required');
 	$this->form_validation->set_rules('course_duration', 'course duration', 'trim|required');
-	$this->form_validation->set_rules('course_duration_in', 'course duration in', 'trim|required');
 	$this->form_validation->set_rules('course_fee_type', 'course fee type', 'trim|required');
 	$this->form_validation->set_rules('course_fees', 'course fees', 'trim|required');
 	$this->form_validation->set_rules('course_name', 'course name', 'trim|required');
-	$this->form_validation->set_rules('course_summary', 'course summary', 'trim|required');
+	$this->form_validation->set_rules('course_summary', 'course summary', 'trim|required'); 
 		
 	$this->form_validation->set_rules('notes', 'notes', 'trim|required');
 		

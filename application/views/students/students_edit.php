@@ -40,6 +40,26 @@ $this->load->view('_layout/siteheader');
 			<?php //echo form_error('active') ?>
 		
 		</div>-->
+		
+		<div class=" form-group">
+			 <label class="control-label " for="int">Course</label>
+			<select class="form-control" name="course_id" id="course_id" placeholder="Course Id" >
+			        <option value="0">Select</option>
+			  <?php foreach ($row_courses as $row) 
+				{ ?>
+				<option <?php echo ($course_id == $row['course_id'])?'selected':''; ?> value="<?php  echo $row['course_id'];?>" ><?php echo $row['course_name']; ?></option>
+				
+				<?php 
+				}
+				?>
+			  </select>
+			  <!--<input type="hidden" class="form-control " name="course_id" id="course_id" placeholder="course_id" value="<?php // echo $course_id; ?>" />
+			  <input type="text" disabled class="form-control " name="course_name" id="course_name" placeholder="Course Name" value="<?php //echo $course_name; ?>" />-->
+			
+			  <div id="err_msg"></div>
+			<?php echo form_error('course_id') ?>
+		
+		</div>
 	    <div class=" form-group">
 			 <label class="control-label " for="int">Batch</label>
 			 <input type="hidden"  name="hid_batch_id" id="hid_batch_id" value="<?php echo $batch_id; ?>" />
@@ -56,39 +76,38 @@ $this->load->view('_layout/siteheader');
 			<?php echo form_error('batch_id') ?>
 		
 		</div>
-		<div class=" form-group">
-			 <label class="control-label " for="int">Course</label>
-			<!--<select class="form-control" name="course_id" id="course_id" placeholder="Course Id" >
-			        <option value="0">Select</option>
-			  <?php //foreach ($row_courses as $row) 
-				//{ ?>
-					<option <? //=$course_id == $row['course_id'])?'selected':''; ?> value="<?php // echo $row['course_id'];?>" ><?php //echo $row['course_name']; ?></option>
-				<?php 
-				//}
-				?>
-			  </select>-->
-			  <input type="hidden" class="form-control " name="course_id" id="course_id" placeholder="course_id" value="<?php echo $course_id; ?>" />
-			  <input type="text" disabled class="form-control " name="course_name" id="course_name" placeholder="Course Name" value="<?php echo $course_name; ?>" />
-			
-			  <div id="err_msg"></div>
-			<?php echo form_error('course_id') ?>
-		
-		</div>
 	    <div class=" form-group">
+			 <label class="control-label " for="int">Course Completed</label>
+             <select class="form-control" name="course_completed" id="course_completed" placeholder="" >
+					<option <?=($course_completed == '1')?'selected':''; ?> value="1">Yes</option>
+					<option <?=($course_completed == '0')?'selected':''; ?> value="0">No</option>
+			 
+			  </select>
+			<?php echo form_error('course_completed') ?>
+		
+		</div> 
+		
+	    <div style = "<?=($course_completed == '0')?'display:none;':''?>" class="div_completion_date form-group">
 			 <label class="control-label " for="timestamp">Completion Date</label>
            
 			<input type="date" class="form-control " name="completion_date" id="completion_date" placeholder="Completion Date" value="<?php echo isset($completion_date) ? set_value('completion_date', date('Y-m-d', strtotime($completion_date))) : set_value('completion_date'); ?>" />
 			<?php echo form_error('completion_date') ?>
 		
 		</div>
-	    <div class=" form-group">
-			 <label class="control-label " for="int">Course Completed</label>
+	    <div style = "<?=($course_completed == '0')?'display:none;':''?>" class="div_completion_date form-group">
+			 <label class="control-label " for="timestamp">Student Did</label>
            
-			<input type="text" class="form-control " name="course_completed" id="course_completed" placeholder="Course Completed" value="<?php echo $course_completed; ?>" />
-			<?php echo form_error('course_completed') ?>
+			<input type="text" class="form-control " name="student_did" id="student_did" placeholder="Student Did" value="<?php echo $student_did; ?>" />
+			<?php echo form_error('student_did') ?>
 		
-		</div> 
-	    
+		</div>
+		<div style = "<?=($course_completed == '0')?'display:none;':''?>" class="div_completion_date form-group">
+			 <label class="control-label " for="timestamp">Certificate Id</label>
+           
+			<input type="text" class="form-control " name="certificate_id" id="certificate_id" placeholder="Certificate Id" value="<?php echo $certificate_id; ?>" />
+			<?php echo form_error('certificate_id') ?>
+		
+		</div>
 	
 	    <div class=" form-group">
 			 <label class="control-label " for="float">Fees Paid</label>
@@ -247,6 +266,28 @@ $this->load->view('_layout/siteheader');
     });
 
 });*/
+
+$(document).ready(function(){
+$("#course_completed").change(function(){
+	course_completed = $("#course_completed").val()
+	if(course_completed == '1'){
+	    $('.div_completion_date').show();
+	}
+	else {
+		$('.div_completion_date').hide();
+		$("#completion_date").val('');
+		$("#student_did").val('');
+		$("#certificate_id").val('');
+	}
+});
+});
+$(document).ready(function(){
+$("#course_id").change(function(){
+	$('#batch_id').html( $batch.find('option').filter( '[data-course="' + this.value + '"]' ) );
+	var fee = $("#batch_id").find(':selected').data('fees');
+	$("#fees_paid").val(fee);
+} ).trigger( 'change' );
+});
 $(document).ready(function(){
      $("#batch_id").change(function(){
 		 $("#course_name").val('');
@@ -277,9 +318,9 @@ $(document).ready(function(){
 					else
 					{
 						$("#err_batch_msg").html(""); 
-						$("#course_name").val(response['course_name']);
+						//$("#course_name").val(response['course_name']);
 						$("#fees_paid").val(fees_paid);
-						$("#course_id").val(course_id);
+						//$("#course_id").val(course_id);
 					} 
 					 
 

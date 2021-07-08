@@ -59,7 +59,7 @@ class Students_model extends CI_Model
         $this->db->like('student_id', $q);
 	$this->db->or_like('active', $q);
 	$this->db->or_like('added_by', $q);
-	$this->db->or_like('address', $q);
+	//$this->db->or_like('address', $q);
 	$this->db->or_like('batch_id', $q);
 	$this->db->or_like('completion_date', $q);
 	$this->db->or_like('course_completed', $q);
@@ -68,11 +68,11 @@ class Students_model extends CI_Model
 	$this->db->or_like('deleted_at', $q);
 	$this->db->or_like('fees_paid', $q);
 	$this->db->or_like('fees_payable', $q);
-	$this->db->or_like('first_name', $q);
+	//$this->db->or_like('first_name', $q);
 	$this->db->or_like('is_deleted', $q);
 	$this->db->or_like('updated', $q);
 	$this->db->or_like('user_id', $q);
-	$this->db->or_like('zipcode', $q);
+	//$this->db->or_like('zipcode', $q);
 	$this->db->from($this->table);
         return $this->db->count_all_results();
     }

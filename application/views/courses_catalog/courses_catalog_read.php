@@ -41,7 +41,6 @@ $this->load->view('_layout/siteheader');
 	    <tr><td>Course Code</td><td><?php echo $course_code; ?></td></tr>
 	    <tr><td>Course Contents</td><td><?php echo $course_contents; ?></td></tr>
 	    <tr><td>Course Duration</td><td><?php echo $course_duration; ?></td></tr>
-	    <tr><td>Course Duration In</td><td><?php echo $course_duration_in; ?></td></tr>
 	    <tr><td>Course Fee Type</td><td><?php echo $course_fee_type; ?></td></tr>
 	    <tr><td>Course Fees</td><td><?php echo $course_fees; ?></td></tr>
 	    <tr><td>Course Name</td><td><?php echo $course_name; ?></td></tr>

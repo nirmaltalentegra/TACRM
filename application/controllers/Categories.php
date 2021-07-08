@@ -103,6 +103,7 @@ class Categories extends APP_Controller
 		'category_id' => set_value('category_id', $row->category_id),
 		'category_name' => set_value('category_name', $row->category_name),
 		'parent_id' => set_value('parent_id', $row->parent_id),
+		'active' => set_value('active', $row->active),
 	    );
 			$data['row_categories'] = $this->Common_model->get_table_details_dynamically('categories', 'category_id', $oder_by = NULL);
 			$this->_tpl('categories/categories_edit', $data);
@@ -123,6 +124,7 @@ class Categories extends APP_Controller
             $data = array(
 		'category_name' => $this->input->post('category_name',TRUE),
 		'parent_id' => $this->input->post('parent_id',TRUE),
+		'active' => $this->input->post('active',TRUE),
 		'updated' => date('Y-m-d H:i:s'),
 	    );
 

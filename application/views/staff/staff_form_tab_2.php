@@ -50,7 +50,7 @@
                 }
 
 
-                echo '<option value="' . $role->id . '"' . $role_selected . '>' . $role->name . "</option>";
+                echo '<option value="' . $role->id . '"' . $role_selected . '>' . $role->user_role . "</option>";
             }
             ?>
         </select>

@@ -85,14 +85,7 @@ $this->load->view('_layout/siteheader');
 			<?php echo form_error('course_duration') ?>
 		
 		</div>
-	    <div class=" form-group">
-			 <label class="control-label " for="varchar">Course Duration In</label>
-         
-			<input type="text" class="form-control " name="course_duration_in" id="course_duration_in" placeholder="Course Duration In" value="<?php echo $course_duration_in; ?>" />
-			<?php echo form_error('course_duration_in') ?>
-		
-		</div>
-	    <div class=" form-group">
+	    <div class=" form-group"> 
 			 <label class="control-label " for="tinyint">Course Fee Type</label>
          <select class="form-control" name="course_fee_type" id="course_fee_type" placeholder="Course Fee Type" >
 					<option value="0">Select</option>

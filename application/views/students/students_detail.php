@@ -2,12 +2,13 @@
 defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->view('_layout/siteheader');
 ?>
 
+<link rel="stylesheet" href="<?php echo base_url(); ?>assets/modules/bootstrap-social/bootstrap-social.css">
 <!-- Main Content -->
 <div class="main-content">
   <section class="section">
     <div class="section-header">
       <h1>Course Details for <?php echo $result[0]->name; ?></h1>
-      <div class="section-header-breadcrumb">
+      <div class="section-header-breadcrumb"> 
         <div class="breadcrumb-item active">
           <a href="dashboard">Dashboard</a>
         </div>
@@ -55,7 +56,7 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
 			<th>Active</th>
 			<th>Added By</th>
 			<th>Created</th>			
-			<th>Action</th>
+			<th>Actions</th>
                 </tr>
 				
 				 
@@ -87,23 +88,27 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
 						<td><?php echo date('d-m-Y',strtotime($row->created)); ?></td>
 						
 						<td width="200px">
-						<?php 
-						echo '<a class="btn btn-icon btn-sm btn-info" href="'.site_url('students/read/'.$row->student_id).'" title="Details">';
-						echo '<i class="fas fa-info-circle"></i>'; 
-						echo '</a>&nbsp;'; 
-						
-						echo '<a class="btn btn-icon btn-sm btn-primary" href="'.site_url('students/update/'.$row->student_id).'" title="Edit">';
-						echo '<i class="far fa-edit"></i>'; 
-						echo '</a>&nbsp;';
-						
-						echo '<a class="btn btn-icon btn-sm btn-danger" href="'.site_url('students/delete/'.$row->student_id).'" title="Delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')">';
-						echo '<i class="fas fa-times"></i>'; 
-						echo '</a>';
-						
-						if($row->course_completed == 1) {
-						?>
-						<a href="javascript:void(0);" class=" btn btn-icon btn-sm btn-warning print_certificate" data-id=<?php echo $row->student_id; ?> title="Print"><i class="fas fa-print"></i></a> 
-						<?php } ?>
+							<div class="dropdown d-inline">
+								<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								  Actions
+								</button>
+								<div class="dropdown-menu">
+								<?php 
+								  echo '<a class="dropdown-item has-icon" href="'.site_url('students/read/'.$row->student_id).'">
+								  <i class="fas fa-info-circle"></i> View Details</a>';
+								  echo '<a class="dropdown-item has-icon" href="'.site_url('students/update/'.$row->student_id).'">
+								  <i class="far fa-edit"></i> Edit</a>';
+								  echo '<a class="dropdown-item has-icon" href="'.site_url('students/delete/'.$row->student_id).'" onclick="javasciprt: return confirm(\'Are You Sure ?\')">
+								  <i class="fas fa-times"></i> Delete</a>';
+								  echo '<a class="dropdown-item has-icon" id="add_payment" data-cid="'.$row->course_id.'" data-uid="'.$row->user_id.'" data-sid="'.$row->student_id.'" href="#"><i class="far fa-clock"></i> Add Payments</a>';
+								  echo '<a class="dropdown-item has-icon" href="#"><i class="far fa-clock"></i> View Payments</a>';
+								  if($row->course_completed == 1) {
+									echo '<a class="dropdown-item has-icon print_certificate" href="javascript:void(0);" data-id="'.$row->student_id.'">
+									<i class="fas fa-print"></i>Print Certficate</a>';	
+								  }
+								?>   
+								</div>
+						  </div>
 						</td>
 	       </tr>
                 <?php
@@ -111,6 +116,24 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
             ?>
             </tbody>
 				  </table>
+	<form class="modal-part" id="model-add-payment"> <div class="form-group">
+      <label>Date</label>
+      <div class="input-group">
+        <input type="date" class="form-control" placeholder="Date" name="date">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Amount Paid</label>
+      <div class="input-group"><input type="text" class="form-control" placeholder="amt_paid" name="amt_paid">
+      </div>
+    </div>
+	<div class="form-group">
+      <label>Note</label>
+      <div class="input-group">
+        <textarea class="form-control" placeholder="note" id="note" name="note"></textarea>
+      </div> 
+    </div>
+  </form>
               </div>
             </div>
           </div>
@@ -119,12 +142,74 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
     </div>
   </section>
 </div>
+
+<?php $this->load->view('_layout/sitefooter'); ?>
 <script>
         $(".print_certificate").click(function(){
             //alert($(this).attr('data-id'));
             var student_id = $(this).attr('data-id');
             window.location.href = "<?php echo base_url(); ?>student_certificate/print_certificate/"+student_id;
         });
+$("#add_payment").fireModal({
+  title: 'Add Payment',
+  body: $("#model-add-payment"),
+  footerClass: 'bg-whitesmoke',
+  autoFocus: false,
+  onFormSubmit: function(modal, e, form) {
+    // Form Data
+    let form_data = $(e.target).serialize();
+    console.log(form_data);
+	var student_id = $(this).attr('data-sid');
+	var user_id = $(this).attr('data-uid');
+	var course_id = $(this).attr('data-cid');
+	var date = $("#date").val();
+	var amt_paid = $("#amt_paid").val();
+	var note = $("#note").val();
+     $.ajax({
+                url: '<?php echo base_url(); ?>Students/student_add_payment',
+                type: 'post',
+                data: {student_id:student_id, course_id:course_id, user_id:user_id, date: date, amt_paid: amt_paid, note:note},
+                dataType: 'json',
+                success:function(response){
+					console.log(response);
+					//alert(response);
+					/*if(response!='failure'){
+						$("#err_msg").html("Record already present");
+						$("#batch_id").val('0');
+					}
+					else
+					{ 
+						$("#err_msg").html(""); 
+						var fee = $("#batch_id").find(':selected').data('fees');
+						$("#fees_paid").val(fee);
+					} */
+					  
+
+                }
+            });
+    // DO AJAX HERE
+    /*let fake_ajax = setTimeout(function() {
+      form.stopProgress();
+      modal.find('.modal-body').prepend('<div class="alert alert-info">Please check your browser console</div>')
+
+      clearInterval(fake_ajax);
+    }, 1500);
+*/
+    e.preventDefault();
+  },
+  shown: function(modal, form) {
+    console.log(form)
+  },
+  buttons: [
+    {
+      text: 'Login',
+      submit: true,
+      class: 'btn btn-primary btn-shadow',
+      handler: function(modal) {
+      }
+    }
+  ]
+});
+
 </script>
-<?php $this->load->view('_layout/sitefooter'); ?>
 

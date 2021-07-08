@@ -305,8 +305,21 @@ class Staff_model extends CI_Model {
 		//$this->db->join('staff_details', 'staff_details.staff_id=staff.staff_id', 'LEFT');
         $this->db->where('staff.staff_id', $arbac_users_id);
 	//	echo "<br> str". $this->db->last_query();exit;
-        return $this->db->get('staff')->row();
+        return $this->db->get('staff')->row();  
 	}
+	 // insert into staff 
+    function insert_staff($data) {
+        $this->db->insert('staff', $data);
+		 $insert_id = $this->db->insert_id();
+		return $insert_id;
+    }
+	
+	// insert into staff_details
+    function insert_staff_details($data) {
+        $this->db->insert('staff_details', $data);
+		 //$insert_id = $this->db->insert_id();
+		//return $insert_id;
+    }
 }
 
-/* End of file Staff_model.php */
+/* End of file Staff_model.php */ 

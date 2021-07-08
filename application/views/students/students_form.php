@@ -82,8 +82,8 @@ $this->load->view('_layout/siteheader');
 
 				<div class="clear"></div>
 				<div id="userDetail"></div>
-			  
-			<div id="div_new_student" style="display:none;">
+			  <div id="err_msg_student" class="text-danger"></div>
+			  <div id="div_new_student" style="display:none;">
 				 <div class="form-group">
 				 <label class="control-label " for="name">Name</label>
 			 
@@ -103,10 +103,33 @@ $this->load->view('_layout/siteheader');
 				<?php echo form_error('phone') ?>
 				</div>
 			</div>
+			 
+	    
+		
 		<?php if($bid){ ?>
 		 <input type="hidden" class="form-control " name="batch_id" id="batch_id" placeholder="batch_id" value="<?php echo $bid; ?>" />
 		 <input type="hidden" class="form-control " name="frm_page" id="frm_page" placeholder="frm_page" value="batch" />
+		 <input type="hidden" class="form-control " name="course_id" id="course_id" placeholder="course_id" value="<?php echo $cid; ?>" />
+		 <input type="text" disabled class="form-control " name="course_name" id="course_name" placeholder="Course Name" value="<?php echo $course_name; ?>" />
 		 <?php } else { ?>
+		 <div class=" form-group">
+			 <label class="control-label " for="int">Course</label>
+             <select class="form-control" name="course_id" id="course_id" placeholder="Course Id" >
+			        <option value="0">Select</option>
+			  <?php foreach ($row_courses as $row)
+				{ ?>
+					<option value="<?php echo $row['course_id'];?>" ><?php echo $row['course_name']; ?></option>
+				<?php 
+				}
+				?>
+			  </select>
+			  <!--<input type="hidden" class="form-control " name="course_id" id="course_id" placeholder="course_id" value="<?php //echo $cid; ?>" />-->
+			
+			  <!--<input type="text" disabled class="form-control " name="course_name" id="course_name" placeholder="Course Name" value="<?php //echo $course_name; ?>" />-->
+			
+			  <div id="err_msg"></div>
+			<?php echo form_error('course_id') ?>
+		</div>
 	    <div class=" form-group">
 			 <label class="control-label " for="int">Batch</label>
              <select class="form-control" name="batch_id" id="batch_id" placeholder="Batch Id" >
@@ -136,25 +159,7 @@ $this->load->view('_layout/siteheader');
 			<?php //echo form_error('course_completed') ?>
 		
 		</div>-->
-			 
-	    <div class=" form-group">
-			 <label class="control-label " for="int">Course</label>
-             <!--<select class="form-control" name="course_id" id="course_id" placeholder="Course Id" >
-			        <option value="0">Select</option>
-			  <?php //foreach ($row_courses as $row)
-				//{ ?>
-					<option value="<?php //echo $row['course_id'];?>" ><?php //echo $row['course_name']; ?></option>
-				<?php 
-				//}
-				?>
-			  </select>-->
-			  <input type="hidden" class="form-control " name="course_id" id="course_id" placeholder="course_id" value="<?php echo $cid; ?>" />
-			
-			  <input type="text" disabled class="form-control " name="course_name" id="course_name" placeholder="Course Name" value="<?php echo $course_name; ?>" />
-			
-			  <div id="err_msg"></div>
-			<?php echo form_error('course_id') ?>
-		</div>
+		
 	
 	    <div class=" form-group">
 			 <label class="control-label " for="float">Fees Paid</label>
@@ -338,14 +343,18 @@ function setText(element){
 		   //$("#user_id").val = response['id'];
 		   $("#user_id").val(response['id']);
 		   $("#student_name").val(response['name']);
-		   
-		   
+		    var course_id = $("#course_id").val()
+			var batch_id = $("#batch_id").val();
+			var user_id = $("#user_id").val();
+		   if(batch_id!='0' && course_id!='0' && user_id!='0' ){
+			   check_student_batch_course(batch_id,course_id,user_id);
+		   }
         }
 
     });
 	}
 }
-$(document).ready(function(){
+/*$(document).ready(function(){
      $("#batch_id").change(function(){
 		 $("#course_name").val('');
 		 $("#course_id").val('');
@@ -385,10 +394,18 @@ $(document).ready(function(){
 
     });
 
+});*/
+$(document).ready(function(){
+$("#course_id").change(function(){
+	$('#batch_id').html( $batch.find('option').filter( '[data-course="' + this.value + '"]' ) );
+	var fee = $("#batch_id").find(':selected').data('fees');
+	$("#fees_paid").val(fee);
+} ).trigger( 'change' );
 });
-/*$(document).ready(function(){
-     $("#course_id").change(function(){
-        var course_id = $(this).val();
+
+$(document).ready(function(){
+     $("#batch_id").change(function(){
+        var course_id = $("#course_id").val()
 		var batch_id = $("#batch_id").val();
 		var user_id = $("#user_id").val();
         if(user_id != ""){
@@ -402,19 +419,49 @@ $(document).ready(function(){
 					//alert(response);
 					if(response!='failure'){
 						$("#err_msg").html("Record already present");
-						$("#course_id").val('0');
+						$("#batch_id").val('0');
 					}
 					else
-					{
-						$("#err_msg").html("");
+					{ 
+						$("#err_msg").html(""); 
+						var fee = $("#batch_id").find(':selected').data('fees');
+						$("#fees_paid").val(fee);
 					} 
-					 
+					  
 
                 }
             });
         }
 
     });
+	
+	
 
-});*/
+});
+function check_student_batch_course(batch_id,course_id,user_id){
+
+        if(user_id != ""){
+			
+            $.ajax({
+                url: '<?php echo base_url(); ?>Students/check_student_batch_course',
+                type: 'post',
+                data: {user_id:user_id, course_id: course_id, batch_id: batch_id},
+               // dataType: 'json',
+                success:function(response){
+					//alert(response);
+					if(response!='failure'){
+						$("#err_msg_student").html("Student already selected for this batch, please select new student");
+					}
+					else
+					{ 
+						$("#err_msg_student").html("");
+					} 
+					  
+
+                }
+            });
+        }
+	
+}
+
 </script>

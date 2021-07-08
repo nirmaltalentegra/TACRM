@@ -40,6 +40,8 @@ $this->load->view('_layout/siteheader');
 	    <tr><td>Batch Id</td><td><?php echo $batch_id; ?></td></tr>
 	    <tr><td>Completion Date</td><td><?php echo $completion_date; ?></td></tr>
 	    <tr><td>Course Completed</td><td><?php echo $course_completed; ?></td></tr>
+		<tr><td>Student Did</td><td><?php echo $student_did; ?></td></tr> 
+		<tr><td>Certificate Id</td><td><?php echo $certificate_id; ?></td></tr>
 	    <tr><td>Course Id</td><td><?php echo $course_id; ?></td></tr>
 	    <tr><td>Created</td><td><?php echo $created; ?></td></tr>
 	    <tr><td>Deleted At</td><td><?php echo $deleted_at; ?></td></tr>

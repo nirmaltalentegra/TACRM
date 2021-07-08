@@ -55,9 +55,11 @@ class Students extends APP_Controller
 		'course_completed' => ($row->course_completed=='1')?'Yes':'No',
 		'course_id' => ($row_course =='failure')?'':$row_course[0]['course_name'],
 		'created' => $row->created,
+		'student_did' => $row->student_did,
+		'certificate_id' => $row->certificate_id,
 		'deleted_at' => $row->deleted_at,
 		'fees_paid' => $row->fees_paid,
-		'fees_payable' => $row->fees_payable,
+		'fees_payable' => $row->fees_payable, 
 		'is_deleted' => $row->is_deleted,
 		'student_id' => $row->student_id,
 		'updated' => $row->updated,
@@ -106,7 +108,7 @@ class Students extends APP_Controller
 		'course_name' => $course_name,
 	);
 		  $data['row_batch'] = $this->Common_model->get_table_details_dynamically('batches', 'batch_id', $oder_by = NULL);
-		  //$data['row_courses'] = $this->Common_model->get_table_details_dynamically('courses_catalog', 'course_id', $oder_by = NULL);
+		  $data['row_courses'] = $this->Common_model->get_table_details_dynamically('courses_catalog', 'course_id', $oder_by = NULL);
           $this->_tpl('students/students_form', $data);	
 		
     }
@@ -132,11 +134,17 @@ class Students extends APP_Controller
 			'name' => $this->input->post('name',TRUE),
 			'email' => $this->input->post('email',TRUE),
 			'phone' => $this->input->post('phone',TRUE),
+			'user_type' => 'Student/Parent',
 			'created_at' => date('Y-m-d H:i:s'),
 			);
 			$user_id = $this->Common_model->insert_records_dynamically('users',$user_data);
 			$student_name = $this->input->post('name',TRUE);
 		}
+		$batch_details = $this->Common_model->get_details_dynamically('batches', 'batch_id', $this->input->post('batch_id',TRUE), 'batch_id', $oder_by = NULL);
+		$batch_code = ($batch_details =='failure')?'':$batch_details[0]['batch_code'];
+		$course_details = $this->Common_model->get_details_dynamically('courses_catalog', 'course_id', $this->input->post('course_id',TRUE), 'course_id', $oder_by = NULL);
+		$course_code = ($course_details =='failure')?'':$course_details[0]['course_code'];
+		$total_students = $this->Students_model->total_rows() + 1;
             $data = array(
 		'active' => '1',
 		'added_by' => $this->session->userdata('id'),
@@ -149,6 +157,7 @@ class Students extends APP_Controller
 		'fees_payable' => $this->input->post('fees_payable',TRUE),
 		'user_id' => $user_id,
 		'name' => $student_name,
+		'student_enrollment_id' => $batch_code."/".$course_code."/".$total_students,
 	    );
 		//echo "<pre>";print_r($data);exit;
             $insert_id = $this->Students_model->insert($data);
@@ -184,6 +193,8 @@ class Students extends APP_Controller
 		'batch_id' => set_value('batch_id', $row->batch_id),
 		'completion_date' => set_value('completion_date', $row->completion_date),
 		'course_completed' => set_value('course_completed', $row->course_completed),
+		'student_did' => set_value('student_did', $row->student_did),
+		'certificate_id' => set_value('certificate_id', $row->certificate_id),
 		'course_id' => set_value('course_id', $row->course_id),
 		'course_name' => set_value('course_name', ($course_details =='failure')?'':$course_details[0]['course_name']),
 		'fees_paid' => set_value('fees_paid', $row->fees_paid),
@@ -192,7 +203,7 @@ class Students extends APP_Controller
 		'user_id' => set_value('user_id', $row->user_id),
 	    );
 		    $data['row_batch'] = $this->Common_model->get_table_details_dynamically('batches', 'batch_id', $oder_by = NULL);
-		    //$data['row_courses'] = $this->Common_model->get_table_details_dynamically('courses_catalog', 'course_id', $oder_by = NULL);
+		    $data['row_courses'] = $this->Common_model->get_table_details_dynamically('courses_catalog', 'course_id', $oder_by = NULL);
 			$this->_tpl('students/students_edit', $data);
 		
         } else {
@@ -215,7 +226,8 @@ class Students extends APP_Controller
 		'completion_date' => $this->input->post('completion_date',TRUE),
 		'course_completed' => $this->input->post('course_completed',TRUE),
 		'course_id' => $this->input->post('course_id',TRUE),
-		
+		'student_did' => $this->input->post('student_did',TRUE),
+		'certificate_id' => $this->input->post('certificate_id',TRUE),
 		'fees_paid' => $this->input->post('fees_paid',TRUE),
 		'fees_payable' => $this->input->post('fees_payable',TRUE),
 		'updated' => date('Y-m-d H:i:s'),
@@ -295,8 +307,6 @@ class Students extends APP_Controller
 			$search_type = 'name';
 		}
 		$result = $this->Students_model->get_students_from_users($search,$search_type);
-        //echo($this->db->last_query()); 
-		//echo "<pre>"; print_r($result);
 		$search_arr = array();
 
 		foreach ($result as $row) {
@@ -342,6 +352,17 @@ class Students extends APP_Controller
 		$data['title']  = 'TRAMS::SCP::Students';
 		$data['result'] = $result;
 		$this->_tpl('students/students_detail', $data);
+	}
+	
+	public function student_add_payment()
+	{
+		$data['student_id'] = $_POST['student_id'];
+		$data['user_id'] = $_POST['user_id'];
+		$data['course_id'] = $_POST['course_id'];
+		$data['date'] = $_POST['date'];
+		$data['amt_paid'] = $_POST['amt_paid'];
+		$data['note'] = $_POST['note'];
+		echo json_encode($data);
 	}
 
 }

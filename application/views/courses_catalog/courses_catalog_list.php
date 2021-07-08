@@ -49,7 +49,6 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
 			<th>Category Name</th>
 		    <!--<th>Course Contents</th>-->
 		    <th>Course Duration</th>
-		    <th>Course Duration In</th>
 		    <th>Course Fee Type</th>
 		    <th>Course Fees</th>
 		    
@@ -82,7 +81,6 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
 			<td><?php echo $courses_catalog->category_name ?></td>
 		    <!--<td><?php echo $courses_catalog->course_contents ?></td>-->
 		    <td><?php echo $courses_catalog->course_duration ?></td>
-		    <td><?php echo $courses_catalog->course_duration_in ?></td>
 		    <td><?php echo $courses_catalog->course_fee_type_name ?></td>
 		    <td><?php echo $courses_catalog->course_fees ?></td>
 		    

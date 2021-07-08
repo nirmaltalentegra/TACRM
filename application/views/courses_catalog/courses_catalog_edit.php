@@ -81,14 +81,7 @@ $this->load->view('_layout/siteheader');
 			<input type="text" class="form-control " name="course_duration" id="course_duration" placeholder="Course Duration" value="<?php echo $course_duration; ?>" />
 			<?php echo form_error('course_duration') ?>
 		
-		</div>
-	    <div class=" form-group">
-			 <label class="control-label " for="varchar">Course Duration In</label>
-           
-			<input type="text" class="form-control " name="course_duration_in" id="course_duration_in" placeholder="Course Duration In" value="<?php echo $course_duration_in; ?>" />
-			<?php echo form_error('course_duration_in') ?>
-		
-		</div>
+		</div> 
 	    <div class=" form-group">
 			 <label class="control-label " for="tinyint">Course Fee Type</label>
              <select class="form-control" name="course_fee_type" id="course_fee_type" placeholder="Course Fee Type" >
@@ -118,6 +111,16 @@ $this->load->view('_layout/siteheader');
 					<?php echo form_error('notes') ?>
 				
 				</div>
+		<div class=" form-group">
+			 <label class="control-label " for="int">Active</label>
+             <select class="form-control" name="active" id="active" placeholder="" >
+					<option <?=($active == '1')?'selected':''; ?> value="1">Active</option>
+					<option <?=($active == '0')?'selected':''; ?> value="0">Inactive</option>
+			 
+			  </select>
+			<?php echo form_error('parent_id') ?>
+		
+		</div>
 	 <div class="ln_solid"></div>
                             <div class="form-group">
                               

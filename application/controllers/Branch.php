@@ -109,7 +109,7 @@ class Branch extends APP_Controller
 	$data['row_city'] = $this->Common_model->get_table_details_dynamically('city', 'city_id');
 	$data['row_country'] = $this->Common_model->get_table_details_dynamically('country', 'country_id');
 	$data['row_staff'] = $this->Common_model->get_table_details_dynamically('staff', 'staff_id');
-	$data['row_status'] = $this->Common_model->get_details_dynamically('status', 'status_type', '6', 'status_id', $oder_by = NULL);
+	$data['row_status'] = $this->Common_model->get_details_dynamically('status', 'status_type', '5', 'status_id', $oder_by = NULL);
     $this->_tpl('branch/branch_form', $data);	
 		 
     }
@@ -187,7 +187,7 @@ class Branch extends APP_Controller
 			$data['row_city'] = $this->Common_model->get_table_details_dynamically('city', 'city_id');
 			$data['row_country'] = $this->Common_model->get_table_details_dynamically('country', 'country_id');
 			$data['row_staff'] = $this->Common_model->get_table_details_dynamically('staff', 'staff_id');
-			$data['row_status'] = $this->Common_model->get_details_dynamically('status', 'status_type', '6', 'status_id', $oder_by = NULL);
+			$data['row_status'] = $this->Common_model->get_details_dynamically('status', 'status_type', '5', 'status_id', $oder_by = NULL);
 			$this->_tpl('branch/branch_edit', $data);
 		
         } else {
