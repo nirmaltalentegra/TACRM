@@ -64,7 +64,7 @@ $this->load->view('_layout/siteheader');
         <div class="col-12 col-md-6 col-lg-6">
           <div class="card">
 		  
-            <form id="frm_create" name="frm_create" class="form-horizontal form-label-left" data-parsley-validate="" action="<?php echo $action; ?>" method="post">
+            <form id="frm_create" name="frm_create" class="form-horizontal form-label-left" data-parsley-validate="" action="<?php echo $action; ?>" method="post" autocomplete="OFF">
               <div class="card-header">
 			
                 <h4>Students</h4>
@@ -396,11 +396,14 @@ function setText(element){
 
 });*/
 $(document).ready(function(){
+var $batch = $( '#batch_id' ),
+$options = $batch.find( 'option' );
 $("#course_id").change(function(){
-	$('#batch_id').html( $batch.find('option').filter( '[data-course="' + this.value + '"]' ) );
+	$batch.html( $options.filter( '[data-course="' + this.value + '"]' ) );
+	$batch.prepend("<option value='0' selected='selected'>Please Select</option>");
 	var fee = $("#batch_id").find(':selected').data('fees');
-	$("#fees_paid").val(fee);
-} ).trigger( 'change' );
+	$("#fees_payable").val(fee);
+} ); 
 });
 
 $(document).ready(function(){
@@ -425,7 +428,7 @@ $(document).ready(function(){
 					{ 
 						$("#err_msg").html(""); 
 						var fee = $("#batch_id").find(':selected').data('fees');
-						$("#fees_paid").val(fee);
+						$("#fees_payable").val(fee);
 					} 
 					  
 

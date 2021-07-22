@@ -28,8 +28,9 @@ $this->load->view('_layout/siteheader');
         <div class="col-12 col-md-6 col-lg-6">
           <div class="card">
 		  
-<form id="frm_edit" class="form-horizontal form-label-left" data-parsley-validate="" action="<?php echo $action; ?>" method="post">
-<input type="hidden"  name="batch_id" name="batch_id" value="<?php echo $batch_id; ?>" />
+	<form id="frm_edit" class="form-horizontal form-label-left" data-parsley-validate="" action="<?php echo $action; ?>" method="post">
+	<input type="hidden"  id="hdn_category_id" name="hdn_category_id" value="<?php echo $category_id; ?>" />
+	<input type="hidden"  id="hdn_course_id" name="hdn_course_id" value="<?php echo $course_id; ?>" />
       <div class="card-header">
                 <h4>Batches</h4>
               </div>
@@ -50,13 +51,22 @@ $this->load->view('_layout/siteheader');
 		</div>
 	    <div class=" form-group">
 			 <label class="control-label " for="int">Course</label>
-           <select class="form-control" name="course_id" id="course_id" placeholder="Course Id" >
+           <select class="form-control" name="course_id" id="course_id" placeholder="Course Id" required="">
 			        <option value="0">Select</option>
 			  <?php foreach ($row_courses as $row)
-				{ ?>
-					<option data-category ="<?php echo $row['category_id'];  ?>" data-fee = "<?php echo $row['course_fees'];  ?>" <?=($row['course_id']==$course_id)?'selected':'' ?> value="<?php echo $row['course_id'];?>" ><?php echo $row['course_name']; ?></option>
-				<?php 
+			  {
+			  $course_fee_type_name = '';
+			  foreach ($row_course_fee_type as $row_type)
+				{ 
+				if($row_type['course_fee_type_id'] == $row['course_fee_type'])
+				{
+					$course_fee_type_name = $row_type['course_fee_type'];
 				}
+				} 
+				 ?>
+					<option data-category ="<?php echo $row['category_id'];  ?>" data-feetype ="<?php echo $row['course_fee_type'];  ?>" data-feetypename = "<?php echo $course_fee_type_name;  ?>" data-fee = "<?php echo $row['course_fees'];  ?>" <?=($row['course_id']==$course_id)?'selected':'' ?> value="<?php echo $row['course_id'];?>" ><?php echo $row['course_name']; ?></option>
+				<?php 
+				}  
 				?>
 			  </select>
 			<?php echo form_error('course_id') ?>
@@ -133,6 +143,21 @@ $this->load->view('_layout/siteheader');
 			  <?php echo form_error('batch_pattern') ?>
 		
 		</div>
+		<div class=" form-group">
+			 <label class="control-label " for="varchar">Week Days</label>
+			<select class="form-control select2" multiple name="week_days[]" id="week_days" placeholder="Batch Pattern" >
+					<?php $week_days = explode(",",$week_days); ?>
+					<option <?=in_array("1", $week_days)?'selected' : '';?> value="1">Sunday</option>
+					<option <?=in_array("2", $week_days)?'selected' : '';?> value="2">Monday</option>
+					<option <?=in_array("3", $week_days)?'selected' : '';?> value="3">Tuesday</option>
+					<option <?=in_array("4", $week_days)?'selected' : '';?> value="4">Wednesday</option>
+					<option <?=in_array("5", $week_days)?'selected' : '';?> value="5">Thursday</option>
+					<option <?=in_array("6", $week_days)?'selected' : '';?> value="6">Friday</option>
+					<option <?=in_array("7", $week_days)?'selected' : '';?> value="7">Saturday</option>
+			</select>
+			<?php echo form_error('week_days') ?>
+		
+		</div>
 	    <div class=" form-group">
 			 <label class="control-label " for="datetime">Start Date</label>
            
@@ -148,21 +173,7 @@ $this->load->view('_layout/siteheader');
 			<?php echo form_error('end_date') ?>
 		
 		</div>
-	    <div class=" form-group">
-			 <label class="control-label " for="varchar">Week Days</label>
-			<select class="form-control select2" multiple name="week_days[]" id="week_days" placeholder="Batch Pattern" >
-					<?php $week_days = explode(",",$week_days); ?>
-					<option <?=in_array("1", $week_days)?'selected' : '';?> value="1">Sunday</option>
-					<option <?=in_array("2", $week_days)?'selected' : '';?> value="2">Monday</option>
-					<option <?=in_array("3", $week_days)?'selected' : '';?> value="3">Tuesday</option>
-					<option <?=in_array("4", $week_days)?'selected' : '';?> value="4">Wednesday</option>
-					<option <?=in_array("5", $week_days)?'selected' : '';?> value="5">Thursday</option>
-					<option <?=in_array("6", $week_days)?'selected' : '';?> value="6">Friday</option>
-					<option <?=in_array("7", $week_days)?'selected' : '';?> value="7">Saturday</option>
-			</select>
-			<?php echo form_error('week_days') ?>
-		
-		</div>
+	    
 	    <div class=" form-group">
 			 <label class="control-label " for="int">Batch Capacity</label>
            
@@ -234,22 +245,34 @@ $this->load->view('_layout/siteheader');
 		</div>
 	    <div class=" form-group">
 			 <label class="control-label " for="tinyint">Course Fee Type</label>
-           <select class="form-control" name="course_fee_type" id="course_fee_type" placeholder="Course Fee Type" >
+			 <?php
+			 foreach ($row_course_fee_type as $row){
+				 $course_fee_type_name ='';
+				 if(($row['course_fee_type_id']==$course_fee_type)){
+					 $course_fee_type_name= $row['course_fee_type'];
+					 break;
+				 }
+			 }
+			 ?>
+			 <input type="hidden" class="form-control " name="course_fee_type" id="course_fee_type" placeholder="Course Fee Type" value="<?php echo $course_fee_type; ?>" />
+			<input readonly type="text" class="form-control " name="course_fee_type_name" id="course_fee_type_name" placeholder="Course Fee Type name" value="<?php echo $course_fee_type_name; ?>" />
+			
+           <!--<select readonly class="form-control" name="course_fee_type" id="course_fee_type" placeholder="Course Fee Type" >
 			        <option value="0">Select</option>
-			  <?php foreach ($row_course_fee_type as $row)
-				{ ?>
-					<option <?=($row['course_fee_type_id']==$course_fee_type)?'selected':'' ?> value="<?php echo $row['course_fee_type_id'];?>" ><?php echo $row['course_fee_type']; ?></option>
+			  <?php //foreach ($row_course_fee_type as $row)
+				//{ ?>
+					<option <? //= ($row['course_fee_type_id']==$course_fee_type)?'selected':'' ?> value="<?php //echo $row['course_fee_type_id'];?>" ><?php //echo $row['course_fee_type']; ?></option>
 				<?php 
-				}
-				?>
-			  </select>
+				//}
+				?> 
+			  </select>-->
 			  <?php echo form_error('course_fee_type') ?>
 		
 		</div>
 	    <div class=" form-group">
 			 <label class="control-label " for="float">Course Fee</label>
            
-			<input type="text" class="form-control " name="course_fee" id="course_fee" placeholder="Course Fee" value="<?php echo $course_fee; ?>" />
+			<input readonly type="text" class="form-control " name="course_fee" id="course_fee" placeholder="Course Fee" value="<?php echo $course_fee; ?>" />
 			<?php echo form_error('course_fee') ?>
 		
 		</div>
@@ -286,122 +309,44 @@ $this->load->view('_layout/siteheader');
     </div>
   </section>
 </div> <!-- Main content -->
-<?php $this->load->view('_layout/footer'); ?>
-	 
-
 
 <script type="text/javascript">
 $(document).ready(function(){
-var $category = $( '#category_id' ),
-	$course = $( '#course_id' ),
-    $options = $course.find( 'option' );
+	var $category = $( '#category_id' ),
+		$course = $( '#course_id' ),
+		$options = $course.find( 'option' );
     
-$category.on( 'change', function() {
-	$course.html( $options.filter( '[data-category="' + this.value + '"]' ) );
-	var fee = $("#course_id").find(':selected').data('fee');
-	$("#course_fee").val(fee);
-} ).trigger( 'change' );
+	$category.on( 'change', function() {
+		var category_id = $("#hdn_category_id").val();
+		var course_id = $("#hdn_course_id").val();
+		
+		$course.html( $options.filter( '[data-category="' + this.value + '"]' ) );
+		$course.prepend("<option value='0' selected='selected'>Please Select</option>");
+		//console.log('category_id '+category_id+' value '+this.value);
+		if(this.value == category_id) {
+			$("#course_id").val(course_id);
+		}
+		else {
+			$("#course_id").val(0);
+		}
+		
+		var fee = $("#course_id").find(':selected').data('fee');
+		var fee_type = $("#course_id").find(':selected').data('feetype');
+		var fee_type_name = $("#course_id").find(':selected').data('feetypename');
+		$("#course_fee").val(fee);
+		$("#course_fee_type").val(fee_type);
+		$("#course_fee_type_name").val(fee_type_name);
+	} ).trigger( 'change' );
 
-$("#course_id").change(function(){	 	
-var fee = $(this).find(':selected').data('fee');
-$("#course_fee").val(fee);
+	$("#course_id").change(function(){	 	
+		var fee = $(this).find(':selected').data('fee');
+		var fee_type = $("#course_id").find(':selected').data('feetype');
+		var fee_type_name = $("#course_id").find(':selected').data('feetypename');
+		$("#course_fee").val(fee);
+		$("#course_fee_type").val(fee_type);
+		$("#course_fee_type_name").val(fee_type_name);
+	});
 });
-});
-var form2 = $('#frm_edit');
-        var error1 = $('.alert-danger', form2);
-        var success1 = $('.alert-success', form2);
 
-        form2.validate({
-            errorElement: 'span', //default input error message container
-            errorClass: 'help-block', // default input error message class
-            focusInvalid: false, // do not focus the last invalid input
-            ignore: "",
-            rules: {
-	        course_id: {
-							required: true
-							},
-	        category_id: {
-							required: true
-							},
-	        batch_title: {
-							required: true
-							},
-	        description: {
-							required: true
-							},
-	        faculty_id: {
-							required: true
-							},
-	        branch_id: {
-							required: true
-							},
-	        batch_type: {
-							required: true
-							},
-	        batch_pattern: {
-							required: true
-							},
-	        start_date: {
-							required: true
-							},
-	        end_date: {
-							required: true
-							},
-	        week_days: {
-							required: true
-							},
-	        student_enrolled: {
-							required: true
-							},
-	        batch_capacity: {
-							required: true
-							},
-	        iscorporate: {
-							required: true
-							},
-	        currency_id: {
-							required: true
-							},
-	        batch_fee_type: {
-							required: true
-							},
-	        fees: {
-							required: true
-							},
-	        course_fee_type: {
-							required: true
-							},
-	        course_fee: {
-							required: true
-							},
-	        batch_status: {
-							required: true
-							},
-	        },
-			messages: {
-	        },highlight: function(element) { // hightlight error inputs
-                $(element)
-                        .closest('.form-group').addClass('has-error'); // set error class to the control group
-
-                $(".tab-content").find("div.tab-pane:has(div.has-error)").each(function(index, tab) {
-                    var id = $(tab).attr("id");
-                    $('a[href="#' + id + '"]').addClass('alert-danger');
-
-                });
-
-            },
-            unhighlight: function(element) { // revert the change done by hightlight
-                $(element)
-                        .closest('.form-group').removeClass('has-error'); // set error class to the control group
-
-            },
-            success: function(label) {
-                label
-                        .closest('.form-group').removeClass('has-error'); // set success class to the control group
-            },
-            submitHandler: function(form) {
-                    form.submit();
-              
-            }
-        });
 </script>
+<?php $this->load->view('_layout/footer'); ?>

@@ -9,13 +9,13 @@ $this->load->view('_layout/siteheader');
 <div class="main-content">
   <section class="section">
     <div class="section-header">
-       <h1>Courses_catalog <small>-Detail list of Courses_catalog</small></h1>
+       <h1>Courses Catalog <small>- Detail list of Courses Catalog</small></h1>
       <div class="section-header-breadcrumb">
         <div class="breadcrumb-item active">
           <a href="#">Dashboard</a>
         </div>
         <div class="breadcrumb-item">
-          Courses_catalog
+          Courses Catalog
         </div>
       </div>
     </div>
@@ -29,16 +29,14 @@ $this->load->view('_layout/siteheader');
 	  <div class="row">
         <div class="col-12 col-md-6 col-lg-6">
           <div class="card">
-            <form id="frm_create" name="frm_create" class="form-horizontal form-label-left" data-parsley-validate="" action="<?php echo $action; ?>" method="post">
-              <div class="card-header">
-                <h4>Courses_catalog</h4>
-              </div>
+            <form id="frm_create" name="frm_create" class="form-horizontal form-label-left" data-parsley-validate="" action="<?php echo $action; ?>" method="post" autocomplete="OFF">
               <div class="card-body">
 	   
 	    <div class=" form-group">
 			 <label class="control-label " for="varchar">Course Code</label>
          
-			<input type="text" class="form-control " name="course_code" id="course_code" placeholder="Course Code" value="<?php echo $course_code; ?>" />
+			<input type="text" class="form-control " name="course_code" id="course_code" placeholder="Course Code" value="<?php echo $course_code; ?>" onkeyup="check_course_code();" />
+			<div id="err_msg_course_code" class="text-danger"></div>
 			<?php echo form_error('course_code') ?>
 		
 		</div>
@@ -219,4 +217,28 @@ var form2 = $('#frm_create');
               
             }
         });
+		
+		function check_course_code(){
+			$("#err_msg_course_code").html("");
+			var course_code = $("#course_code").val();
+			if(course_code != ""){
+				$.ajax({
+					url: '<?php echo base_url(); ?>courses_catalog/check_exist',
+					type: 'post',
+					data: {val: course_code,col: 'course_code'},
+				   // dataType: 'json',
+					success:function(response){
+						//console.log(response);
+						if(response == 'false'){
+							$("#err_msg_course_code").html("Course Code "+course_code+" already exists");
+							$("#course_code").val("");
+						}
+						else
+						{ 
+							$("#err_msg_course_code").html("");
+						} 
+					}
+				});
+			}
+		}
 </script>

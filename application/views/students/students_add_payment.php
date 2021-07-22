@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 $this->load->view('_layout/siteheader');
 ?>
+
 <div class="main-content">
 
   <form class="modal-part" id="modal-login-part">
@@ -42,8 +43,9 @@ $this->load->view('_layout/siteheader');
 </div>
 <?php $this->load->view('_layout/footer'); ?>
 <script>
-$( document ).ready(function() {
-$("#modal-5").fireModal({
+$(document).ready(function() {
+	var me = $(this);
+me.fireModal({
   title: 'Login',
   body: $("#modal-login-part"),
   footerClass: 'bg-whitesmoke',

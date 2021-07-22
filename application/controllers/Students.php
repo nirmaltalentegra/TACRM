@@ -96,8 +96,8 @@ class Students extends APP_Controller
 	    'course_id' => set_value('course_id'),
 	    'created' => set_value('created'),
 	    'deleted_at' => set_value('deleted_at'),
-	    'fees_paid' => ($fees)?$fees:set_value('fees_paid'),
-	    'fees_payable' => set_value('fees_payable'),
+	    'fees_paid' => set_value('fees_paid'),
+	    'fees_payable' => ($fees) ? $fees : set_value('fees_payable'),
 	    'is_deleted' => set_value('is_deleted'),
 	    'student_id' => set_value('student_id'),
 	    'updated' => set_value('updated'),
@@ -146,28 +146,40 @@ class Students extends APP_Controller
 		$course_code = ($course_details =='failure')?'':$course_details[0]['course_code'];
 		$total_students = $this->Students_model->total_rows() + 1;
             $data = array(
-		'active' => '1',
-		'added_by' => $this->session->userdata('id'),
-		'batch_id' => $this->input->post('batch_id',TRUE),
-		'completion_date' => $this->input->post('completion_date',TRUE),
-		'course_completed' => 0,
-		'course_id' => $this->input->post('course_id',TRUE),
-		'created' => date('Y-m-d H:i:s'),
-		'fees_paid' => $this->input->post('fees_paid',TRUE),
-		'fees_payable' => $this->input->post('fees_payable',TRUE),
-		'user_id' => $user_id,
-		'name' => $student_name,
-		'student_enrollment_id' => $batch_code."/".$course_code."/".$total_students,
-	    );
+				'active' => '1',
+				'added_by' => $this->session->userdata('id'),
+				'batch_id' => $this->input->post('batch_id',TRUE),
+				'completion_date' => $this->input->post('completion_date',TRUE),
+				'course_completed' => 0,
+				'course_id' => $this->input->post('course_id',TRUE),
+				'created' => date('Y-m-d H:i:s'),
+				'fees_paid' => $this->input->post('fees_paid',TRUE),
+				'fees_payable' => $this->input->post('fees_payable',TRUE),
+				'user_id' => $user_id,
+				'name' => $student_name,
+				'student_enrollment_id' => $batch_code."/".$course_code."/".$total_students,
+				);
 		//echo "<pre>";print_r($data);exit;
             $insert_id = $this->Students_model->insert($data);
 			if($insert_id){
-			$batch_student_data = array(
-			'student_id' => $insert_id,
-			'batch_id' => $this->input->post('batch_id',TRUE),
-			'created' => date('Y-m-d H:i:s'),
-			);
-			$this->Batches_students_model->insert($batch_student_data);
+				$batch_student_data = array(
+				'student_id' => $insert_id,
+				'batch_id' => $this->input->post('batch_id',TRUE),
+				'created' => date('Y-m-d H:i:s'),
+				);
+				$this->Batches_students_model->insert($batch_student_data);
+				
+				//Insert into tbl_payments
+				if($this->input->post('fees_paid') > 0) {
+					$insdata['student_id'] = $insert_id;
+					$insdata['user_id'] = $user_id;
+					$insdata['course_id'] = $this->input->post('course_id',TRUE);
+					$insdata['date'] = date('Y-m-d H:i:s');
+					$insdata['amount_paid'] = $this->input->post('fees_paid',TRUE);
+					$insdata['note'] = "";
+					$insdata['created_at']  = date('Y-m-d H:i:s');
+					$id = $this->Common_model->insert_records_dynamically('tbl_payments', $insdata);
+				}	
 			}
             $this->session->set_flashdata('message', 'Create Record Success');
 			if($this->input->post('frm_page',TRUE) == 'batch'){
@@ -349,6 +361,7 @@ class Students extends APP_Controller
 	public function student_course_batch($user_id)
 	{
 		$result = $this->Students_model->get_studentdetail_by_user_id($user_id);
+		//echo "<br> str ".$this->db->last_query();exit;
 		$data['title']  = 'TRAMS::SCP::Students';
 		$data['result'] = $result;
 		$this->_tpl('students/students_detail', $data);
@@ -360,9 +373,174 @@ class Students extends APP_Controller
 		$data['user_id'] = $_POST['user_id'];
 		$data['course_id'] = $_POST['course_id'];
 		$data['date'] = $_POST['date'];
-		$data['amt_paid'] = $_POST['amt_paid'];
+		$data['amount_paid'] = $_POST['amt_paid'];
 		$data['note'] = $_POST['note'];
+		$data['created_at']  = date('Y-m-d H:i:s');
+		$id = $this->Common_model->insert_records_dynamically('tbl_payments', $data);
+		if($id){
+		$row_arr = $this->Common_model->get_details_dynamically('tbl_payments','student_id',$data['student_id']);
+		$fee_paid = 0;
+		foreach($row_arr as $row){
+			$fee_paid+= $row['amount_paid'];
+		}
+		$data_student = array(
+		'fees_paid' => $fee_paid,
+		'updated' => date('Y-m-d H:i:s'),
+	    );
+
+            $this->Students_model->update($data['student_id'], $data_student);
+			$response = "success";
+		}
+		else{
+			$response = "failure";
+		}
+		echo $response;
+	}
+	
+	
+	public function student_edit_payment()
+	{
+		$student_id = $_POST['student_id'];
+		$data['id'] = $_POST['txt_id'];
+		$data['date'] = $_POST['txt_date'];
+		$data['amount_paid'] = $_POST['txt_amount_paid'];
+		$data['note'] = $_POST['txt_note'];
+		$data['created_at']  = date('Y-m-d H:i:s');
+		$id = $this->Common_model->update_records_dynamically('tbl_payments', $data,'id',$data['id']);
+		if(!empty($id))
+		{
+			$fee_paid=0;
+			$row_arr=$this->Common_model->get_details_dynamically('tbl_payments','student_id',$student_id);			
+			foreach($row_arr as $row)
+			{
+				$fee_paid+=$row['amount_paid'];
+			}
+			$data_student = array(
+				'fees_paid' => $fee_paid,
+				'updated' => date('Y-m-d H:i:s'),
+			);
+            $this->Students_model->update($student_id, $data_student);
+			$response = "success";
+		}
+		else
+		{
+			$response = "failure";
+		}
+		echo $response;
+	}
+	
+	public function student_fetch_details()
+	{
+		$student_id = $_POST['id'];
+		$amt = $_POST['amt'];
+		$row_arr=$this->Common_model->get_details_dynamically('students','student_id',$student_id);
+		foreach($row_arr as $row)
+		{
+			$student_name=$row['name'];
+		}		
+		   $no = floor($amt);
+		   $point = round($amt - $no, 2) * 100;
+		   $hundred = null;
+		   $digits_1 = strlen($no);
+		   $i = 0;
+		   $str = array();
+		   $words = array('0' => '', '1' => 'One', '2' => 'Two',
+			'3' => 'Three', '4' => 'Four', '5' => 'Five', '6' => 'Six',
+			'7' => 'Seven', '8' => 'Eight', '9' => 'Nine',
+			'10' => 'Ten', '11' => 'Eleven', '12' => 'Twelve',
+			'13' => 'Thirteen', '14' => 'Fourteen',
+			'15' => 'Fifteen', '16' => 'Sixteen', '17' => 'Seventeen',
+			'18' => 'Eighteen', '19' =>'Nineteen', '20' => 'Twenty',
+			'30' => 'Thirty', '40' => 'Forty', '50' => 'Fifty',
+			'60' => 'Sixty', '70' => 'Seventy',
+			'80' => 'Eighty', '90' => 'Ninety');
+		   $digits = array('', 'Hundred', 'Thousand', 'Lakh', 'Crore');
+		   while ($i < $digits_1) {
+			 $divider = ($i == 2) ? 10 : 100;
+			 $amt = floor($no % $divider);
+			 $no = floor($no / $divider);
+			 $i += ($divider == 10) ? 1 : 2;
+			 if ($amt) {
+				$plural = (($counter = count($str)) && $amt > 9) ? 's' : null;
+				$hundred = ($counter == 1 && $str[0]) ? ' and ' : null;
+				$str [] = ($amt < 21) ? $words[$amt] .
+					" " . $digits[$counter] . $plural . " " . $hundred
+					:
+					$words[floor($amt / 10) * 10]
+					. " " . $words[$amt % 10] . " "
+					. $digits[$counter] . $plural . " " . $hundred;
+			 } else $str[] = null;
+		  }
+		  $str = array_reverse($str);
+		  $result = implode('', $str);
+		  $points = ($point) ?
+			"." . $words[$point / 10] . " " . 
+				  $words[$point = $point % 10] : '';
+		  $output = $result . "Rupees  ";
+		
+		$data = array(
+			'data1'=>$student_name,
+			'data2'=>$output,
+		);
 		echo json_encode($data);
+	}
+	
+	public function get_student_payment()
+	{
+		$data['student_id'] = $_POST['student_id'];
+		$row_arr = $this->Common_model->get_details_dynamically('tbl_payments','student_id',$data['student_id'],'date','DESC');
+		//echo($this->db->last_query());
+		//print_r($row_arr);exit;
+		$res_arr = array();
+		foreach ($row_arr as $row) {
+			$id = $row['id'];
+			$user_id = $row['user_id'];
+			$student_id = $row['student_id'];
+			$course_id = $row['course_id'];
+			$date = date("d-m-Y",strtotime($row['date']));
+			$amount_paid = $row['amount_paid'];
+			$note = $row['note']; 
+
+			$res_arr[] = array("id" => $id, "user_id" => $user_id,  "student_id" => $student_id, "course_id" => $course_id, "date" => $date, "amount_paid" => $amount_paid, "note" => $note );
+		}
+
+		echo json_encode($res_arr); 
+		//echo json_encode($res_arr);
+		//echo $data['student_id'];
+	}
+	
+	public function student_delete_payment()
+	{
+		$id = $_POST['id'];
+	
+		$row_arr=$this->Common_model->get_details_dynamically('tbl_payments','id',$id);
+		foreach($row_arr as $row)
+		{
+			$student_id=$row['student_id'];
+		}
+		
+		$row = $this->Common_model->delete_records_dynamically('tbl_payments','id',$id);
+		
+		$fee_paid=0;
+		$row_arr=$this->Common_model->get_details_dynamically('tbl_payments','student_id',$student_id);
+		if($row_arr=="failure")
+		{
+			$fee_paid=0;
+		}
+		else
+		{
+			foreach($row_arr as $row)
+			{
+				$fee_paid+=$row['amount_paid'];
+			}
+		}
+		$data_student = array(
+			'fees_paid' => $fee_paid,
+			'updated' => date('Y-m-d H:i:s'),
+		);
+		$this->Students_model->update($student_id, $data_student);
+		
+		echo "Done";
 	}
 
 }

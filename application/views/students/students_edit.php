@@ -282,20 +282,22 @@ $("#course_completed").change(function(){
 });
 });
 $(document).ready(function(){
-$("#course_id").change(function(){
-	$('#batch_id').html( $batch.find('option').filter( '[data-course="' + this.value + '"]' ) );
+	var $batch = $( '#batch_id' ),
+   $options = $batch.find( 'option' );
+   $("#course_id").change(function(){
+	$batch.html( $options.filter( '[data-course="' + this.value + '"]' ) );
 	var fee = $("#batch_id").find(':selected').data('fees');
-	$("#fees_paid").val(fee);
-} ).trigger( 'change' );
+	$("#fees_payable").val(fee);
+} );
 });
 $(document).ready(function(){
      $("#batch_id").change(function(){
 		 $("#course_name").val('');
 		 $("#course_id").val('');
-		 $("#fees_paid").val('');
+		 $("#fees_payable").val('');
 		 
 		var course_id = $(this).find(':selected').data('course');
-		var fees_paid = $(this).find(':selected').data('fees');
+		var fees_payable = $(this).find(':selected').data('fees');
 		
 		var batch_id = $("#batch_id").val();
 		var user_id = $("#user_id").val();
@@ -319,7 +321,7 @@ $(document).ready(function(){
 					{
 						$("#err_batch_msg").html(""); 
 						//$("#course_name").val(response['course_name']);
-						$("#fees_paid").val(fees_paid);
+						$("#fees_payable").val(fees_payable);
 						//$("#course_id").val(course_id);
 					} 
 					 

@@ -121,6 +121,7 @@ class Batches extends APP_Controller
 			'updated' => set_value('updated'), 
 	);
 	      $data['row_courses'] = $this->Common_model->get_table_details_dynamically('courses_catalog', 'course_id', $oder_by = NULL);
+		
 		  $data['row_categories'] = $this->Common_model->get_table_details_dynamically('categories', 'category_id', $oder_by = NULL);
 		  $data['row_faculty'] = $this->Common_model->get_table_details_dynamically('profiles', 'id', $oder_by = NULL);
 		  $data['row_branch'] = $this->Common_model->get_table_details_dynamically('branch', 'branch_id', $oder_by = NULL);

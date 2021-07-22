@@ -25,11 +25,15 @@ class Student_certificate extends APP_Controller {
 				
 				$course = $arr_students_list->course_name;
 				$student_name = ucwords($arr_students_list->name);
-				$completion_date = date('d-m-Y',strtotime($arr_students_list->completion_date));
+				$completion_date = ($arr_students_list->completion_date != "" || $arr_students_list->completion_date != "0000-00-00 00:00:00") ? date('d-m-Y',strtotime($arr_students_list->completion_date)) : "";
+				$student_enrollment_id = $arr_students_list->student_enrollment_id;
+				$student_did = $arr_students_list->student_did;
+				$certificate_id = $arr_students_list->certificate_id;
+				
 				$image_url = base_url().$this->config->item('certificate_file_path');
 				
-				$template = str_replace(array('$course','$student_name','$image_url','$completion_date'),
-							array($course,$student_name,$image_url,$completion_date),
+				$template = str_replace(array('$course','$student_name','$image_url','$completion_date','$student_enrollment_id','$student_did',								'$certificate_id'),
+							array($course,$student_name,$image_url,$completion_date,$student_enrollment_id,$student_did,$certificate_id),
 							$arr_certificate_list[0]['template_data']);
 				//echo "<br> template ".$template;
 				//exit;

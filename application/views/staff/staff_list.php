@@ -87,17 +87,24 @@ $this->load->view('_layout/siteheader');
 		              <td><?php echo $staff->last_login ?></td>
                      <!-- <td><a href="" class="btn btn-secondary">Detail</a></td> -->
 					<td>	
-				<?php 
-                        echo '<a class="btn btn-icon btn-sm btn-primary" href="'.site_url('staff/update/'.$staff->id).'" title="Edit">';
-			echo '<i class="far fa-edit"></i>'; 
+					<div class="dropdown d-inline">
+								<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								  Actions
+								</button>
+								<div class="dropdown-menu">
+								<?php 
+								 echo '<a class="dropdown-item has-icon"  href="'.site_url('staff/read/'.$staff->id).'" title="Details">';
+			echo '<i class="fas fa-info-circle"></i>View Details</i>'; 
+                        echo '</a>';    
+                        echo '<a class="dropdown-item has-icon"  href="'.site_url('staff/update/'.$staff->id).'" title="Edit">';
+			echo '<i class="far fa-edit"></i> Edit'; 
                         echo '</a>';
-                        echo '<a class="btn btn-icon btn-sm btn-info" href="'.site_url('staff/read/'.$staff->id).'" title="Details">';
-			echo '<i class="fas fa-info-circle"></i>'; 
-                        echo '</a>';                                              
-                        echo '<a class="btn btn-icon btn-sm btn-danger" href="'.site_url('staff/delete/'.$staff->id).'" title="Delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')">';
-			echo '<i class="fas fa-times"></i>'; 
+                        echo '<a class="dropdown-item has-icon"  href="'.site_url('staff/delete/'.$staff->id).'" title="Delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')">';
+			echo ' <i class="fas fa-times"></i> Delete'; 
                         echo '</a>';			
 					?>
+								</div>
+						  </div> 
 				</td>
 					
                     </tr>

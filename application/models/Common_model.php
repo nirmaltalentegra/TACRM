@@ -44,6 +44,7 @@ class Common_model extends CI_Model {
     public function update_records_dynamically($table_name, $data, $where_field, $field_value) {
         $this->db->where($where_field, $field_value);
         $this->db->update($table_name, $data);
+		return true;
     }
 	
     public function delete_records_dynamically($table_name, $where_field, $field_value) {

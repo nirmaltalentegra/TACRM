@@ -52,12 +52,22 @@ $this->load->view('_layout/siteheader');
 		<div class=" form-group">
 			 <label class="control-label " for="int">Course</label>
 			  <select class="form-control" name="course_id" id="course_id" placeholder="Course Id" >
-			        <option value="0">Select</option>
-			  <?php foreach ($row_courses as $row)
-				{ ?>
-				    <option data-category ="<?php echo $row['category_id'];  ?>" data-fee = "<?php echo $row['course_fees'];  ?>" value="<?php echo $row['course_id'];?>" ><?php echo $row['course_name']; ?></option>
-				<?php 
+			        <option value="0" >Select</option>
+			  <?php 
+			  foreach ($row_courses as $row)
+			  {  
+			  $course_fee_type_name = '';
+			  foreach ($row_course_fee_type as $row_type)
+				{ 
+				if($row_type['course_fee_type_id'] == $row['course_fee_type'])
+				{
+					$course_fee_type_name = $row_type['course_fee_type'];
 				}
+				} 
+				?>
+				    <option data-category ="<?php echo $row['category_id'];  ?>"  data-feetype ="<?php echo $row['course_fee_type'];  ?>" data-feetypename = "<?php echo $course_fee_type_name;  ?>" data-fee = "<?php echo $row['course_fees'];  ?>" value="<?php echo $row['course_id'];?>" ><?php echo $row['course_name']; ?></option>
+				<?php 
+				} 
 				?>
 			  </select>
 
@@ -137,6 +147,20 @@ $this->load->view('_layout/siteheader');
 			<?php echo form_error('batch_pattern') ?>
 		
 		</div>
+		<div class=" form-group">
+			 <label class="control-label " for="varchar">Week Days</label>
+			<select class="form-control select2" multiple name="week_days[]" id="week_days" placeholder="Batch Pattern" >
+					<option value="1">Sunday</option>
+					<option value="2">Monday</option>
+					<option value="3">Tuesday</option>
+					<option value="4">Wednesday</option>
+					<option value="5">Thursday</option>
+					<option value="6">Friday</option>
+					<option value="7">Saturday</option>
+			</select>
+			<?php echo form_error('week_days') ?>
+		
+		</div>
 	    <div class=" form-group">
 			 <label class="control-label " for="datetime">Start Date</label>
          
@@ -151,20 +175,7 @@ $this->load->view('_layout/siteheader');
 			<?php echo form_error('end_date') ?>
 		
 		</div>
-	    <div class=" form-group">
-			 <label class="control-label " for="varchar">Week Days</label>
-			<select class="form-control select2" multiple name="week_days[]" id="week_days" placeholder="Batch Pattern" >
-					<option value="1">Sunday</option>
-					<option value="2">Monday</option>
-					<option value="3">Tuesday</option>
-					<option value="4">Wednesday</option>
-					<option value="5">Thursday</option>
-					<option value="6">Friday</option>
-					<option value="7">Saturday</option>
-			</select>
-			<?php echo form_error('week_days') ?>
-		
-		</div>
+	    
 	    <div class=" form-group">
 			 <label class="control-label " for="int">Batch Capacity</label>
          
@@ -236,22 +247,26 @@ $this->load->view('_layout/siteheader');
 		</div>
 	    <div class=" form-group">
 			 <label class="control-label " for="tinyint">Course Fee Type</label>
-			 <select class="form-control" name="course_fee_type" id="course_fee_type" placeholder="Course Fee Type" >
+			  <input type="hidden" class="form-control " name="course_fee_type" id="course_fee_type" placeholder="Course Fee Type" value="" />
+			
+			 <input  readonly type="text" class="form-control " name="course_fee_type_name" id="course_fee_type_name" placeholder="Course Fee Type" value="" />
+			
+			 <!--<select class="form-control" name="course_fee_type" id="course_fee_type" placeholder="Course Fee Type" >
 			        <option value="0">Select</option>
-			  <?php foreach ($row_course_fee_type as $row)
-				{ ?>
-					<option value="<?php echo $row['course_fee_type_id'];?>" ><?php echo $row['course_fee_type']; ?></option>
+			  <?php //foreach ($row_course_fee_type as $row)
+				//{ ?>
+					<option value="<?php //echo $row['course_fee_type_id'];?>" ><?php //echo $row['course_fee_type']; ?></option>
 				<?php 
-				}
+				//}
 				?>
-			  </select>
+			  </select>-->
 			<?php echo form_error('course_fee_type') ?>
 		
 		</div>
 	    <div class=" form-group">
 			 <label class="control-label " for="float">Course Fee</label>
          
-			<input  type="text" class="form-control " name="course_fee" id="course_fee" placeholder="Course Fee" value="<?php //echo $course_fee; ?>" />
+			<input  readonly type="text" class="form-control " name="course_fee" id="course_fee" placeholder="Course Fee" value="<?php //echo $course_fee; ?>" />
 			<?php echo form_error('course_fee') ?>
 		
 		</div>
@@ -300,15 +315,25 @@ var $category = $( '#category_id' ),
 	$course = $( '#course_id' ),
     $options = $course.find( 'option' );
     
-$category.on( 'change', function() {
+$category.change(function(){	
+	//$course.html( $options.filter( '[data-category="0"]' ) );
 	$course.html( $options.filter( '[data-category="' + this.value + '"]' ) );
+	$course.prepend("<option value='0' selected='selected'>Please Select</option>");
 	var fee = $("#course_id").find(':selected').data('fee');
+	var fee_type = $("#course_id").find(':selected').data('feetype');
+	var fee_type_name = $("#course_id").find(':selected').data('feetypename');
 	$("#course_fee").val(fee);
-} ).trigger( 'change' );
+	$("#course_fee_type").val(fee_type);
+	$("#course_fee_type_name").val(fee_type_name);
+} );
 
-$("#course_id").change(function(){	 	
+$("#course_id").change(function(){	 	 
 var fee = $(this).find(':selected').data('fee');
+var fee_type_name = $("#course_id").find(':selected').data('feetypename');
+var fee_type = $("#course_id").find(':selected').data('feetype');
 $("#course_fee").val(fee);
+$("#course_fee_type").val(fee_type);
+$("#course_fee_type_name").val(fee_type_name);
 });
 });
 

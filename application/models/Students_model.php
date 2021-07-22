@@ -184,6 +184,19 @@ class Students_model extends CI_Model
         }
     }
 	
+	function check_student_by_certificate_id($certifcation_id) 
+    {
+        $this->db->where('certificate_id',$certifcation_id);
+        $query = $this->db->get($this->table);
+		//$result = $query->result_array();
+        $count = $query->num_rows();
+        if ($count > 0) {
+            return 'success';
+        } else {
+            return 'failure';
+        }
+    }
+	
 	function get_students_course_details($student_id)
     {
 		$this->db->select('students.* ,batches.batch_title,courses_catalog.course_name');
@@ -210,7 +223,16 @@ class Students_model extends CI_Model
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();    
     }
-
+	function get_studentdetail_by_certification_id($certificate_id)
+    {
+		$this->db->select('students.*,courses_catalog.course_name');
+		//$this->db->join('users', 'users.id = students.user_id');
+		//$this->db->join('batches', 'batches.batch_id = students.batch_id');
+		$this->db->join('courses_catalog', 'courses_catalog.course_id = students.course_id');
+		$this->db->where('certificate_id', $certificate_id);
+        //$this->db->order_by($this->id, $this->order);
+        return $this->db->get($this->table)->result();    
+    }
 }
 
 /* End of file Students_model.php */

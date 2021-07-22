@@ -74,7 +74,7 @@ class Courses_catalog extends APP_Controller
         $data = array(
             'button' => 'Create',
             'action' => site_url('courses_catalog/create_action'),
-			'title'  => 'TRAMS::SCP::Create Courses_catalog',
+			'title'  => 'TRAMS::SCP::Create Courses catalog',
 	    'active' => set_value('active'),
 	    'added_by' => set_value('added_by'),
 	    'category_id' => set_value('category_id'),
@@ -217,7 +217,7 @@ class Courses_catalog extends APP_Controller
 	$this->form_validation->set_rules('course_name', 'course name', 'trim|required');
 	$this->form_validation->set_rules('course_summary', 'course summary', 'trim|required'); 
 		
-	$this->form_validation->set_rules('notes', 'notes', 'trim|required');
+	//$this->form_validation->set_rules('notes', 'notes', 'trim|required');
 		
 	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
@@ -228,6 +228,7 @@ class Courses_catalog extends APP_Controller
 	$col = $this->input->post('col');
 	$id = isset($_POST['id']) ? $_POST['id'] : '';
 	$res = $this->Courses_catalog_model->check_exist($val,$col,$id);
+	//echo "<br> str ".$this->db->last_query();
 	if($res){
 		echo 'false';
 	}
