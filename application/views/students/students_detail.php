@@ -211,6 +211,7 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
 			</div>
 			<div class="modal-body">
 				<img src="<?php echo base_url(); ?>assets/logo.png" alt="NoImg" width="100%" />
+				<input type="hidden" id="PaymentID" />
 				<div class="table-responsive">
 					<table>
 						<thead>
@@ -267,7 +268,8 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
 							</tr>
 						</tbody>
 					</table>
-				</div>
+				</div><br/><br/>
+				<button class="btn btn-info" id="DownloadPDF"><i class="fas fa-cloud-download"></i> Download PDF</button>
 			</div>
 		</div>
 	</div>
@@ -282,6 +284,10 @@ defined('BASEPATH') OR exit('No direct script access allowed'); $this->load->vie
 		window.location.href = "<?php echo base_url(); ?>student_certificate/print_certificate/"+student_id;
 	});
 
+$("#DownloadPDF").click(function(){
+	var student_id = $("#PaymentID").val();
+	window.location.href = "<?php echo base_url(); ?>student_certificate/print_payment/"+student_id;
+});
 
 $(".view_payments").click(function(){
 	var me = $(this);
@@ -302,7 +308,7 @@ $(".view_payments").click(function(){
 					var date = response[j]['date'];
 					var amount_paid = response[j]['amount_paid'];
 					var note = response[j]['note'];
-					str_res += '<tr><td>'+date	+'</td><td>Rs. '+amount_paid+'</td><td>'+note+ '</td><td><a class="dropdown-item has-icon print_payment" data-date="'+date+'"  data-id="'+id+'" data-amount_paid="'+amount_paid+'" data-note="'+note+'" ><i class="fas fa-print"></i></a><a class="dropdown-item has-icon edit_payment" data-date="'+date+'"  data-id="'+id+'" data-amount_paid="'+amount_paid+'" data-note="'+note+'" ><i class="fas fa-edit"></i></a><a class="dropdown-item has-icon delete_payment" data-id="'+id+'" ><i class="fas fa-trash"></i></a></td><tr>';
+					str_res += '<tr><td>'+date	+'</td><td>Rs. '+amount_paid+'</td><td>'+note+ '</td><td><a class="dropdown-item has-icon print_payment" data-date="'+date+'"  data-id="'+id+'" data-amount_paid="'+amount_paid+'" data-note="'+note+'" ><i class="fas fa-print"></i></a><a class="dropdown-item has-icon edit_payment" data-date="'+date+'"  data-id="'+id+'" data-amount_paid="'+amount_paid+'" data-note="'+note+'" ><i class="fas fa-edit"></i></a><a class="dropdown-item has-icon delete_payment" data-id="'+id+'" ><i class="fas fa-trash"></i></a><a href="<?php echo base_url(); ?>Students/send_email_with_pdf/'+id+'" class="dropdown-item has-icon" data-date="'+date+'"  data-id="'+id+'" data-amount_paid="'+amount_paid+'" data-note="'+note+'" ><i class="fas fa-envelope"></i></a></td><tr>';
 				}
 				$("#PaymentListData").html(str_res);
 			}
@@ -425,6 +431,7 @@ $(document).on("click", ".print_payment", function(e) {
 	var amount_paid = mee.attr('data-amount_paid');
 	var note = mee.attr('data-note');
 	
+	$("#PaymentID").val(id)
 	$("#PaymentDate").html(date);
 	$("#PaymentAmt").html("Rs. "+mee.attr('data-amount_paid'));
 	$.ajax({

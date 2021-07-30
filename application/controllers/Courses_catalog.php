@@ -192,12 +192,12 @@ class Courses_catalog extends APP_Controller
         $row = $this->Courses_catalog_model->get_by_id($id);
 
         if ($row) {
-           // $this->Courses_catalog_model->delete($id);
-		   $data = array(
-			'is_deleted' => '1',
-			'deleted_at' => date('Y-m-d H:i:s'), 
-			);
-            $this->Courses_catalog_model->update($id, $data);
+            $this->Courses_catalog_model->delete($id);
+		   //$data = array(
+			//'is_deleted' => '1',
+			//'deleted_at' => date('Y-m-d H:i:s'), 
+			//);
+            //$this->Courses_catalog_model->update($id, $data);
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('courses_catalog'));
         } else {
