@@ -113,21 +113,21 @@ $this->load->view('_layout/siteheader');
 									<?php echo form_error('company') ?>
 
 								</div>
-								<div class=" form-group">
+								<!--<div class=" form-group">
 									<label class="control-label " for="receivables">Receivables</label>
 
-									<input type="text" class="form-control " name="receivables" id="receivables" placeholder="receivables" value="<?php echo $receivables; ?>" />
-									<?php echo form_error('receivables') ?>
+									<input type="text" class="form-control " name="receivables" id="receivable" placeholder="receivables" value="<?php //echo $receivables; ?>" />
+									<?php //echo form_error('receivables') ?>
 
 								</div>
 
 								<div class=" form-group">
 									<label class="control-label " for="credits">Credits</label>
 
-									<input type="text" class="form-control " name="credits" id="credits" placeholder="credits" value="<?php echo $credits; ?>" />
-									<?php echo form_error('credits') ?>
+									<input type="text" class="form-control " name="credits" id="credit" placeholder="credits" value="<?php //echo $credits; ?>" />
+									<?php //echo form_error('credits') ?>
 
-								</div>
+								</div>-->
 
 								<div class=" form-group">
 									<label class="control-label " for="int">Status</label>
@@ -185,9 +185,6 @@ $this->load->view('_layout/siteheader');
 				required: true
 			},
 			firstname: {
-				required: true
-			},
-			middlename: {
 				required: true
 			},
 			lastname: {

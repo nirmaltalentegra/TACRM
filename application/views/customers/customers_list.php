@@ -55,10 +55,11 @@ $this->load->view('_layout/siteheader');
                                         <th>Company</th>
                                         <th>Email</th>
                                         <th>Phone/Mobile</th>
-                                        <th>Receivables</th>
+										<th>Created At</th>
+										<th>Status</th>
+                                        <!--<th>Receivables</th>
                                         <th>Credits</th>
-                                        <th>Created At</th>
-                                        <th>Updated At</th>
+                                        <th>Updated At</th>-->
 
                                         <th>Action</th>
 
@@ -68,6 +69,15 @@ $this->load->view('_layout/siteheader');
                                     <?php
                                     $start = 0;
                                     foreach ($data as $customer) {
+										if($customer->prefix == 0) {
+											$prefix = "Mrs.";
+										}
+										else if($customer->prefix == 1) {
+											$prefix = "Mr.";
+										}
+										else if($customer->prefix == 2) {
+											$prefix = "Miss.";
+										}										
                                     ?>
                                         <tr>
                                             <td>
@@ -78,7 +88,7 @@ $this->load->view('_layout/siteheader');
                                             </td>
                                             <!-- <td><?php //echo $c->name 
                                                         ?></td> -->
-                                            <td><?php echo $customer->prefix ?></td>
+                                            <td><?php echo $prefix ?></td>
                                             <td><?php echo $customer->firstname ?></td>
                                             <td><?php echo $customer->middlename ?></td>
                                             <td><?php echo $customer->lastname ?></td>
@@ -87,26 +97,34 @@ $this->load->view('_layout/siteheader');
                                             <td><?php echo $customer->company ?></td>
                                             <td><?php echo $customer->email ?></td>
                                             <td><?php echo $customer->phone ?></td>
-                                            <td><?php echo $customer->receivables ?></td>
+											<td><?php echo $customer->created_at ?></td>
+                                            <!--<td><?php echo $customer->receivables ?></td>
                                             <td><?php echo $customer->credits ?></td>
-                                            <td><?php echo $customer->created_at ?></td>
-
-                                            <td><?php echo $customer->updated_at ?></td>
+                                            <td><?php echo $customer->updated_at ?></td>-->
                                             <td><?php if ($customer->status == 1) echo "Active";
                                                 else echo "Inactive"; ?></td>
 
                                             <td style="text-align:center" width="200px">
-                                                <?php
-                                                echo anchor(site_url('customers/read/' . $customer->id), 'Read');
-                                                echo ' | ';
-                                                echo anchor(site_url('customers/update/' . $customer->id), 'Update');
-                                                echo ' | ';
-                                                echo anchor(site_url('customers/delete/' . $customer->id), 'Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
-                                                echo ' | ';
-                                                echo anchor(site_url('customers/send_email_verification/' . $customer->id), 'Send Verification Email');
-
-
-                                                ?>
+											<div class="dropdown d-inline">
+								<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								  Actions
+								</button>
+								<div class="dropdown-menu">
+								<?php 
+								 echo '<a class="dropdown-item has-icon"  href="'.site_url('customers/read/' . $customer->id).'" title="Read">';
+								echo '<i class="fas fa-info-circle"></i>View Details</i>'; 
+											echo '</a>';    
+											echo '<a class="dropdown-item has-icon"  href="'.site_url('customers/update/' . $customer->id).'" title="Update">';
+								echo '<i class="far fa-edit"></i> Update'; 
+											echo '</a>';
+											echo '<a class="dropdown-item has-icon"  href="'.site_url('customers/delete/' . $customer->id).'" title="Delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')">';
+								echo ' <i class="fas fa-times"></i> Delete'; 
+											echo '</a>';			
+						//echo ' | ';
+                                                //echo anchor(site_url('customers/send_email_verification/' . $customer->id), 'Send Verification Email');
+					?>
+								</div>
+						  </div> 
                                             </td>
                                         </tr>
                                     <?php

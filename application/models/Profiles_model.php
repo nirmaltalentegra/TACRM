@@ -42,7 +42,12 @@ class Profiles_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
-	
+	// get data by user_id
+	function get_by_user_id($id)
+    {
+        $this->db->where('user_id', $id);
+        return $this->db->get($this->table)->row();
+    }
 	
 	// get data array by id
     function get_profiles($id)
@@ -117,6 +122,12 @@ class Profiles_model extends CI_Model
     function update($id, $data)
     {
         $this->db->where($this->id, $id);
+        $this->db->update($this->table, $data);
+    }
+	
+	function update_profile($id, $data)
+    {
+        $this->db->where('user_id', $id);
         $this->db->update($this->table, $data);
     }
 

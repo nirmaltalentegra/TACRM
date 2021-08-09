@@ -28,8 +28,8 @@ class Batches_students_model extends CI_Model
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }
-	
-	// get all data array
+
+    // get all data array
     function get_all_batches_students()
     {
         $this->db->order_by($this->id, $this->order);
@@ -42,86 +42,101 @@ class Batches_students_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
-	
-	
-	// get data array by id
+
+
+    // get data array by id
     function get_batches_students($id)
     {
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row_array();
     }
-	    
+
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL)
+    {
         $this->db->like('batch_id', $q);
-	$this->db->or_like('active', $q);
-	$this->db->or_like('certified', $q);
-	$this->db->or_like('created', $q);
-	$this->db->or_like('faculty_comments', $q);
-	$this->db->or_like('faculty_id', $q);
-	$this->db->or_like('faculty_rating', $q);
-	$this->db->or_like('student_comments', $q);
-	$this->db->or_like('student_id', $q);
-	$this->db->or_like('student_rating', $q);
-	$this->db->or_like('updated', $q);
-	$this->db->from($this->table);
+        $this->db->or_like('active', $q);
+        $this->db->or_like('certified', $q);
+        $this->db->or_like('created', $q);
+        $this->db->or_like('faculty_comments', $q);
+        $this->db->or_like('faculty_id', $q);
+        $this->db->or_like('faculty_rating', $q);
+        $this->db->or_like('student_comments', $q);
+        $this->db->or_like('student_id', $q);
+        $this->db->or_like('student_rating', $q);
+        $this->db->or_like('updated', $q);
+        $this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $sort_column = '',$sort_by = '',$q = NULL) {
-		if($sort_column!='' && $sort_by!= '' ){
+    function get_limit_data($limit, $start = 0, $sort_column = '', $sort_by = '', $q = NULL)
+    {
+        if ($sort_column != '' && $sort_by != '') {
             $this->db->order_by($sort_column, $sort_by);
+        } else {
+            $this->db->order_by($this->id, $this->order);
         }
-		else { 
-        $this->db->order_by($this->id, $this->order);
-		}
         $this->db->like('batch_id', $q);
-	$this->db->or_like('active', $q);
-	$this->db->or_like('certified', $q);
-	$this->db->or_like('created', $q);
-	$this->db->or_like('faculty_comments', $q);
-	$this->db->or_like('faculty_id', $q);
-	$this->db->or_like('faculty_rating', $q);
-	$this->db->or_like('student_comments', $q);
-	$this->db->or_like('student_id', $q);
-	$this->db->or_like('student_rating', $q);
-	$this->db->or_like('updated', $q);
-	$this->db->limit($limit, $start);
+        $this->db->or_like('active', $q);
+        $this->db->or_like('certified', $q);
+        $this->db->or_like('created', $q);
+        $this->db->or_like('faculty_comments', $q);
+        $this->db->or_like('faculty_id', $q);
+        $this->db->or_like('faculty_rating', $q);
+        $this->db->or_like('student_comments', $q);
+        $this->db->or_like('student_id', $q);
+        $this->db->or_like('student_rating', $q);
+        $this->db->or_like('updated', $q);
+        $this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }
 
     // insert data
     function insert($data)
     {
-        $this->db->insert($this->table, $data);
+        $this->db->db_debug = false;
+        if (!$this->db->insert($this->table, $data)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     // update data
     function update($id, $data)
     {
+        $this->db->db_debug = false;
         $this->db->where($this->id, $id);
-        $this->db->update($this->table, $data);
+        if (!$this->db->update($this->table, $data)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     // delete data
     function delete($id)
     {
+        $this->db->db_debug = false;
         $this->db->where($this->id, $id);
-        $this->db->delete($this->table);
+        if (!$this->db->delete($this->table)) {
+            return false;
+        } else {
+            return true;
+        }
     }
-	
-	// check_exist
-    function check_exist($val,$col,$id)
+
+    // check_exist
+    function check_exist($val, $col, $id)
     {
         $this->db->where($col, $val);
-		if($id){
-		$this->db->where($this->id.' !=', $id);
-		}
+        if ($id) {
+            $this->db->where($this->id . ' !=', $id);
+        }
         $this->db->from($this->table);
         return $this->db->count_all_results();
     }
-
 }
 
 /* End of file Batches_students_model.php */

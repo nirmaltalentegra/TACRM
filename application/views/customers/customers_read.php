@@ -17,7 +17,15 @@ $this->load->view('_layout/siteheader');
             </div>
         </div>
         <?php
-        $user_data = get_user_details($this->session->userdata('id'));
+        if($prefix == 0) {
+			$prefix = "Mrs.";
+		}
+		else if($prefix == 1) {
+			$prefix = "Mr.";
+		}
+		else if($prefix == 2) {
+			$prefix = "Miss.";
+		}
 
         ?>
 
@@ -71,7 +79,11 @@ $this->load->view('_layout/siteheader');
                                     <td>Phone</td>
                                     <td><?php echo $phone; ?></td>
                                 </tr>
-                                <tr>
+								<tr>
+                                    <td>Created At</td>
+                                    <td><?php echo $created_at; ?></td>
+                                </tr>
+                                <!--<tr>
                                     <td>Receivables</td>
                                     <td><?php echo $receivables; ?></td>
                                 </tr>
@@ -79,18 +91,13 @@ $this->load->view('_layout/siteheader');
                                     <td>Credits</td>
                                     <td><?php echo $credits; ?></td>
                                 </tr>
-
-                                <tr>
-                                    <td>Created At</td>
-                                    <td><?php echo $created_at; ?></td>
-                                </tr>
-                                <tr>
+								<tr>
                                     <td>Updated At</td>
                                     <td><?php echo $updated_at; ?></td>
-                                </tr>
+                                </tr>-->
                                 <tr>
                                     <td>Status</td>
-                                    <td><?php echo $status; ?></td>
+                                    <td><?php echo ($status == 1) ? "Active" : "Inactive"; ?></td>
                                 </tr>
                             </table>
                             <div class="ln_solid"></div>

@@ -25,19 +25,19 @@ class Branch_model extends CI_Model
     // get all
     function get_all()
     {
-		$this->db->select('branch.*,CONCAT(staff_details.firstname, " ", staff_details.lastname) as manager_name,
+        $this->db->select('branch.*,CONCAT(staff_details.firstname, " ", staff_details.lastname) as manager_name,
 					branch_type.branch_type_name as branch_type_name,status.status as status_name,
 					city.city_name as city_name,country.country_name as country_name');
-		$this->db->join('staff_details', 'branch.manager_id=staff_details.staff_id', 'LEFT');
-		$this->db->join('branch_type', 'branch.branch_type = branch_type.branch_type_id', 'LEFT');
-		$this->db->join('status', 'branch.branch_status = status.status_id', 'LEFT');
-		$this->db->join('city', 'branch.city_id = city.city_id', 'LEFT');
-		$this->db->join('country', 'branch.country_id = country.country_id', 'LEFT');
+        $this->db->join('staff_details', 'branch.manager_id=staff_details.staff_id', 'LEFT');
+        $this->db->join('branch_type', 'branch.branch_type = branch_type.branch_type_id', 'LEFT');
+        $this->db->join('status', 'branch.branch_status = status.status_id', 'LEFT');
+        $this->db->join('city', 'branch.city_id = city.city_id', 'LEFT');
+        $this->db->join('country', 'branch.country_id = country.country_id', 'LEFT');
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result();
     }
-	
-	// get all data array
+
+    // get all data array
     function get_all_branch()
     {
         $this->db->order_by($this->id, $this->order);
@@ -50,108 +50,123 @@ class Branch_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
-	
-	
-	// get data array by id
+
+
+    // get data array by id
     function get_branch($id)
     {
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row_array();
     }
-	    
+
     // get total rows
-    function total_rows($q = NULL) {
+    function total_rows($q = NULL)
+    {
         $this->db->like('branch_id', $q);
-	$this->db->or_like('autoresp_email_id', $q);
-	$this->db->or_like('branch_address', $q);
-	$this->db->or_like('branch_area', $q);
-	$this->db->or_like('branch_code', $q);
-	$this->db->or_like('branch_name', $q);
-	$this->db->or_like('branch_reg_date', $q);
-	$this->db->or_like('branch_status', $q);
-	$this->db->or_like('branch_type', $q);
-	$this->db->or_like('city_id', $q);
-	$this->db->or_like('country_id', $q);
-	$this->db->or_like('created', $q);
-	$this->db->or_like('email_id', $q);
-	$this->db->or_like('flags', $q);
-	$this->db->or_like('ispublic', $q);
-	$this->db->or_like('land_mark', $q);
-	$this->db->or_like('manager_id', $q);
-	$this->db->or_like('mobile', $q);
-	$this->db->or_like('phone', $q);
-	$this->db->or_like('signature', $q);
-	$this->db->or_like('updated', $q);
-	$this->db->or_like('zipcode', $q);
-	$this->db->from($this->table);
+        $this->db->or_like('autoresp_email_id', $q);
+        $this->db->or_like('branch_address', $q);
+        $this->db->or_like('branch_area', $q);
+        $this->db->or_like('branch_code', $q);
+        $this->db->or_like('branch_name', $q);
+        $this->db->or_like('branch_reg_date', $q);
+        $this->db->or_like('branch_status', $q);
+        $this->db->or_like('branch_type', $q);
+        $this->db->or_like('city_id', $q);
+        $this->db->or_like('country_id', $q);
+        $this->db->or_like('created', $q);
+        $this->db->or_like('email_id', $q);
+        $this->db->or_like('flags', $q);
+        $this->db->or_like('ispublic', $q);
+        $this->db->or_like('land_mark', $q);
+        $this->db->or_like('manager_id', $q);
+        $this->db->or_like('mobile', $q);
+        $this->db->or_like('phone', $q);
+        $this->db->or_like('signature', $q);
+        $this->db->or_like('updated', $q);
+        $this->db->or_like('zipcode', $q);
+        $this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
     // get data with limit and search
-    function get_limit_data($limit, $start = 0, $sort_column = '',$sort_by = '',$q = NULL) {
-		if($sort_column!='' && $sort_by!= '' ){
+    function get_limit_data($limit, $start = 0, $sort_column = '', $sort_by = '', $q = NULL)
+    {
+        if ($sort_column != '' && $sort_by != '') {
             $this->db->order_by($sort_column, $sort_by);
+        } else {
+            $this->db->order_by($this->id, $this->order);
         }
-		else { 
-        $this->db->order_by($this->id, $this->order);
-		}
         $this->db->like('branch_id', $q);
-	$this->db->or_like('autoresp_email_id', $q);
-	$this->db->or_like('branch_address', $q);
-	$this->db->or_like('branch_area', $q);
-	$this->db->or_like('branch_code', $q);
-	$this->db->or_like('branch_name', $q);
-	$this->db->or_like('branch_reg_date', $q);
-	$this->db->or_like('branch_status', $q);
-	$this->db->or_like('branch_type', $q);
-	$this->db->or_like('city_id', $q);
-	$this->db->or_like('country_id', $q);
-	$this->db->or_like('created', $q);
-	$this->db->or_like('email_id', $q);
-	$this->db->or_like('flags', $q);
-	$this->db->or_like('ispublic', $q);
-	$this->db->or_like('land_mark', $q);
-	$this->db->or_like('manager_id', $q);
-	$this->db->or_like('mobile', $q);
-	$this->db->or_like('phone', $q);
-	$this->db->or_like('signature', $q);
-	$this->db->or_like('updated', $q);
-	$this->db->or_like('zipcode', $q);
-	$this->db->limit($limit, $start);
+        $this->db->or_like('autoresp_email_id', $q);
+        $this->db->or_like('branch_address', $q);
+        $this->db->or_like('branch_area', $q);
+        $this->db->or_like('branch_code', $q);
+        $this->db->or_like('branch_name', $q);
+        $this->db->or_like('branch_reg_date', $q);
+        $this->db->or_like('branch_status', $q);
+        $this->db->or_like('branch_type', $q);
+        $this->db->or_like('city_id', $q);
+        $this->db->or_like('country_id', $q);
+        $this->db->or_like('created', $q);
+        $this->db->or_like('email_id', $q);
+        $this->db->or_like('flags', $q);
+        $this->db->or_like('ispublic', $q);
+        $this->db->or_like('land_mark', $q);
+        $this->db->or_like('manager_id', $q);
+        $this->db->or_like('mobile', $q);
+        $this->db->or_like('phone', $q);
+        $this->db->or_like('signature', $q);
+        $this->db->or_like('updated', $q);
+        $this->db->or_like('zipcode', $q);
+        $this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }
 
     // insert data
     function insert($data)
     {
-        $this->db->insert($this->table, $data);
+        $this->db->db_debug = false;
+        if (!$this->db->insert($this->table, $data)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     // update data
     function update($id, $data)
     {
+        $this->db->db_debug = false;
         $this->db->where($this->id, $id);
-        $this->db->update($this->table, $data);
+        if (!$this->db->update($this->table, $data)) {
+            return false;
+        } else {
+            return true;
+        }
     }
 
     // delete data
     function delete($id)
     {
+        $this->db->db_debug = false;
         $this->db->where($this->id, $id);
-        $this->db->delete($this->table);
+        if (!$this->db->delete($this->table)) {
+            return false;
+        } else {
+            return true;
+        }
     }
-	
-	// check_exist
-    function check_exist($val,$col,$id)
+
+    // check_exist
+    function check_exist($val, $col, $id)
     {
         $this->db->where($col, $val);
-		if($id){
-		$this->db->where($this->id.' !=', $id);
-		}
+        if ($id) {
+            $this->db->where($this->id . ' !=', $id);
+        }
         $this->db->from($this->table);
         return $this->db->count_all_results();
     }
-
 }
 
 /* End of file Branch_model.php */

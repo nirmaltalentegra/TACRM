@@ -18,8 +18,11 @@ class Batch_type extends APP_Controller
         parent::__construct();
         $this->load->model('Batch_type_model');
         $this->load->library('form_validation');
-		$this->load->library('Arbac');
-		if(!$this->arbac->is_loggedin()){ redirect('scp/login'); }
+        $this->load->library('session');
+        $this->load->library('Arbac');
+        if (!$this->arbac->is_loggedin()) {
+            redirect('scp/login');
+        }
     }
 
     public function index()
@@ -28,48 +31,46 @@ class Batch_type extends APP_Controller
 
         $data = array(
             'batch_type_data' => $batch_type,
-			'title' => 'TRAMS::SCP::Batch_type',
+            'title' => 'TRAMS::SCP::Batch_type',
         );
-		$this->_tpl('batch_type/batch_type_list', $data);
-		
+        $this->_tpl('batch_type/batch_type_list', $data);
     }
 
-    public function read($id) 
+    public function read($id)
     {
         $row = $this->Batch_type_model->get_by_id($id);
         if ($row) {
             $data = array(
-			'title'  => 'TRAMS::SCP::Batch_type',
-		'active' => $row->active,
-		'batch_type_id' => $row->batch_type_id,
-		'batch_type_name' => $row->batch_type_name,
-		'created' => $row->created,
-		'updated' => $row->updated,
-	    );
-			$this->_tpl('batch_type/batch_type_read', $data);
+                'title'  => 'TRAMS::SCP::Batch_type',
+                'active' => $row->active,
+                'batch_type_id' => $row->batch_type_id,
+                'batch_type_name' => $row->batch_type_name,
+                'created' => $row->created,
+                'updated' => $row->updated,
+            );
+            $this->_tpl('batch_type/batch_type_read', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('batch_type'));
         }
     }
 
-    public function create() 
+    public function create()
     {
         $data = array(
             'button' => 'Create',
             'action' => site_url('batch_type/create_action'),
-			'title'  => 'TRAMS::SCP::Create Batch_type',
-	    'active' => set_value('active'),
-	    'batch_type_id' => set_value('batch_type_id'),
-	    'batch_type_name' => set_value('batch_type_name'),
-	    'created' => set_value('created'),
-	    'updated' => set_value('updated'),
-	);
-          $this->_tpl('batch_type/batch_type_form', $data);	
-		
+            'title'  => 'TRAMS::SCP::Create Batch_type',
+            'active' => set_value('active'),
+            'batch_type_id' => set_value('batch_type_id'),
+            'batch_type_name' => set_value('batch_type_name'),
+            'created' => set_value('created'),
+            'updated' => set_value('updated'),
+        );
+        $this->_tpl('batch_type/batch_type_form', $data);
     }
-    
-    public function create_action() 
+
+    public function create_action()
     {
         $this->_rules();
 
@@ -77,19 +78,19 @@ class Batch_type extends APP_Controller
             $this->create();
         } else {
             $data = array(
-		'active' => $this->input->post('active',TRUE),
-		'batch_type_name' => $this->input->post('batch_type_name',TRUE),
-		'created' => date('Y-m-d H:i:s'),
-		'updated' => date('Y-m-d H:i:s'),
-	    );
+                'active' => $this->input->post('active', TRUE),
+                'batch_type_name' => $this->input->post('batch_type_name', TRUE),
+                'created' => date('Y-m-d H:i:s'),
+                'updated' => date('Y-m-d H:i:s'),
+            );
 
             $this->Batch_type_model->insert($data);
             $this->session->set_flashdata('message', 'Create Record Success');
             redirect(site_url('batch_type'));
         }
     }
-    
-    public function update($id) 
+
+    public function update($id)
     {
         $row = $this->Batch_type_model->get_by_id($id);
 
@@ -97,22 +98,21 @@ class Batch_type extends APP_Controller
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('batch_type/update_action'),
-				'title'  => 'TRAMS::SCP::Update Batch_type',
-		'active' => set_value('active', $row->active),
-		'batch_type_id' => set_value('batch_type_id', $row->batch_type_id),
-		'batch_type_name' => set_value('batch_type_name', $row->batch_type_name),
-		'created' => set_value('created', $row->created),
-		'updated' => set_value('updated', $row->updated),
-	    );
-			$this->_tpl('batch_type/', $data);
-		
+                'title'  => 'TRAMS::SCP::Update Batch_type',
+                'active' => set_value('active', $row->active),
+                'batch_type_id' => set_value('batch_type_id', $row->batch_type_id),
+                'batch_type_name' => set_value('batch_type_name', $row->batch_type_name),
+                'created' => set_value('created', $row->created),
+                'updated' => set_value('updated', $row->updated),
+            );
+            $this->_tpl('batch_type/', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('batch_type'));
         }
     }
-    
-    public function update_action() 
+
+    public function update_action()
     {
         $this->_rules();
 
@@ -120,19 +120,19 @@ class Batch_type extends APP_Controller
             $this->update($this->input->post('batch_type_id', TRUE));
         } else {
             $data = array(
-		'active' => $this->input->post('active',TRUE),
-		'batch_type_name' => $this->input->post('batch_type_name',TRUE),
-		
-		'updated' => date('Y-m-d H:i:s'),
-	    );
+                'active' => $this->input->post('active', TRUE),
+                'batch_type_name' => $this->input->post('batch_type_name', TRUE),
+
+                'updated' => date('Y-m-d H:i:s'),
+            );
 
             $this->Batch_type_model->update($this->input->post('batch_type_id', TRUE), $data);
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('batch_type'));
         }
     }
-    
-    public function delete($id) 
+
+    public function delete($id)
     {
         $row = $this->Batch_type_model->get_by_id($id);
 
@@ -146,31 +146,29 @@ class Batch_type extends APP_Controller
         }
     }
 
-    public function _rules() 
+    public function _rules()
     {
-	$this->form_validation->set_rules('active', 'active', 'trim|required');
-	$this->form_validation->set_rules('batch_type_name', 'batch type name', 'trim|required');
-		
-		
+        $this->form_validation->set_rules('active', 'active', 'trim|required');
+        $this->form_validation->set_rules('batch_type_name', 'batch type name', 'trim|required');
 
-	$this->form_validation->set_rules('batch_type_id', 'batch_type_id', 'trim');
-	$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
+
+
+        $this->form_validation->set_rules('batch_type_id', 'batch_type_id', 'trim');
+        $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 
     public function check_exist()
     {
-    $val = $this->input->post('val');
-	$col = $this->input->post('col');
-	$id = isset($_POST['id']) ? $_POST['id'] : '';
-	$res = $this->Batch_type_model->check_exist($val,$col,$id);
-	if($res){
-		echo 'false';
-	}
-	else {
-		echo 'true';
-	}
+        $val = $this->input->post('val');
+        $col = $this->input->post('col');
+        $id = isset($_POST['id']) ? $_POST['id'] : '';
+        $res = $this->Batch_type_model->check_exist($val, $col, $id);
+        if ($res) {
+            echo 'false';
+        } else {
+            echo 'true';
+        }
     }
-
 }
 
 /* End of file Batch_type.php */

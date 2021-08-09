@@ -50,8 +50,8 @@ class Customers extends APP_Controller
                 'address' => $row->address,
                 'company' => $row->company,
                 'city' => $row->city,
-                'receivables' => $row->receivables,
-                'credits' => $row->credits,
+                //'receivables' => $row->receivables,
+                //'credits' => $row->credits,
                 'status' => $row->status,
                 'created_at' => $row->created_at,
                 'updated_at' => $row->updated_at,
@@ -79,8 +79,8 @@ class Customers extends APP_Controller
             'address' => set_value('address'),
             'company' => set_value('company'),
             'city' => set_value('city'),
-            'receivables' => set_value('receivables'),
-            'credits' => set_value('credits'),
+            //'receivables' => set_value('receivables'),
+            //'credits' => set_value('credits'),
             'status' => set_value('status'),
             'created_at' => set_value('created_at'),
             'updated_at' => set_value('updated_at'),
@@ -108,8 +108,8 @@ class Customers extends APP_Controller
                 'address' => $this->input->post('address', TRUE),
                 'company' => $this->input->post('company', TRUE),
                 'city' => $this->input->post('city', TRUE),
-                'receivables' => $this->input->post('receivables', TRUE),
-                'credits' => $this->input->post('credits', TRUE),
+                //'receivables' => $this->input->post('receivables', TRUE),
+                //'credits' => $this->input->post('credits', TRUE),
                 'status' => $this->input->post('status', TRUE),
             );
 
@@ -143,8 +143,8 @@ class Customers extends APP_Controller
                 'address' => set_value('address', $row->address),
                 'company' => set_value('company', $row->company),
                 'city' => set_value('city', $row->city),
-                'receivables' => set_value('receivables', $row->receivables),
-                'credits' => set_value('credits', $row->credits),
+                //'receivables' => set_value('receivables', $row->receivables),
+                //'credits' => set_value('credits', $row->credits),
                 'status' => set_value('status', $row->status),
                 'created_at' => set_value('created_at', date('Y-m-d H:i:s')),
                 'updated_at' => set_value('updated_at', date('Y-m-d H:i:s')),
@@ -176,8 +176,8 @@ class Customers extends APP_Controller
                 'address' => $this->input->post('address', TRUE),
                 'company' => $this->input->post('company', TRUE),
                 'city' => $this->input->post('city', TRUE),
-                'receivables' => $this->input->post('receivables', TRUE),
-                'credits' => $this->input->post('credits', TRUE),
+                //'receivables' => $this->input->post('receivables', TRUE),
+                //'credits' => $this->input->post('credits', TRUE),
                 'status' => $this->input->post('status', TRUE),
             );
 
@@ -206,16 +206,16 @@ class Customers extends APP_Controller
 
         $this->form_validation->set_rules('firstname', 'firstname', 'trim|required');
         $this->form_validation->set_rules('lastname', 'lastname', 'trim|required');
-        $this->form_validation->set_rules('middlename', 'middlename', 'trim|required');
+        //$this->form_validation->set_rules('middlename', 'middlename', 'trim|required');
         $this->form_validation->set_rules('email', 'email', 'trim|required');
         $this->form_validation->set_rules('prefix', 'prefix', 'trim|required');
         $this->form_validation->set_rules('address', 'address', 'trim|required');
         $this->form_validation->set_rules('company', 'company', 'trim|required');
         $this->form_validation->set_rules('city', 'city', 'trim|required');
         $this->form_validation->set_rules('phone', 'phone', 'trim|required');
-        $this->form_validation->set_rules('receivables', 'receivables', 'trim|required');
-        $this->form_validation->set_rules('credits', 'credits', 'trim|required');
-        $this->form_validation->set_rules('id', 'id', 'trim');
+        //$this->form_validation->set_rules('receivables', 'receivables', 'trim|required');
+        //$this->form_validation->set_rules('credits', 'credits', 'trim|required');
+        //$this->form_validation->set_rules('id', 'id', 'trim');
         $this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
     }
 

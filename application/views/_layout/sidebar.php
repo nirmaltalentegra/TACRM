@@ -43,6 +43,9 @@ defined('BASEPATH') or exit('No direct script access allowed');
           <li class="<?php echo $this->uri->segment(1) == 'batches' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>batches">Batches</a></li>
           <li class="<?php echo $this->uri->segment(1) == 'students' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>students">Students</a></li>
           <li class="<?php echo $this->uri->segment(1) == 'customers' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>customers">Customers</a></li>
+
+          <li class="<?php echo $this->uri->segment(1) == 'invoices' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>invoices">Invoices</a></li>
+          <li class="<?php echo $this->uri->segment(1) == 'student_registration' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>student_registration">Student Registration</a></li>
           <!--<li class="<?php echo $this->uri->segment(2) == 'bootstrap_buttons' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>example/bootstrap_buttons">Configuration</a></li>
           <li class="<?php echo $this->uri->segment(2) == 'bootstrap_card' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>example/bootstrap_card">Settings</a></li>
           <li class="<?php echo $this->uri->segment(2) == 'bootstrap_carousel' ? 'active' : ''; ?>"><a class="nav-link" href="<?php echo base_url(); ?>example/bootstrap_carousel">Report</a></li>

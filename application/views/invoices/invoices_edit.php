@@ -6,7 +6,7 @@ $this->load->view('_layout/siteheader');
 <div class="main-content">
     <section class="section">
         <div class="section-header">
-            <h1>Customers <small>-Detail list of Invoices</small></h1>
+            <h1>Invoices <small>-Detail list of Invoices</small></h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active">
                     <a href="#">Dashboard</a>
@@ -24,7 +24,7 @@ $this->load->view('_layout/siteheader');
 
         <div class="section-body">
             <div class="row">
-                <div class="col-12 col-md-6 col-lg-6">
+                <div class="col-12 col-md-12 col-lg-12">
                     <div class="card">
 
                         <form id="frm_edit" class="form-horizontal form-label-left" data-parsley-validate="" action="<?php echo $action; ?>" method="post">
@@ -38,23 +38,18 @@ $this->load->view('_layout/siteheader');
                                 <div class="form-group">
                                     <label class="control-label " for="order_no">Order No</label>
 
-                                    <input type="text" class="form-control " name="order_no" id="order_no" placeholder="order_no" value="<?php echo $order_no; ?>" disabled />
+                                    <input type="text" class="form-control " name="order_no" id="order_no" placeholder="order_no" value="<?php echo $order_no; ?>" readonly="readonly" />
                                     <?php echo form_error('order_no') ?>
 
                                 </div>
 
                                 <div class="form-group">
                                     <select name="customer_id" id="customer_id" class="form-control">
-                                        <option value="2" <?php if ($status == 0) {
-                                                                echo " selected";
-                                                            } ?>>Miss.</option>
-                                        <option value="1" <?php if ($status == 1) {
-                                                                echo " selected";
-                                                            } ?>>Mr.</option>
-                                        <option value="0" <?php if ($status == 0) {
-                                                                echo " selected";
-                                                            } ?>>Mrs.</option>
+                                        <option value="">Select Customers</option>
+                                        <?php foreach ($customers as $row) { ?>
+                                            <option <?= ($customer_id == $row['id']) ? 'selected' : ''; ?> value="<?php echo $row['id']; ?>"><?= $row['firstname'] . ' ' . $row['middlename'] . ' ' . $row['lastname'] ?></option>
 
+                                        <?php } ?>
                                     </select>
                                     <?php echo form_error('customer_id') ?>
 
@@ -148,6 +143,49 @@ $this->load->view('_layout/siteheader');
 
                                 </div>
 
+                                <div class="form-row">
+                                    <!-- Table -->
+                                    <table id='list' class="table  table-striped table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th>Item</th>
+                                                <th>Rate</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id=" myTable">
+                                            <?php
+                                            $start = 0;
+                                            foreach ($itemstbl as $item) {
+                                            ?>
+                                                <tr>
+
+                                                    <!-- <td><?php //echo $c->name 
+                                                                ?></td> -->
+                                                    <td><input type="text" name="item_name" class=" form-control item_name " id="item_name<?php echo $item['id'] ?>" value="<?php echo $item['item_name'] ?>" /></td>
+                                                    <td>
+                                                        <input type="text" name="item_qty" class="item_qty form-control calc" id="item_qty<?php echo $item['id'] ?>" value="<?php echo $item['qty'] ?>" />
+                                                    </td>
+                                                    <td><input type="text" name="item_rate" class="item_rate form-control calc" id="item_rate<?php echo $item['id'] ?>" value="<?php echo $item['rate'] ?>" /></td>
+                                                    <td><input type="text" name="item_total" class="item_total form-control " id="item_total<?php echo $item['id'] ?>" value="<?php echo $item['total'] ?>" /></td>
+                                                    <td>
+                                                        <button type="button" class="btn btn-outline-primary btn-sm itemupdate" name="itemupdate" id="itemupdate" value="<?php echo $item['id'] ?>">Update</button>
+
+                                                        <button type="button" class="btn btn-outline-danger btn-sm itemdelete" name="itemdelete" id="itemdelete" value="<?php echo $item['id'] ?>">Delete</button>
+                                                    </td>
+
+
+                                                </tr>
+                                            <?php
+                                            }
+                                            ?>
+                                        </tbody>
+
+                                    </table>
+                                </div>
+
                                 <div class="ln_solid"></div>
                                 <div class="form-group">
 
@@ -156,6 +194,7 @@ $this->load->view('_layout/siteheader');
 
 
                                 </div>
+
                         </form>
 
 
@@ -174,7 +213,85 @@ $this->load->view('_layout/siteheader');
     var form2 = $('#frm_edit');
     var error1 = $('.alert-danger', form2);
     var success1 = $('.alert-success', form2);
+    $(document).ready(function() {
 
+
+
+        // Update record
+        $('#list').on('click', '.itemupdate', function() {
+            var id = this.value;
+
+            url = '<?php echo site_url('invoices/updateItem_action')
+                    ?>';
+
+            //AJAX request
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: {
+                    id: id,
+                    name: $('#item_name' + id).val(),
+                    rate: $('#item_rate' + id).val(),
+                    qty: $('#item_qty' + id).val(),
+                    total: $('#item_total' + id).val(),
+                },
+                dataType: 'json',
+                success: function(response) {
+
+                    if (response == 1) {
+                        alert("updated succssfully.");
+                        // $('#name').val(response.data.name);
+                        // $('#email').val(response.data.email);
+                        // $('#gender').val(response.data.gender);
+                        // $('#city').val(response.data.city);
+
+                        // this.reload();
+                    } else {
+                        alert("Invalid ID.");
+                    }
+                }
+            });
+
+        });
+
+        // delete 
+        $('#list').on('click', '.itemdelete', function() {
+            var id = this.value;
+
+            url = '<?php echo site_url('invoices/deleteItem')
+                    ?>';
+            //AJAX request
+            $.ajax({
+                url: url,
+                type: 'post',
+                data: {
+                    id: id
+                },
+                dataType: 'json',
+                success: function(response) {
+
+                    if (response == 1) {
+                        alert("deleted succssfully.");
+                        $(this).hide()
+
+                    } else {
+                        alert("Invalid ID.");
+                    }
+                }
+            });
+
+        });
+        // calculate
+        $('#list').on('blur', '.calc', function() {
+            var val1 = this.value; 
+            var val2,val3;
+            $('#list').on('blur', '.calc', function() {});
+            // console.log(parseFloat($("#item_rate" + id).val()));
+            // var sum = parseFloat($("#item_rate" + id).val()) * parseFloat($("#item_qty" + id).val())
+            // $("#item_total" + id).val(sum);
+        });
+
+    });
     form2.validate({
         errorElement: 'span', //default input error message container
         errorClass: 'help-block', // default input error message class

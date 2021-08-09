@@ -89,20 +89,7 @@ $this->load->view('_layout/siteheader');
 
                                 </div>
 
-
-                                <div class=" form-group">
-                                    <label class="control-label " for="int">Status</label>
-                                    <select name="status" id="status1" class="form-control">
-                                        <option value="1">Active</option>
-                                        <option value="0">Inactive</option>
-                                    </select>
-                                    <!--<input type="text" class="form-control " name="status" id="status" placeholder="Status" value="<?php echo $status; ?>" />-->
-                                    <?php echo form_error('status') ?>
-
-                                </div>
-
-
-                                <div class=" form-group">
+								<div class=" form-group">
                                     <label class="control-label " for="varchar">
                                         <Address>Address</Address>
                                     </label>
@@ -125,20 +112,30 @@ $this->load->view('_layout/siteheader');
                                     <?php echo form_error('company') ?>
 
                                 </div>
-                                <div class=" form-group">
+								<div class=" form-group">
+                                    <label class="control-label " for="int">Status</label>
+                                    <select name="status" id="status1" class="form-control">
+                                        <option value="1">Active</option>
+                                        <option value="0">Inactive</option>
+                                    </select>
+                                    <!--<input type="text" class="form-control " name="status" id="status" placeholder="Status" value="<?php echo $status; ?>" />-->
+                                    <?php echo form_error('status') ?>
+
+                                </div>
+                                <!--<div class=" form-group">
                                     <label class="control-label " for="varchar">Receivables</label>
 
                                     <input type="text" class="form-control " name="receivables" id="receivables" placeholder="Receivables" value="<?php echo $receivables; ?>" />
-                                    <?php echo form_error('receivables') ?>
+                                    <?php //echo form_error('receivables') ?>
 
                                 </div>
                                 <div class=" form-group">
                                     <label class="control-label " for="varchar">Credits</label>
 
                                     <input type="text" class="form-control " name="credits" id="credits" placeholder="credits" value="<?php echo $credits; ?>" />
-                                    <?php echo form_error('credits') ?>
+                                    <?php //echo form_error('credits') ?>
 
-                                </div>
+                                </div>-->
 
 
 
@@ -184,9 +181,6 @@ $this->load->view('_layout/siteheader');
                 required: true
             },
             firstname: {
-                required: true
-            },
-            middlename: {
                 required: true
             },
             lastname: {

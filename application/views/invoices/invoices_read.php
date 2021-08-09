@@ -12,7 +12,7 @@ $this->load->view('_layout/siteheader');
                     <a href="#">Dashboard</a>
                 </div>
                 <div class="breadcrumb-item">
-                    Users
+                    Invoice
                 </div>
             </div>
         </div>

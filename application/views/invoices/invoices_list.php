@@ -48,17 +48,16 @@ $this->load->view('_layout/siteheader');
                                         <!--<th>Default Mobile No</th>-->
                                         <th>Order No</th>
                                         <th>Customer</th>
-                                        <th>Subject</th>
+                                        <th>Ship</th>
                                         <th>Description</th>
-                                        <th>Total Qty</th>
+                                        <th>Sub Total</th>
                                         <th>Total Amt</th>
                                         <th>Paid</th>
                                         <th>Balance</th>
-                                        <th>Refunded</th>
                                         <th>Terms</th>
                                         <th>Due Date</th>
                                         <th>Created At</th>
-                                        <th>Updated At</th>
+                                        <!-- <th>Updated At</th> -->
                                         <th>Status</th>
                                         <th>Action</th>
 
@@ -78,33 +77,48 @@ $this->load->view('_layout/siteheader');
                                             </td>
                                             <!-- <td><?php //echo $c->name 
                                                         ?></td> -->
-                                            <td><?php echo $invoices->order_no ?></td>
-                                            <td><?php echo $invoices->customer_id ?></td>
-                                            <td><?php echo $invoices->subject ?></td>
-                                            <td><?php echo $customer->description ?></td>
-                                            <td><?php echo $customer->total_qty ?></td>
-                                            <td><?php echo $customer->total_amt ?></td>
-                                            <td><?php echo $customer->paid ?></td>
-                                            <td><?php echo $customer->balance ?></td>
-                                            <td><?php echo $customer->refunded ?></td>
-                                            <td><?php echo $customer->terms ?></td>
-                                            <td><?php echo $customer->due_date ?></td>
-                                            <td><?php echo $customer->created_at ?></td>
+                                            <td><?php echo $invoices->id ?></td>
+                                            <td><?php echo $invoices->invoice_to ?></td>
+                                            <td><?php echo $invoices->invoice_ship ?></td>
+                                            <td><?php echo $invoices->invoice_notes ?></td>
+                                            <td><?php echo $invoices->invoice_subtotal ?></td>
+                                            <td><?php echo $invoices->invoice_total ?></td>
+                                            <td><?php echo $invoices->invoice_amountpaid ?></td>
+                                            <td><?php echo $invoices->invoice_balance_due ?></td>
+                                            <td><?php echo $invoices->invoice_terms ?></td>
+                                            <td><?php echo date('d/m/Y',strtotime($invoices->invoice_due_date)) ?></td>
+                                            <td><?php echo date('d/m/Y',strtotime($invoices->invoice_date)) ?></td>
 
-                                            <td><?php echo $customer->updated_at ?></td>
-                                            <td><?php if ($customer->status == 1) echo "Active";
+                                            <!--<td><?php echo $invoices->updated_at ?></td>-->
+                                            <td><?php if ($invoices->invoice_status == 1) echo "Active";
                                                 else echo "Inactive"; ?></td>
 
                                             <td style="text-align:center" width="200px">
-                                                <?php
-                                                echo anchor(site_url('invoices/read/' . $invoices->id), 'Read');
-                                                echo ' | ';
-                                                echo anchor(site_url('invoices/update/' . $customer->id), 'Update');
-                                                echo ' | ';
-                                                echo anchor(site_url('invoices/delete/' . $customer->id), 'Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
-                                                echo ' | ';
-                                                echo anchor(site_url('invoices/send_email_verification/' . $invoices->id), 'Send Verification Email');
-                                                ?>
+											<div class="dropdown d-inline">
+								<button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								  Actions
+								</button>
+								<div class="dropdown-menu">
+								<?php 
+								 echo '<a class="dropdown-item has-icon"  href="'.site_url('invoices/read/' . $invoices->id).'" title="Details">';
+									echo '<i class="fas fa-info-circle"></i>Read</i>'; 
+												echo '</a>';    
+												echo '<a class="dropdown-item has-icon"  href="'.site_url('invoices/update/' . $invoices->id).'" title="Update">';
+									echo '<i class="far fa-edit"></i> Update'; 
+												echo '</a>';
+												echo '<a class="dropdown-item has-icon"  href="'.site_url('invoices/delete/' . $invoices->id).'" title="Delete" onclick="javasciprt: return confirm(\'Are You Sure ?\')">';
+									echo ' <i class="fas fa-times"></i> Delete'; 
+												echo '</a>';			
+										echo '<a class="dropdown-item has-icon"  href="'.site_url('invoices/send_email_verification/' . $invoices->id).'" title="Send Verification Email">';
+									echo '  <i class="fas fa-envelope-square"></i> Send Verification Email'; 
+												echo '</a>';			
+										echo '<a class="dropdown-item has-icon"  href="'.site_url('invoices/invoice_view/' . $invoices->id).'" title="print">';
+									echo ' <i class="fas fa-print"></i>Print'; 
+												echo '</a>';			
+											?>
+								</div>
+						  </div> 
+						  
                                             </td>
                                         </tr>
                                     <?php

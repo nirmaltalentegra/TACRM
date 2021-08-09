@@ -1,6 +1,7 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 ?>
+
 <body>
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
@@ -200,15 +201,16 @@ defined('BASEPATH') OR exit('No direct script access allowed');
               </div>
             </div>
           </li>
-		   <?php 
-$user_data = get_user_details($this->session->userdata('id')); 
+          <?php
+          $user_data = get_user_details($this->session->userdata('id'));
 
-?>  
+          ?>
           <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
-            <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
-            <div class="d-sm-none d-lg-inline-block">Hi, <?php echo $user_data['user_name']; ?></div></a>
-           
-			<div class="dropdown-menu dropdown-menu-right">
+              <img alt="image" src="<?php echo base_url(); ?>assets/img/avatar/avatar-1.png" class="rounded-circle mr-1">
+              <div class="d-sm-none d-lg-inline-block">Hi, <?php echo $user_data['user_name']; ?></div>
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right">
               <div class="dropdown-title">Logged in 5 min ago</div>
               <a href="<?php echo base_url(); ?>staff/profile" class="dropdown-item has-icon">
                 <i class="far fa-user"></i> Profile

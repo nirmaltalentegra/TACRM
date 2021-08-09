@@ -35,10 +35,30 @@ class Invoices_model extends CI_Model
     // get all
     function get_all()
     {
-
-        $this->db->order_by($this->id, $this->order);
-
-        return $this->db->get($this->table)->result();
+        /*$this->db->select('*');
+        $this->db->join('customers', 'customers.id = invoices.id');
+        $this->db->order_by('invoices.id', $this->order);
+        return $this->db->get($this->table)->result();*/
+		$this->db->select('*');
+        $this->db->order_by('new_invoice.id', $this->order);
+        return $this->db->get("new_invoice")->result();
+    }
+	
+	function get_items($id)
+    {
+        $this->db->select('*');
+        //$this->db->join('customers', 'customers.id = invoices.id');
+		$this->db->where("id", $id);
+        $this->db->order_by('new_invoice.id', $this->order);
+        return $this->db->get("new_invoice")->result();
+    }
+	
+	function get_items_list($id)
+    {
+        $this->db->select('*');
+		$this->db->where("invoice_id", $id);
+        $this->db->order_by('id', "ASC");
+        return $this->db->get("new_invoice_items")->result();
     }
 
     // get all data array
@@ -46,6 +66,13 @@ class Invoices_model extends CI_Model
     {
         $this->db->order_by($this->id, $this->order);
         return $this->db->get($this->table)->result_array();
+    }
+
+    // get data by id
+    function get_customerby_id($id)
+    {
+        $this->db->where($this->id, $id);
+        return $this->db->get('customers')->row();
     }
 
     // get data by id
@@ -119,7 +146,13 @@ class Invoices_model extends CI_Model
         $this->db->limit($limit, $start);
         return $this->db->get($this->table)->result();
     }
-
+    //customer data
+    function get_customer_data()
+    {
+        $this->db->where('status', 1);
+        $this->db->order_by($this->id, 'ASC');
+        return $this->db->get('customers')->result_array();
+    }
     // insert data
     function insert($data)
     {
